@@ -1,0 +1,7 @@
+chainlit
+transformers
+huggingface_hub
+sentence-transformers
+faiss-cpu
+python-dotenv
+torch
