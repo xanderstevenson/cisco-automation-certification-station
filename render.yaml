@@ -1,0 +1,6 @@
+services:
+  - type: web
+    name: cisco-chatbot
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: chainlit run app.py
