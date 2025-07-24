@@ -7,6 +7,12 @@ from rag.vector_store import build_vector_store
 DOCS_DIR = "docs"
 URLS_FILE = "urls.txt"
 
+def clean_html(raw_html):
+    soup = BeautifulSoup(raw_html, "html.parser")
+    for tag in soup(["script", "style", "footer", "nav", "header", "noscript"]):
+        tag.decompose()
+    return soup.get_text(separator="\n", strip=True)
+
 def load_text_from_pdfs(doc_dir):
     documents = []
     for filename in os.listdir(doc_dir):
@@ -33,15 +39,14 @@ def load_text_from_urls(urls_file):
                 continue
             try:
                 response = requests.get(url, timeout=10)
-                soup = BeautifulSoup(response.text, "html.parser")
-                text = soup.get_text(separator="\n", strip=True)
+                text = clean_html(response.text)
                 documents.append(text)
                 print(f"[✓] Loaded URL: {url}")
             except Exception as e:
                 print(f"[!] Error fetching {url}: {e}")
     return documents
 
-if __name__ == "__main__":
+def vectorize_all():
     print("📄 Loading documents (PDFs + URLs)...")
     pdf_texts = load_text_from_pdfs(DOCS_DIR)
     url_texts = load_text_from_urls(URLS_FILE)
@@ -50,5 +55,10 @@ if __name__ == "__main__":
     if all_texts:
         build_vector_store(all_texts)
         print("✅ Vector store built and saved to rag/index/")
+        return True
     else:
         print("⚠️ No valid content found to embed.")
+        return False
+
+if __name__ == "__main__":
+    vectorize_all()

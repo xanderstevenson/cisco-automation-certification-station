@@ -1,0 +1,1 @@
+Open Shortest Path First (OSPF) is a link-state routing protocol used in IP networks. It uses Dijkstra's algorithm to determine the shortest path tree for each route. OSPF supports VLSM and CIDR, allows for hierarchical network design via areas, and quickly converges in response to topology changes. It's widely used in enterprise and service provider networks.
