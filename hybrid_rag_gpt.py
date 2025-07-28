@@ -1,11 +1,18 @@
 # hybrid_rag_gpt.py
 
 import os
-from openai import OpenAI
+import json
+from dotenv import load_dotenv
+import google.generativeai as genai
 from rag.retriever import retrieve_answer
 from serpapi import GoogleSearch
 
-oai_client = OpenAI()
+# Load environment variables from .env file
+load_dotenv()
+
+# Configure Gemini API
+genai.configure(api_key=os.environ.get("GOOGLE_API_KEY", ""))
+model = genai.GenerativeModel('gemini-1.5-flash')
 
 # Doc search tool using your improved retriever with lazy loading
 def doc_search(query: str) -> str:
@@ -26,87 +33,75 @@ def web_search(query: str) -> str:
     except Exception as e:
         return f"Error during internet search: {e}"
 
-# Tools GPT can call
-tools = [
-    {
-        "type": "function",
-        "function": {
-            "name": "doc_search",
-            "description": "Searches private documents for answers to a query.",
-            "parameters": {
-                "type": "object",
-                "properties": {
-                    "query": {"type": "string"}
-                },
-                "required": ["query"]
-            },
-        },
-    },
-    {
-        "type": "function",
-        "function": {
-            "name": "web_search",
-            "description": "Uses web search to retrieve recent or general info.",
-            "parameters": {
-                "type": "object",
-                "properties": {
-                    "query": {"type": "string"}
-                },
-                "required": ["query"]
-            },
-        },
-    },
-]
-
+# System prompt for Gemini
 system_prompt = (
-    "You are a helpful AI assistant for network engineering certification prep. "
-    "You have access to private documents through 'doc_search' and internet via 'web_search'. "
-    "Use both to provide the best answer. Combine facts from documents, internet, and your own knowledge. Cite sources."
+    "You are a helpful AI assistant for Cisco network engineering certification preparation. "
+    "You specialize in automation topics including CCNA Auto, ENAUTO, DCNAUTO, AUTOCOR, and CCIE Automation. "
+    "\n\nFor casual greetings or simple interactions, respond naturally and briefly. "
+    "For technical questions, provide comprehensive, accurate answers with practical examples. "
+    "Only search through documentation and provide detailed responses when the user asks specific technical questions. "
+    "Always cite your sources when referencing specific documentation or external information."
 )
 
 def chat(user_query):
-    messages = [
-        {"role": "system", "content": system_prompt},
-        {"role": "user", "content": user_query},
-    ]
+    """Hybrid RAG chat function using Gemini API"""
+    try:
+        # Check if this is a simple greeting or casual interaction
+        casual_patterns = ['hi', 'hello', 'hey', 'thanks', 'thank you', 'bye', 'goodbye']
+        is_casual = any(pattern in user_query.lower().strip() for pattern in casual_patterns) and len(user_query.strip()) < 20
+        
+        if is_casual:
+            # For casual interactions, respond directly without document search
+            simple_prompt = f"""{system_prompt}
 
-    response = oai_client.chat.completions.create(
-        model="gpt-4o",
-        messages=messages,
-        tools=tools,
-        tool_choice="auto"
-    )
+**User Message:** {user_query}
 
-    first_response = response.choices[0].message
+**Instructions:** 
+Respond naturally and briefly to this casual interaction. Be friendly and helpful, and let the user know you're here to help with Cisco certification questions when they're ready.
+"""
+            response = model.generate_content(simple_prompt)
+            return response.text
+        else:
+            # For technical questions, use full RAG pipeline
+            # Step 1: Get relevant documents
+            doc_context = doc_search(user_query)
+            
+            # Step 2: Get web search results for current info
+            web_context = web_search(user_query)
+            
+            # Step 3: Construct enhanced prompt with context
+            enhanced_prompt = f"""{system_prompt}
 
-    if first_response.tool_calls:
-        tool_outputs = []
-        for call in first_response.tool_calls:
-            query = eval(call.function.arguments)["query"]
-            if call.function.name == "doc_search":
-                tool_output = doc_search(query)
-            elif call.function.name == "web_search":
-                tool_output = web_search(query)
-            else:
-                tool_output = "Unknown tool called."
+**User Question:** {user_query}
 
-            tool_outputs.append({
-                "role": "tool",
-                "tool_call_id": call.id,
-                "content": tool_output,
-            })
+**Relevant Documentation Context:**
+{doc_context}
 
-        # Append tool responses and retry
-        messages.append(first_response)
-        messages.extend(tool_outputs)
+**Current Web Information:**
+{web_context}
 
-        second_response = oai_client.chat.completions.create(
-            model="gpt-4o",
-            messages=messages
-        )
-        return second_response.choices[0].message.content
+**Instructions:** 
+Answer the user's question in a natural, conversational tone as if you're a knowledgeable Cisco certification expert. 
+Use the documentation and web information above to provide accurate, helpful answers.
+When referencing sources, do so naturally (e.g., "According to Cisco's documentation..." or "Based on current information...").
+Avoid robotic phrases like "The provided text states" - instead, speak naturally and directly to the user.
 
-    return first_response.content
+IMPORTANT: When recommending study resources, ALWAYS prioritize official Cisco resources:
+- Cisco U (u.cisco.com)
+- Cisco Learning Network (learningnetwork.cisco.com)
+- Cisco NetAcad (netacad.com)
+- Official Cisco certification pages
+Provide actual clickable URLs when mentioning resources. Avoid recommending third-party sites unless specifically asked.
+
+If you don't have complete information, be honest about it while still providing helpful guidance.
+"""
+            
+            # Step 4: Generate response with Gemini
+            response = model.generate_content(enhanced_prompt)
+            return response.text
+        
+    except Exception as e:
+        return f"Error generating response: {str(e)}. Please try again."
 
 # For local testing
 if __name__ == "__main__":

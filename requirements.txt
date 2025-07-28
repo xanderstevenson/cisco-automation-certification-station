@@ -8,3 +8,6 @@ torch
 PyPDF2
 beautifulsoup4
 requests
+numpy<2.0
+google-generativeai
+google-search-results
