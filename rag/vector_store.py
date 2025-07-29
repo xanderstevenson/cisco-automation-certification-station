@@ -7,7 +7,9 @@ import textwrap
 
 load_dotenv()
 
-model = SentenceTransformer("all-MiniLM-L6-v2")
+# Use smaller model for memory-constrained environments like Render free tier
+model_name = os.environ.get("EMBEDDING_MODEL", "all-MiniLM-L6-v2")
+model = SentenceTransformer(model_name)
 
 CHUNK_SIZE = 500  # characters
 CHUNK_OVERLAP = 50  # characters

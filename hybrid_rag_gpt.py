@@ -4,7 +4,7 @@ import os
 import json
 from dotenv import load_dotenv
 import google.generativeai as genai
-from rag.retriever import retrieve_answer
+from rag.retriever import retrieve_answer, cleanup_memory
 from serpapi import GoogleSearch
 
 # Load environment variables from .env file
@@ -98,6 +98,8 @@ Provide a concise, helpful answer as a Cisco certification expert. Use the conte
                         temperature=0.7
                     )
                 )
+                # Cleanup memory after processing
+                cleanup_memory()
                 return response.text
             
             except Exception as tech_error:

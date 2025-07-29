@@ -2,5 +2,13 @@ services:
   - type: web
     name: cisco-chatbot
     env: python
-    buildCommand: pip install -r requirements.txt
-    startCommand: chainlit run app.py
+    preDeployCommand: pip install uv
+    buildCommand: uv pip install -r requirements-lite.txt
+    startCommand: chainlit run app.py --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: EMBEDDING_MODEL
+        value: paraphrase-MiniLM-L3-v2  # Smaller model for memory constraints
+      - key: PYTHONUNBUFFERED
+        value: "1"
+      - key: TOKENIZERS_PARALLELISM
+        value: "false"  # Reduce memory usage
