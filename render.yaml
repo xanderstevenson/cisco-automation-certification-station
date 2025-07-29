@@ -2,6 +2,7 @@ services:
   - type: web
     name: cisco-chatbot
     env: python
+    pythonVersion: "3.12"
     preDeployCommand: pip install uv
     buildCommand: uv pip install -r requirements-lite.txt
     startCommand: chainlit run app.py --host 0.0.0.0 --port $PORT

@@ -1,12 +1,13 @@
 # Memory-optimized requirements for Render free tier (512MB limit)
+# Python 3.12 compatible versions
 chainlit==1.0.200
 google-generativeai==0.3.2
 sentence-transformers==2.2.2
 faiss-cpu==1.7.4
 python-dotenv==1.0.0
-torch==2.1.0 --index-url https://download.pytorch.org/whl/cpu
+torch==2.1.0+cpu --extra-index-url https://download.pytorch.org/whl/cpu
 PyPDF2==3.0.1
 beautifulsoup4==4.12.2
 requests==2.31.0
-numpy<2.0
+numpy==1.26.4
 google-search-results==2.4.2
