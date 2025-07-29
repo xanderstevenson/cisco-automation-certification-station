@@ -16,22 +16,27 @@ model = genai.GenerativeModel('gemini-1.5-flash')
 
 # Doc search tool using your improved retriever with lazy loading
 def doc_search(query: str) -> str:
-    return retrieve_answer(query)
+    # Reduce search results for faster response
+    return retrieve_answer(query, k=2)
 
 # Internet search fallback via SerpAPI
 def web_search(query: str) -> str:
+    # Skip web search if no API key to speed up response
+    if not os.environ.get("SERPAPI_KEY"):
+        return "Web search unavailable (no API key configured)."
+    
     params = {
         "q": query,
-        "api_key": os.environ.get("SERPAPI_KEY", ""),
+        "api_key": os.environ.get("SERPAPI_KEY"),
         "engine": "google",
-        "num": 3
+        "num": 2  # Reduced for faster response
     }
     try:
         results = GoogleSearch(params).get_dict()
-        snippets = [r.get("snippet", "") for r in results.get("organic_results", []) if r.get("snippet")]
+        snippets = [r.get("snippet", "") for r in results.get("organic_results", [])[:2] if r.get("snippet")]
         return "\n".join(snippets) if snippets else "No internet results found."
     except Exception as e:
-        return f"Error during internet search: {e}"
+        return "Web search temporarily unavailable."
 
 # System prompt for Gemini
 system_prompt = (
@@ -62,43 +67,56 @@ Respond naturally and briefly to this casual interaction. Be friendly and helpfu
             response = model.generate_content(simple_prompt)
             return response.text
         else:
-            # For technical questions, use full RAG pipeline
-            # Step 1: Get relevant documents
-            doc_context = doc_search(user_query)
-            
-            # Step 2: Get web search results for current info
-            web_context = web_search(user_query)
-            
-            # Step 3: Construct enhanced prompt with context
-            enhanced_prompt = f"""{system_prompt}
+            # For technical questions, use optimized RAG pipeline
+            try:
+                # Step 1: Get relevant documents (reduced results)
+                doc_context = doc_search(user_query)
+                
+                # Step 2: Get web search results (with fallback)
+                web_context = web_search(user_query)
+                
+                # Step 3: Construct streamlined prompt
+                enhanced_prompt = f"""{system_prompt}
 
 **User Question:** {user_query}
 
-**Relevant Documentation Context:**
+**Documentation Context:**
 {doc_context}
 
-**Current Web Information:**
+**Web Information:**
 {web_context}
 
 **Instructions:** 
-Answer the user's question in a natural, conversational tone as if you're a knowledgeable Cisco certification expert. 
-Use the documentation and web information above to provide accurate, helpful answers.
-When referencing sources, do so naturally (e.g., "According to Cisco's documentation..." or "Based on current information...").
-Avoid robotic phrases like "The provided text states" - instead, speak naturally and directly to the user.
-
-IMPORTANT: When recommending study resources, ALWAYS prioritize official Cisco resources:
-- Cisco U (u.cisco.com)
-- Cisco Learning Network (learningnetwork.cisco.com)
-- Cisco NetAcad (netacad.com)
-- Official Cisco certification pages
-Provide actual clickable URLs when mentioning resources. Avoid recommending third-party sites unless specifically asked.
-
-If you don't have complete information, be honest about it while still providing helpful guidance.
+Provide a concise, helpful answer as a Cisco certification expert. Use the context above and cite sources naturally. Keep responses focused and practical. If information is limited, acknowledge it while still being helpful.
 """
+                
+                # Step 4: Generate response with Gemini (with timeout handling)
+                response = model.generate_content(
+                    enhanced_prompt,
+                    generation_config=genai.types.GenerationConfig(
+                        max_output_tokens=800,  # Limit response length for speed
+                        temperature=0.7
+                    )
+                )
+                return response.text
             
-            # Step 4: Generate response with Gemini
-            response = model.generate_content(enhanced_prompt)
-            return response.text
+            except Exception as tech_error:
+                # Fallback to document-only response if full pipeline fails
+                try:
+                    doc_only_context = doc_search(user_query)
+                    fallback_prompt = f"""{system_prompt}
+
+**User Question:** {user_query}
+
+**Available Documentation:**
+{doc_only_context}
+
+**Instructions:** Answer based on the documentation above. Be helpful and direct.
+"""
+                    response = model.generate_content(fallback_prompt)
+                    return response.text
+                except:
+                    return "I'm experiencing some technical difficulties. Please try asking your question again, or try a simpler version of your question."
         
     except Exception as e:
         return f"Error generating response: {str(e)}. Please try again."
