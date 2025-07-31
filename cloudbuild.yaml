@@ -1,0 +1,43 @@
+steps:
+  # Build the container image
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [
+      'build', 
+      '-t', 'gcr.io/$PROJECT_ID/cisco-automation-chatbot:$COMMIT_SHA',
+      '-t', 'gcr.io/$PROJECT_ID/cisco-automation-chatbot:latest',
+      '.'
+    ]
+  
+  # Push the container image to Container Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/$PROJECT_ID/cisco-automation-chatbot:$COMMIT_SHA']
+  
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/$PROJECT_ID/cisco-automation-chatbot:latest']
+  
+  # Deploy to Cloud Run
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: gcloud
+    args: [
+      'run', 'deploy', 'cisco-automation-chatbot',
+      '--image', 'gcr.io/$PROJECT_ID/cisco-automation-chatbot:$COMMIT_SHA',
+      '--region', 'us-central1',
+      '--platform', 'managed',
+      '--allow-unauthenticated',
+      '--memory', '2Gi',
+      '--cpu', '1',
+      '--timeout', '300',
+      '--max-instances', '10',
+      '--min-instances', '0',
+      '--concurrency', '10',
+      '--set-env-vars', 'EMBEDDING_MODEL=paraphrase-MiniLM-L3-v2,PYTHONUNBUFFERED=1,TOKENIZERS_PARALLELISM=false',
+      '--set-secrets', 'GOOGLE_API_KEY=cisco-chatbot-secrets:latest:google-api-key,SERPAPI_KEY=cisco-chatbot-secrets:latest:serpapi-key'
+    ]
+
+images:
+  - 'gcr.io/$PROJECT_ID/cisco-automation-chatbot:$COMMIT_SHA'
+  - 'gcr.io/$PROJECT_ID/cisco-automation-chatbot:latest'
+
+options:
+  logging: CLOUD_LOGGING_ONLY
+  machineType: 'E2_HIGHCPU_8'

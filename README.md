@@ -180,25 +180,56 @@ google-search-results # SerpAPI client
 
 ## 🚀 Deployment
 
-### **Render.com (Included)**
-The project includes `render.yaml` for one-click deployment:
+### **Google Cloud Run (Recommended)**
+Optimized for production deployment with auto-scaling and pay-per-use pricing:
+
+#### **Prerequisites:**
+1. Install [Google Cloud CLI](https://cloud.google.com/sdk/docs/install)
+2. Create a [Google Cloud Project](https://console.cloud.google.com/)
+3. Enable billing for your project
+
+#### **Quick Deployment:**
+```bash
+# Authenticate with Google Cloud
+gcloud auth login
+
+# Run the deployment script
+./deploy-gcp.sh YOUR_PROJECT_ID
+```
+
+#### **Manual Deployment:**
+```bash
+# Set your project
+gcloud config set project YOUR_PROJECT_ID
+
+# Enable required APIs
+gcloud services enable cloudbuild.googleapis.com run.googleapis.com
+
+# Build and deploy
+gcloud builds submit --tag gcr.io/YOUR_PROJECT_ID/cisco-automation-chatbot
+gcloud run deploy cisco-automation-chatbot \
+  --image gcr.io/YOUR_PROJECT_ID/cisco-automation-chatbot \
+  --platform managed \
+  --region us-central1 \
+  --allow-unauthenticated \
+  --memory 2Gi \
+  --set-env-vars GOOGLE_API_KEY=your_key
+```
+
+#### **Features:**
+- ⚡ **Auto-scaling**: Scales to zero when not used
+- 💰 **Cost-effective**: Pay only for actual usage
+- 🔒 **Secure**: Built-in HTTPS and secret management
+- 🌍 **Global**: Deploy to multiple regions
+- 📊 **Monitoring**: Built-in logging and metrics
+
+### **Render.com (Alternative)**
+The project includes `render.yaml` for deployment:
 
 1. Fork this repository
 2. Connect to Render.com
 3. Add environment variables in Render dashboard
 4. Deploy automatically
-
-### **Google Cloud Platform**
-Designed for easy GCP migration:
-
-```bash
-# Example Cloud Run deployment
-gcloud run deploy cisco-cert-assistant \
-  --source . \
-  --platform managed \
-  --region us-central1 \
-  --set-env-vars GOOGLE_API_KEY=your_key
-```
 
 ## 🛠️ Customization
 
