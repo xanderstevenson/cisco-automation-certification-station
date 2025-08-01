@@ -180,24 +180,46 @@ google-search-results # SerpAPI client
 
 ## 🚀 Deployment
 
-### **Google Cloud Run (Recommended)**
-Optimized for production deployment with auto-scaling and pay-per-use pricing:
+### **Google Cloud Run (Production Ready)**
+Optimized for production deployment with auto-scaling, 2GB memory, and pay-per-use pricing:
 
 #### **Prerequisites:**
 1. Install [Google Cloud CLI](https://cloud.google.com/sdk/docs/install)
 2. Create a [Google Cloud Project](https://console.cloud.google.com/)
 3. Enable billing for your project
+4. Get your Google Gemini API key from [Google AI Studio](https://aistudio.google.com/)
 
-#### **Quick Deployment:**
+#### **Option 1: Automated Deployment (Recommended)**
 ```bash
 # Authenticate with Google Cloud
 gcloud auth login
 
-# Run the deployment script
+# Run the deployment script (builds image + deploys)
 ./deploy-gcp.sh YOUR_PROJECT_ID
 ```
 
-#### **Manual Deployment:**
+#### **Option 2: Quick Deploy (Use Pre-built Image)**
+If you already have a built image or want to skip the build process:
+
+```bash
+# Set your project
+gcloud config set project YOUR_PROJECT_ID
+
+# Quick deploy with existing image (30-60 seconds)
+gcloud run deploy cisco-automation-chatbot \
+  --image gcr.io/YOUR_PROJECT_ID/cisco-automation-chatbot \
+  --platform managed \
+  --region us-central1 \
+  --allow-unauthenticated \
+  --memory 2Gi \
+  --cpu 1 \
+  --timeout 300 \
+  --max-instances 10 \
+  --min-instances 0 \
+  --set-env-vars GOOGLE_API_KEY=your_google_api_key,EMBEDDING_MODEL=paraphrase-MiniLM-L3-v2,PYTHONUNBUFFERED=1,TOKENIZERS_PARALLELISM=false
+```
+
+#### **Option 3: Build and Deploy Manually**
 ```bash
 # Set your project
 gcloud config set project YOUR_PROJECT_ID
@@ -205,31 +227,39 @@ gcloud config set project YOUR_PROJECT_ID
 # Enable required APIs
 gcloud services enable cloudbuild.googleapis.com run.googleapis.com
 
-# Build and deploy
+# Build container image (5-10 minutes)
 gcloud builds submit --tag gcr.io/YOUR_PROJECT_ID/cisco-automation-chatbot
+
+# Deploy to Cloud Run
 gcloud run deploy cisco-automation-chatbot \
   --image gcr.io/YOUR_PROJECT_ID/cisco-automation-chatbot \
   --platform managed \
   --region us-central1 \
   --allow-unauthenticated \
   --memory 2Gi \
-  --set-env-vars GOOGLE_API_KEY=your_key
+  --set-env-vars GOOGLE_API_KEY=your_google_api_key
 ```
 
-#### **Features:**
-- ⚡ **Auto-scaling**: Scales to zero when not used
-- 💰 **Cost-effective**: Pay only for actual usage
+#### **Production Features:**
+- ⚡ **Auto-scaling**: 0-10 instances based on demand
+- 💾 **Memory**: 2GB allocated (handles AI models efficiently)
+- 💰 **Cost-effective**: Pay only for actual usage (~$0.05-0.50/month typical)
 - 🔒 **Secure**: Built-in HTTPS and secret management
-- 🌍 **Global**: Deploy to multiple regions
-- 📊 **Monitoring**: Built-in logging and metrics
+- 🌍 **Global**: Deploy to multiple regions worldwide
+- 📊 **Monitoring**: Built-in logging, metrics, and alerting
+- 🚀 **Performance**: Fast cold starts with optimized container
 
-### **Render.com (Alternative)**
+#### **After Deployment:**
+Your chatbot will be available at: `https://cisco-automation-chatbot-[hash]-uc.a.run.app`
+
+### **Alternative: Render.com**
+*Note: Render has memory limitations (512MB) that may cause issues with AI models.*
+
 The project includes `render.yaml` for deployment:
-
 1. Fork this repository
 2. Connect to Render.com
 3. Add environment variables in Render dashboard
-4. Deploy automatically
+4. Deploy (may experience memory issues)
 
 ## 🛠️ Customization
 
