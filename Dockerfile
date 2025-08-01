@@ -14,6 +14,9 @@ RUN apt-get update && apt-get install -y \
     gcc \
     g++ \
     curl \
+    swig \
+    libblas-dev \
+    liblapack-dev \
     && rm -rf /var/lib/apt/lists/* \
     && pip install --no-cache-dir uv
 
@@ -21,8 +24,14 @@ RUN apt-get update && apt-get install -y \
 COPY requirements-lite.txt .
 
 # Install Python dependencies with uv (much faster)
-RUN uv pip install --system torch==2.2.0 --index-url https://download.pytorch.org/whl/cpu && \
-    uv pip install --system -r requirements-lite.txt
+# Install PyTorch first (CPU-only)
+RUN uv pip install --system torch==2.2.0 --index-url https://download.pytorch.org/whl/cpu
+
+# Install FAISS separately to avoid build issues
+RUN uv pip install --system faiss-cpu==1.8.0 --only-binary=faiss-cpu
+
+# Install remaining dependencies
+RUN uv pip install --system -r requirements-lite.txt
 
 # Copy application code
 COPY . .

@@ -1,11 +1,10 @@
 # Memory-optimized requirements for Google Cloud Run deployment
-# Python 3.12 compatible versions
+# Python 3.12 compatible versions with pre-built wheels
+# Note: torch and faiss-cpu are installed separately in Dockerfile
 chainlit==1.0.200
 google-generativeai==0.3.2
 sentence-transformers==2.2.2
-faiss-cpu==1.7.4
 python-dotenv==1.0.0
-torch==2.2.0
 PyPDF2==3.0.1
 beautifulsoup4==4.12.2
 requests==2.31.0
