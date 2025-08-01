@@ -8,3 +8,15 @@ https://www.netacad.com/
 https://learningnetwork.cisco.com/s/
 https://learningnetwork.cisco.com/s/certifications
 https://medium.com/@bigevilbeard/from-devcor-to-autocor-the-network-automation-revolution-is-here-03581bb3269f
+
+# Cisco U Learning Paths for DevNet and Automation Certification Preparation
+https://u.cisco.com/paths/network-automation-engineer-172
+https://u.cisco.com/paths/developing-applications-using-cisco-core-platforms-apis-217
+https://u.cisco.com/paths/implementing-automation-cisco-enterprise-solutions-20
+https://u.cisco.com/paths/implementing-automation-cisco-service-provider-solutions-27
+https://u.cisco.com/paths/understanding-cisco-network-automation-essentials-3
+https://u.cisco.com/paths/developing-applications-automating-workflows-using-cisco-platforms-10
+
+# Cisco U Practice Exams for DevNet Certifications
+https://u.cisco.com/exams/cisco-exam-review-devnet-associate-4532
+https://u.cisco.com/exams/cisco-exam-review-devcor-4531
