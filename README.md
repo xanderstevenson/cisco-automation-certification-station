@@ -17,9 +17,9 @@ A sophisticated **Hybrid RAG-powered AI assistant** for Cisco network automation
 - 📖 **Natural Citations**: "According to Cisco's documentation..." style
 
 ### **Production Ready**
-- ☁️ **Multi-Platform**: Render.com ready, GCP portable
-- 🔒 **Secure**: Environment variables for API keys
-- ⚡ **Optimized**: Lazy loading, chunked processing
+- ☁️ **Google Cloud Run**: Production deployment with auto-scaling and 2GB memory
+- 🔒 **Secure**: Environment variables and secret management
+- ⚡ **Optimized**: UV package manager, lazy loading, chunked processing
 - 🎨 **Professional UI**: Modern Chainlit interface
 
 ## 📋 Prerequisites
