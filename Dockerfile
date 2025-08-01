@@ -9,19 +9,20 @@ ENV PYTHONUNBUFFERED=1
 ENV TOKENIZERS_PARALLELISM=false
 ENV PORT=8080
 
-# Install system dependencies
+# Install system dependencies and uv
 RUN apt-get update && apt-get install -y \
     gcc \
     g++ \
-    && rm -rf /var/lib/apt/lists/*
+    curl \
+    && rm -rf /var/lib/apt/lists/* \
+    && pip install --no-cache-dir uv
 
 # Copy requirements first for better Docker layer caching
 COPY requirements-lite.txt .
 
-# Install Python dependencies with CPU-only PyTorch
-RUN pip install --no-cache-dir --upgrade pip && \
-    pip install --no-cache-dir torch==2.2.0 --index-url https://download.pytorch.org/whl/cpu && \
-    pip install --no-cache-dir -r requirements-lite.txt
+# Install Python dependencies with uv (much faster)
+RUN uv pip install --system torch==2.2.0 --index-url https://download.pytorch.org/whl/cpu && \
+    uv pip install --system -r requirements-lite.txt
 
 # Copy application code
 COPY . .
