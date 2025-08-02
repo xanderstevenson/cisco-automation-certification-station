@@ -1,14 +1,30 @@
-# Welcome to Chainlit! 🚀🤖
+# Cisco Automation Certification Station 🤖
 
-Hi there, Developer! 👋 We're excited to have you on board. Chainlit is a powerful tool designed to help you prototype, debug and share applications built on top of LLMs.
+Welcome to your **AI-powered Cisco automation certification advisor**! 🚀
 
-## Useful Links 🔗
+I'm here to help you master Cisco network automation technologies and prepare for certifications including **CCNA Auto**, **ENAUTO**, **DCNAUTO**, **AUTOCOR**, **CCIE Automation**, and the upcoming **CCNA Automation** exam.
 
-- **Documentation:** Get started with our comprehensive [Chainlit Documentation](https://docs.chainlit.io) 📚
-- **Discord Community:** Join our friendly [Chainlit Discord](https://discord.gg/k73SQ3FyUh) to ask questions, share your projects, and connect with other developers! 💬
+## 🌟 What I Can Help With
 
-We can't wait to see what you create with Chainlit! Happy coding! 💻😊
+- **Certification Guidance**: Get expert advice on exam preparation strategies
+- **Technical Questions**: Deep dive into YANG, NETCONF, RESTCONF, APIs, and automation frameworks  
+- **Learning Resources**: Discover the best Cisco U courses, DevNet labs, and practice exams
+- **Hands-On Practice**: Find sandbox environments and practical exercises
+- **Career Planning**: Navigate your automation certification journey
 
-## Welcome screen
+## 📚 Key Resources I'll Recommend
 
-To modify the welcome screen, edit the `chainlit.md` file at the root of your project. If you do not want a welcome screen, just leave this file empty.
+- **[Cisco U](https://u.cisco.com/)** - Official training paths and practice exams
+- **[DevNet Learning Labs](https://developer.cisco.com/learning/)** - Hands-on automation practice
+- **[DevNet Sandbox](https://developer.cisco.com/site/sandbox/)** - Free lab environments
+- **[Cisco Learning Network](https://learningnetwork.cisco.com/s/)** - Community and expert discussions
+
+## 🎯 Ready to Get Started?
+
+Ask me anything about Cisco automation certifications! Try questions like:
+- "How do I prepare for CCNA Automation?"
+- "What's the difference between NETCONF and RESTCONF?"
+- "When do DevNet certifications retire?"
+- "Show me the best learning path for network automation"
+
+Let's accelerate your automation certification journey! 💪
