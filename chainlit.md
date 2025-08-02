@@ -2,11 +2,9 @@
 
 Welcome to your **AI-powered Cisco automation certification advisor**
 
-<div align="center">
-
-![Cisco Automation Certification Station](/public/Cisco-automation-certification-station.png)
-
-</div>
+<p align="center">
+<img src="/public/Cisco-automation-certification-station.png" alt="Cisco Automation Certification Station" width="150">
+</p>
 
 I'm here to help you improve your knowledge in and skills with Cisco network automation technologies and prepare you for certifications including:
 
@@ -21,7 +19,7 @@ I'm here to help you improve your knowledge in and skills with Cisco network aut
 
 - **Certification Guidance**: Get expert advice on exam preparation strategies
 - **Technical Questions**: Deep dive into YANG, NETCONF, RESTCONF, APIs, and automation frameworks  
-- **Learning Resources**: Discover the best Cisco U courses, DevNet labs, and practice exams
+- **Learning Resources**: Discover the best Cisco U. courses, DevNet labs, and practice exams
 - **Hands-On Practice**: Find sandbox environments and practical exercises
 - **Career Planning**: Navigate your automation certification journey
 
@@ -47,6 +45,8 @@ Let's accelerate your automation certification journey!
 
 ## Cisco Certification Evolution: DevNet to Automation
 
+<p align="center">
 <img src="/public/Automation_Cert_badges_Current_Future.png" alt="Cisco Automation Certification Evolution" width="75%">
+</p>
 
-Beginning February 3, 2026, Cisco DevNet certifications will evolve to an Automation track. These updated certifications feature major updates to the exams and training materials with an even greater focus on automation and AI-ready networking skills.
+Beginning **February 3, 2026**, Cisco DevNet certifications will evolve to an Automation track. These updated certifications feature major updates to the exams and training materials with an even greater focus on automation and AI-ready networking skills.

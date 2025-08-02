@@ -33,7 +33,7 @@ RUN uv pip install --system faiss-cpu==1.8.0 --only-binary=faiss-cpu
 # Install remaining dependencies
 RUN uv pip install --system -r requirements-lite.txt
 
-# Copy application code
+# Copy application code (including vector store files from git)
 COPY . .
 
 # Create non-root user for security

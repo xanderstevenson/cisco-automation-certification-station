@@ -62,7 +62,7 @@ edit_message = true
 
 [UI]
 # Name of the assistant.
-name = "Assistant"
+name = "Cisco Automation Certification Station"
 
 # default_theme = "dark"
 
@@ -105,7 +105,8 @@ alert_style = "classic"
 # custom_meta_image_url = "https://chainlit-cloud.s3.eu-west-3.amazonaws.com/logo/chainlit_banner.png"
 
 # Load assistant logo directly from URL.
-logo_file_url = ""
+# Set to a transparent 1x1 pixel to hide the Chainlit logo
+logo_file_url = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg=="
 
 # Load assistant avatar image directly from URL.
 default_avatar_file_url = ""
