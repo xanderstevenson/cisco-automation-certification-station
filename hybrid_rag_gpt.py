@@ -11,8 +11,18 @@ from serpapi import GoogleSearch
 load_dotenv()
 
 # Configure Gemini API
-genai.configure(api_key=os.environ.get("GOOGLE_API_KEY", ""))
-model = genai.GenerativeModel('gemini-1.5-flash')
+genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
+
+# Use Gemini 1.5 Flash for faster responses (optimized for speed)
+model = genai.GenerativeModel("gemini-1.5-flash")
+
+# Optimized generation config for faster responses
+fast_generation_config = genai.types.GenerationConfig(
+    max_output_tokens=1000,  # Increased from 800 for more comprehensive answers
+    temperature=0.7,
+    top_p=0.9,
+    top_k=40
+)
 
 # Doc search tool using your improved retriever with lazy loading
 def doc_search(query: str) -> str:
@@ -118,10 +128,7 @@ Provide a concise, helpful answer as a Cisco certification expert. Use the conte
                 print("[DEBUG] Generating response with Gemini...")
                 response = model.generate_content(
                     enhanced_prompt,
-                    generation_config=genai.types.GenerationConfig(
-                        max_output_tokens=800,  # Limit response length for speed
-                        temperature=0.7
-                    )
+                    generation_config=fast_generation_config
                 )
                 print("[DEBUG] Response generated successfully")
                 
