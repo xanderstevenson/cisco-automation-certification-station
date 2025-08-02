@@ -1,0 +1,108 @@
+/* Cisco Automation Certification Station Custom Theme */
+
+/* Cisco Blue Color Palette */
+:root {
+  --cisco-blue: #1BA0D7;
+  --cisco-dark-blue: #0D5F8A;
+  --cisco-light-blue: #5CB3D9;
+}
+
+/* Hide Chainlit logo completely */
+.chainlit-logo,
+[data-testid="chainlit-logo"],
+.logo,
+img[alt*="Chainlit"],
+img[src*="chainlit"] {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+}
+
+/* Style navigation elements with Cisco blue */
+.MuiButton-root,
+button[data-testid="new-chat-button"],
+button[aria-label="New Chat"],
+.MuiIconButton-root {
+  color: var(--cisco-blue) !important;
+}
+
+/* Style "New Chat" button */
+button:contains("New Chat"),
+[data-testid="new-chat-button"] {
+  background-color: var(--cisco-blue) !important;
+  color: white !important;
+}
+
+/* Style profile/user menu */
+.MuiAvatar-root,
+[data-testid="user-menu"] {
+  background-color: var(--cisco-blue) !important;
+}
+
+/* Style links and interactive elements */
+a, .MuiLink-root {
+  color: var(--cisco-blue) !important;
+}
+
+a:hover, .MuiLink-root:hover {
+  color: var(--cisco-dark-blue) !important;
+}
+
+/* Style header elements */
+.MuiAppBar-root,
+.MuiToolbar-root {
+  border-bottom: 2px solid var(--cisco-blue) !important;
+}
+
+/* Style buttons on hover */
+.MuiButton-root:hover,
+.MuiIconButton-root:hover {
+  background-color: var(--cisco-light-blue) !important;
+  color: white !important;
+}
+
+/* Center images in markdown */
+.markdown-body img {
+  display: block;
+  margin: 0 auto;
+  max-width: 100%;
+}
+
+/* Specific styling for logo image */
+img[alt*="Cisco Automation Certification Station"] {
+  width: 150px;
+  height: auto;
+  display: block;
+  margin: 20px auto;
+}
+
+/* Specific styling for certification evolution image */
+img[alt*="Cisco Automation Certification Evolution"] {
+  width: 75%;
+  height: auto;
+  display: block;
+  margin: 20px auto;
+}
+
+/* Hide any remaining Chainlit branding */
+[class*="chainlit"],
+[id*="chainlit"] {
+  display: none !important;
+}
+
+/* Style the welcome screen */
+.markdown-body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.markdown-body h1 {
+  color: var(--cisco-dark-blue);
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.markdown-body h2 {
+  color: var(--cisco-blue);
+  border-bottom: 2px solid var(--cisco-light-blue);
+  padding-bottom: 5px;
+}
