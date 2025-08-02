@@ -1,5 +1,7 @@
 # Cisco Automation Certification Station 🤖
 
+![Cisco Automation Certification Transition](./images/Automation_Cert_badges_Current_Future.png)
+
 Welcome to your **AI-powered Cisco automation certification advisor**! 🚀
 
 I'm here to help you master Cisco network automation technologies and prepare for certifications including **CCNA Auto**, **ENAUTO**, **DCNAUTO**, **AUTOCOR**, **CCIE Automation**, and the upcoming **CCNA Automation** exam.
