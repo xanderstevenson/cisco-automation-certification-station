@@ -1,12 +1,21 @@
-# Cisco Automation Certification Station 🤖
+# Cisco Automation Certification Station 
 
-![Cisco Automation Certification Transition](./images/Automation_Cert_badges_Current_Future.png)
+Welcome to your **AI-powered Cisco automation certification advisor**
 
-Welcome to your **AI-powered Cisco automation certification advisor**! 🚀
+<center>
+<img src="/public/Cisco-automation-certification-station.png" alt="Cisco Automation Certification Station" width="150">
+</center>
 
-I'm here to help you master Cisco network automation technologies and prepare for certifications including **CCNA Auto**, **ENAUTO**, **DCNAUTO**, **AUTOCOR**, **CCIE Automation**, and the upcoming **CCNA Automation** exam.
+I'm here to help you improve your knowledge in and skills with Cisco network automation technologies and prepare you for certifications including:
 
-## 🌟 What I Can Help With
+- [CCNA Automation](https://learningnetwork.cisco.com/s/ccnaauto-exam-topics)
+- [CCNP Automation](https://learningcontent.cisco.com/documents/marketing/exam-topics/350-901-AUTOCOR-v2.0-7-9-2025.pdf)
+- [CCIE Automation](https://learningcontent.cisco.com/documents/marketing/exam-topics/CCIE_Automation_V1.1_BP.pdf)
+- [Automating Cisco Enterprise Solutions (ENAUTO)](https://www.cisco.com/site/us/en/learn/training-certifications/exams/enauto.html)
+- [Automating Cisco Data Center Networking Solutions (DCNAUTO)](https://learningcontent.cisco.com/documents/marketing/exam-topics/300-635-DCNAUTO-v2.0-7-9-2025.pdf)
+
+
+## What I Can Help With
 
 - **Certification Guidance**: Get expert advice on exam preparation strategies
 - **Technical Questions**: Deep dive into YANG, NETCONF, RESTCONF, APIs, and automation frameworks  
@@ -14,14 +23,15 @@ I'm here to help you master Cisco network automation technologies and prepare fo
 - **Hands-On Practice**: Find sandbox environments and practical exercises
 - **Career Planning**: Navigate your automation certification journey
 
-## 📚 Key Resources I'll Recommend
+## Key Resources I'll Recommend
 
 - **[Cisco U](https://u.cisco.com/)** - Official training paths and practice exams
+- **[Cisco Learning Network](https://learningnetwork.cisco.com/s/)** - Community and expert discussions
 - **[DevNet Learning Labs](https://developer.cisco.com/learning/)** - Hands-on automation practice
 - **[DevNet Sandbox](https://developer.cisco.com/site/sandbox/)** - Free lab environments
-- **[Cisco Learning Network](https://learningnetwork.cisco.com/s/)** - Community and expert discussions
 
-## 🎯 Ready to Get Started?
+
+## Ready to Get Started?
 
 Ask me anything about Cisco automation certifications! Try questions like:
 - "How do I prepare for CCNA Automation?"
@@ -29,4 +39,11 @@ Ask me anything about Cisco automation certifications! Try questions like:
 - "When do DevNet certifications retire?"
 - "Show me the best learning path for network automation"
 
-Let's accelerate your automation certification journey! 💪
+Let's accelerate your automation certification journey!
+
+
+## Cisco Certification Evolution: DevNet to Automation
+
+![Cisco Automation Certification Evolution](/public/Automation_Cert_badges_Current_Future.png)
+
+Beginning February 3, 2026, Cisco DevNet certifications will evolve to an Automation track. These updated certifications feature major updates to the exams and training materials with an even greater focus on automation and AI-ready networking skills.
