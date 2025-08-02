@@ -2,9 +2,9 @@
 
 Welcome to your **AI-powered Cisco automation certification advisor**
 
-<center>
+<div align="center">
 <img src="/public/Cisco-automation-certification-station.png" alt="Cisco Automation Certification Station" width="150">
-</center>
+</div>
 
 I'm here to help you improve your knowledge in and skills with Cisco network automation technologies and prepare you for certifications including:
 
