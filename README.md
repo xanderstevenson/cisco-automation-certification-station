@@ -20,88 +20,93 @@ This application serves as an intelligent certification advisor that:
 
 ### Hybrid RAG Architecture Overview
 
-```text
-┌─────────────────────────────────────────────────────────────────┐
-│                        USER QUERY                              │
-└─────────────────────┬───────────────────────────────────────────┘
-                      │
-                      ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                 INTELLIGENT ROUTING                            │
-│  ┌─────────────────┐              ┌─────────────────────────┐   │
-│  │ Casual Greeting │              │   Technical Question    │   │
-│  │ ("Hi", "Thanks") │              │ (Certification topics)  │   │
-│  └─────────────────┘              └─────────────────────────┘   │
-└─────────────────────┬───────────────────────┬───────────────────┘
-                      │                       │
-                      ▼                       ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                    DIRECT RESPONSE          HYBRID RAG PIPELINE │
-│                                                                 │
-│                                    ┌─────────────────────────┐  │
-│                                    │   PARALLEL PROCESSING   │  │
-│                                    │                         │  │
-│                              ┌─────▼──────┐    ┌─────▼──────┐ │
-│                              │ DOCUMENT   │    │    WEB     │ │
-│                              │  SEARCH    │    │  SEARCH    │ │
-│                              │            │    │            │ │
-│                              │ FAISS      │    │ SerpAPI    │ │
-│                              │ Vector     │    │ Google     │ │
-│                              │ Store      │    │ Search     │ │
-│                              └─────┬──────┘    └─────┬──────┘ │
-│                                    │                 │        │
-│                                    └─────────┬───────┘        │
-│                                              ▼                │
-│                                    ┌─────────────────────────┐ │
-│                                    │   CONTEXT SYNTHESIS     │ │
-│                                    │                         │ │
-│                                    │ Enhanced Prompt with    │ │
-│                                    │ Document + Web Context  │ │
-│                                    └─────────┬───────────────┘ │
-│                                              ▼                │
-│                                    ┌─────────────────────────┐ │
-│                                    │   GEMINI 1.5 FLASH     │ │
-│                                    │                         │ │
-│                                    │ AI Response Generation  │ │
-│                                    │ with Source Citations   │ │
-│                                    └─────────────────────────┘ │
-└─────────────────────────────────────────────────────────────────┘
-                                              │
-                                              ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                      FINAL RESPONSE                            │
-│                                                                 │
-│  • Comprehensive certification guidance                        │
-│  • Specific exam topics from PDFs                              │
-│  • Study plans with Cisco U links                              │
-│  • Natural source citations                                    │
-└─────────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart TD
+    A[👤 User Query] --> B{🧠 Intelligent Router}
+    
+    B -->|Casual Greeting| C[💬 Direct Response]
+    B -->|Technical Question| D[🔍 Hybrid RAG Pipeline]
+    
+    C --> E[✅ Quick Reply]
+    
+    D --> F[📚 Document Search]
+    D --> G[🌐 Web Search]
+    
+    F --> H[(🗂️ FAISS Vector Store<br/>209 Chunks)]
+    G --> I[🔎 SerpAPI<br/>Real-time Results]
+    
+    H --> J[🔗 Context Fusion]
+    I --> J
+    
+    J --> K[🤖 Google Gemini<br/>1.5 Flash AI]
+    
+    K --> L[📋 Comprehensive Response<br/>• Technical Details<br/>• Source Citations<br/>• Study Plans<br/>• Learning Paths]
+    
+    style A fill:#e1f5fe
+    style B fill:#fff3e0
+    style D fill:#f3e5f5
+    style K fill:#e8f5e8
+    style L fill:#fff8e1
 ```
 
-### Document Processing and Vectorization Workflow
+### System Components Architecture
 
-```text
-┌─────────────────────────────────────────────────────────────────┐
-│                    KNOWLEDGE BASE CREATION                     │
-└─────────────────────┬───────────────────────────────────────────┘
-                      │
-                      ▼
-          └─────────────────┬───────────────────┘
-                            ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                    TEXT CHUNKING                               │
-│                                                                 │
-│                              ▼                                  │
-│              ┌─────────────────────────────────┐                │
-│              │        FINAL OUTPUT             │                │
-│              │                                 │                │
-│              │ • faiss.index (321KB)           │                │
-│              │ • texts.pkl (101KB)             │                │
-│              │ • Ready for similarity search   │                │
-│              │ • Sub-second query response     │                │
-│              └─────────────────────────────────┘                │
-└─────────────────────────────────────────────────────────────────┘
+```mermaid
+graph TB
+    subgraph "🖥️ Frontend Layer"
+        UI[Chainlit Web Interface<br/>• Chat History<br/>• File Upload<br/>• Cisco Theme]
+    end
+    
+    subgraph "⚙️ Processing Layer"
+        ROUTER[Query Router<br/>• Intent Classification<br/>• Route Selection]
+        RAG[Hybrid RAG Engine<br/>• Parallel Processing<br/>• Context Fusion]
+    end
+    
+    subgraph "🤖 AI & Data Layer"
+        GEMINI[Google Gemini 1.5 Flash<br/>• Text Generation<br/>• Context Aware<br/>• Fast Response]
+        SERP[SerpAPI<br/>• Real-time Search<br/>• Current Information]
+    end
+    
+    subgraph "💾 Storage Layer"
+        VECTOR[(FAISS Vector Store<br/>• 384-dim Embeddings<br/>• Fast Similarity Search)]
+        DOCS[(Document Collection<br/>• 11 Cisco PDFs<br/>• 9 Official URLs)]
+        CONFIG[(Configuration<br/>• Environment Variables<br/>• Model Settings)]
+    end
+    
+    UI --> ROUTER
+    ROUTER --> RAG
+    RAG --> GEMINI
+    RAG --> SERP
+    RAG --> VECTOR
+    VECTOR --> DOCS
+    RAG --> CONFIG
+    
+    style UI fill:#e3f2fd
+    style ROUTER fill:#fff3e0
+    style RAG fill:#f3e5f5
+    style GEMINI fill:#e8f5e8
+    style VECTOR fill:#fce4ec
+    style DOCS fill:#f1f8e9
 ```
+
+### Document Processing Pipeline
+
+The system processes documents through a sophisticated vectorization pipeline:
+
+**📁 Data Sources:**
+- 11 official Cisco certification PDFs (CCNA Auto, ENAUTO, DCNAUTO, AUTOCOR, CCIE materials)
+- 9 curated Cisco URLs (Cisco U courses, Learning Network, DevNet resources)
+
+**🔄 Processing Steps:**
+1. **Content Extraction**: PyPDF2 for PDFs, BeautifulSoup4 for web content
+2. **Text Chunking**: 500 characters per chunk with 50-character overlap for context preservation
+3. **Embedding Generation**: paraphrase-MiniLM-L3-v2 model creates 384-dimensional vectors
+4. **Vector Store Creation**: FAISS IndexFlatL2 for fast similarity search
+
+**📊 Output:**
+- `faiss.index` (321KB) - Vector similarity search index
+- `texts.pkl` (101KB) - Text chunks and metadata
+- 209 total chunks ready for sub-second query response
 
 ## Technical Components
 

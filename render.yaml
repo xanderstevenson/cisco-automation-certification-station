@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: cisco-chatbot
+    name: cisco-automation-certification-station
     env: python
     pythonVersion: "3.12"
     preDeployCommand: pip install uv
@@ -8,8 +8,8 @@ services:
     startCommand: chainlit run app.py --host 0.0.0.0 --port $PORT
     envVars:
       - key: EMBEDDING_MODEL
-        value: paraphrase-MiniLM-L3-v2  # Smaller model for memory constraints
+        value: paraphrase-MiniLM-L3-v2 # Smaller model for memory constraints
       - key: PYTHONUNBUFFERED
         value: "1"
       - key: TOKENIZERS_PARALLELISM
-        value: "false"  # Reduce memory usage
+        value: "false" # Reduce memory usage
