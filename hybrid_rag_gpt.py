@@ -1,11 +1,13 @@
 # hybrid_rag_gpt.py
 
 import os
-import json
-from dotenv import load_dotenv
 import google.generativeai as genai
-from rag.retriever import retrieve_answer, cleanup_memory
+from dotenv import load_dotenv
 from serpapi import GoogleSearch
+import gc
+from rag.retriever import retrieve_answer, cleanup_memory
+import concurrent.futures
+import threading
 
 # Load environment variables from .env file
 load_dotenv()
@@ -16,12 +18,12 @@ genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 # Use Gemini 1.5 Flash for faster responses (optimized for speed)
 model = genai.GenerativeModel("gemini-1.5-flash")
 
-# Optimized generation config for faster responses
+# Optimized generation config for fastest responses with accuracy
 fast_generation_config = genai.types.GenerationConfig(
-    max_output_tokens=1000,  # Increased from 800 for more comprehensive answers
-    temperature=0.7,
-    top_p=0.9,
-    top_k=40
+    max_output_tokens=850,  # Optimized for speed while maintaining detail
+    temperature=0.4,  # Lower for faster, more focused responses
+    top_p=0.8,  # Slightly reduced for speed
+    top_k=30  # Reduced for faster token selection
 )
 
 # Doc search tool using your improved retriever with lazy loading
@@ -105,15 +107,19 @@ Respond naturally and briefly to this casual interaction. Be friendly and helpfu
             try:
                 print(f"[DEBUG] Processing technical query: {user_query}")
                 
-                # Step 1: Get relevant documents (reduced results)
-                print("[DEBUG] Starting document search...")
-                doc_context = doc_search(user_query)
-                print(f"[DEBUG] Document search completed. Context length: {len(doc_context)}")
+                # Step 1 & 2: Run document and web search in parallel for speed
+                print("[DEBUG] Starting parallel document and web search...")
                 
-                # Step 2: Get web search results (with fallback)
-                print("[DEBUG] Starting web search...")
-                web_context = web_search(user_query)
-                print(f"[DEBUG] Web search completed. Context length: {len(web_context)}")
+                with concurrent.futures.ThreadPoolExecutor(max_workers=2) as executor:
+                    # Submit both searches concurrently
+                    doc_future = executor.submit(doc_search, user_query)
+                    web_future = executor.submit(web_search, user_query)
+                    
+                    # Get results as they complete
+                    doc_context = doc_future.result()
+                    web_context = web_future.result()
+                
+                print(f"[DEBUG] Parallel search completed. Doc context: {len(doc_context)}, Web context: {len(web_context)}")
                 
                 # Step 3: Construct streamlined prompt
                 enhanced_prompt = f"""{system_prompt}
