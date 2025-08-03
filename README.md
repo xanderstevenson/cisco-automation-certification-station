@@ -1,10 +1,16 @@
 <div align="center">
-  <img src="public/Cisco-automation-certification-station.png" alt="Cisco Automation Certification Station" width="400">
+  <img src="public/Cisco-automation-certification-station.png" alt="Cisco Automation Certification Station">
 </div>
 
-# Cisco Automation Certification Station
 
-A production-ready Hybrid Retrieval-Augmented Generation (RAG) system designed for Cisco network automation certification preparation. This system combines local document search, web search, and AI generation to provide comprehensive, source-backed answers for CCNA Automation, ENAUTO, DCNAUTO, AUTOCOR, and CCIE Automation topics.
+A production-ready Hybrid Retrieval-Augmented Generation (RAG) system designed for Cisco network automation certification preparation. This system combines local document search, web search, and AI generation to provide comprehensive, source-backed answers for:
+
+- [CCNA Automation](https://learningnetwork.cisco.com/s/ccnaauto-exam-topics)
+- [CCNP Automation](https://learningcontent.cisco.com/documents/marketing/exam-topics/350-901-AUTOCOR-v2.0-7-9-2025.pdf)
+- [CCIE Automation](https://learningcontent.cisco.com/documents/marketing/exam-topics/CCIE_Automation_V1.1_BP.pdf)
+- [Automating Cisco Enterprise Solutions (ENAUTO)](https://www.cisco.com/site/us/en/learn/training-certifications/exams/enauto.html)
+- [Automating Cisco Data Center Networking Solutions (DCNAUTO)](https://learningcontent.cisco.com/documents/marketing/exam-topics/300-635-DCNAUTO-v2.0-7-9-2025.pdf)
+
 
 ## What This System Does
 
