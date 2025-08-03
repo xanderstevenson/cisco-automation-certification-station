@@ -26,8 +26,8 @@ fast_generation_config = genai.types.GenerationConfig(
 
 # Doc search tool using your improved retriever with lazy loading
 def doc_search(query: str) -> str:
-    # Reduce search results for faster response
-    return retrieve_answer(query, k=2)
+    # Increase search results for comprehensive certification information
+    return retrieve_answer(query, k=5)
 
 # Internet search fallback via SerpAPI
 def web_search(query: str) -> str:
@@ -73,6 +73,12 @@ system_prompt = """You are a knowledgeable Cisco network automation expert and c
 - Developing Applications Using Cisco Core Platforms APIs
 - Implementing Automation for Enterprise/Service Provider Solutions
 - Understanding Cisco Network Automation Essentials
+
+**For certification-specific queries:**
+- ALWAYS search for and provide specific exam topics from the PDF blueprints when available
+- Create detailed study plans with specific learning resources from Cisco U, DevNet Labs, and Sandbox
+- Reference exact exam objectives and weightings when discussing certification preparation
+- Provide specific course recommendations and learning paths from our knowledge base
 
 Always provide specific, clickable URLs when recommending resources. Focus on official Cisco materials and avoid third-party recommendations unless specifically relevant."""
 
@@ -121,7 +127,13 @@ Respond naturally and briefly to this casual interaction. Be friendly and helpfu
 {web_context}
 
 **Instructions:** 
-Provide a concise, helpful answer as a Cisco certification expert. Use the context above and cite sources naturally. Keep responses focused and practical. If information is limited, acknowledge it while still being helpful.
+Provide a comprehensive, detailed answer as a Cisco certification expert. For certification-specific queries:
+1. Extract and list specific exam topics from the PDF documentation when available
+2. Create structured study plans with learning resources from Cisco U, DevNet Labs, and Sandbox
+3. Reference exact exam objectives, weightings, and preparation strategies
+4. Provide specific course URLs and learning paths from the knowledge base
+
+Use the context above extensively and cite sources naturally. Be thorough and practical, leveraging all available PDF content for certification guidance.
 """
                 
                 # Step 4: Generate response with Gemini (with timeout handling)
