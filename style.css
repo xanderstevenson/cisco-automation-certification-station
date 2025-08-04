@@ -1,0 +1,146 @@
+/* Cisco Automation Certification Station - Custom Styles */
+
+/* FORCE WHITE BACKGROUND EVERYWHERE */
+.stApp, .main, body, html {
+    background-color: white !important;
+    color: black !important;
+}
+
+/* Main app container - force width and centering */
+.main .block-container {
+    max-width: 800px !important;
+    margin: 0 auto !important;
+    padding-top: 0rem !important;
+    padding-left: 2rem !important;
+    padding-right: 2rem !important;
+    background-color: white !important;
+}
+
+/* Remove ALL top spacing */
+.main {
+    padding-top: 0 !important;
+    margin-top: 0 !important;
+}
+
+/* App container */
+.stApp {
+    max-width: 800px !important;
+    margin: 0 auto !important;
+    background-color: white !important;
+}
+
+/* PERFECT IMAGE CENTERING - RESPONSIVE */
+div[data-testid="stImage"] {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    text-align: center !important;
+    width: 100% !important;
+    margin: 0 auto !important;
+}
+
+div[data-testid="stImage"] > img {
+    margin: 0 auto !important;
+    display: block !important;
+    max-width: 100% !important;
+}
+
+/* Force centering on image containers */
+.element-container:has(div[data-testid="stImage"]) {
+    display: flex !important;
+    justify-content: center !important;
+    width: 100% !important;
+}
+
+/* ULTRA AGGRESSIVE SPACING REMOVAL */
+.element-container {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* Remove gaps between ALL elements */
+div[data-testid="stVerticalBlock"] > div {
+    gap: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* Remove first container top spacing */
+.main .block-container > div:first-child {
+    padding-top: 0 !important;
+    margin-top: 0 !important;
+}
+
+/* NUCLEAR SPACING REMOVAL - TARGET ALL CONTAINERS */
+.stApp > div {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+/* Remove spacing from all Streamlit containers */
+div[data-testid="stVerticalBlock"] {
+    gap: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+/* Force zero spacing on all divs */
+.main div {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+}
+
+/* Specific targeting for form containers */
+div[data-testid="stForm"] {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* Subtle text input label spacing */
+.stTextInput > label {
+    margin-bottom: 0.25rem !important;
+}
+
+/* Remove spacing from text input areas */
+.stTextInput {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* Remove button container spacing with minimal padding */
+.stButton {
+    margin: 0 !important;
+    padding: 0.25rem 0 !important;
+}
+
+/* Form submit button styling - Light blue */
+button[kind="formSubmit"] {
+    background-color: #5CB3D9 !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 5px !important;
+    padding: 0.5rem 1rem !important;
+    font-weight: 500 !important;
+}
+
+button[kind="formSubmit"]:hover {
+    background-color: #1BA0D7 !important;
+    color: white !important;
+}
+
+/* Regular button styling */
+.stButton > button {
+    background-color: #1BA0D7 !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 5px !important;
+}
+
+.stButton > button:hover {
+    background-color: #0D5F8A !important;
+}
+
+/* Input styling */
+.stTextInput > div > div > input {
+    border-color: #1BA0D7 !important;
+}

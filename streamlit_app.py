@@ -8,7 +8,7 @@ import streamlit as st
 import os
 from hybrid_rag_gpt import chat
 from PIL import Image
-
+import base64
 # Page configuration
 st.set_page_config(
     page_title="Cisco Automation Certification Station",
@@ -16,6 +16,14 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="collapsed"
 )
+
+# Load external CSS file
+def load_css(file_name):
+    with open(file_name) as f:
+        st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
+
+# Load the external CSS
+load_css('style.css')
 
 # Custom CSS for Cisco branding
 st.markdown("""
@@ -246,44 +254,116 @@ header {visibility: hidden;}
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
-# Header with logo
-st.markdown('<div class="cisco-header">', unsafe_allow_html=True)
+# CSS Background Approach with base64 encoding for image rendering
+import base64
 
-# Display logo if it exists - centered with minimal spacing
 logo_path = "public/Cisco-automation-certification-station.png"
 if os.path.exists(logo_path):
-    try:
-        logo = Image.open(logo_path)
-        # Center the image with better column ratio
-        col1, col2, col3 = st.columns([2, 3, 2])
-        with col2:
-            st.image(logo, use_container_width=False)
-    except:
-        st.markdown("### 🔧 Cisco Automation Certification Station")
+    # Read and encode the image as base64
+    with open(logo_path, "rb") as f:
+        logo_data = base64.b64encode(f.read()).decode()
+    
+    st.markdown(f"""
+    <div style="
+        width: 100%;
+        background: white;
+        padding: 20px 0;
+        text-align: center;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    ">
+        <img src="data:image/png;base64,{logo_data}" style="max-height: none; width: auto;" alt="Cisco Automation Certification Station">
+    </div>
+    """, unsafe_allow_html=True)
 else:
-    st.markdown("### 🔧 Cisco Automation Certification Station")
+    st.markdown('<h3 style="text-align: center;">🔧 Cisco Automation Certification Station</h3>', unsafe_allow_html=True)
 
-st.markdown('</div>', unsafe_allow_html=True)
+# Move heading above text box (not centered)
+st.markdown('##### Ask about Cisco automation certs, exam prep, or technical topics:')
 
-# Chat interface right after logo
-st.markdown("### 💬 Ask Your Certification Questions")
-user_input = st.text_input("Ask about Cisco automation certifications, exam preparation, or technical topics:", key="user_input")
+# Aggressive CSS to fix button and centering issues
+st.markdown("""
+<style>
+/* FORCE CENTER EVERYTHING */
+.main .block-container {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+}
 
-if st.button("Send", key="send_button"):
-    if user_input:
-        # Add user message to session state
-        st.session_state.messages.append({"role": "user", "content": user_input})
-        
-        # Show thinking indicator
-        with st.spinner("⚡ Searching Cisco documentation and generating comprehensive response..."):
-            # Get response from hybrid RAG system
-            response = chat(user_input)
-        
-        # Add assistant response to session state
-        st.session_state.messages.append({"role": "assistant", "content": response})
-        
-        # Clear input (rerun will show empty input)
-        st.rerun()
+/* ULTRA AGGRESSIVE BUTTON STYLING */
+button[kind="formSubmit"], .stButton > button, button[data-testid="baseButton-secondary"], button {
+    background-color: #5CB3D9 !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 5px !important;
+    padding: 0.5rem 1rem !important;
+    font-weight: 500 !important;
+    background: #5CB3D9 !important;
+}
+
+button[kind="formSubmit"]:hover, .stButton > button:hover, button[data-testid="baseButton-secondary"]:hover, button:hover {
+    background-color: #1BA0D7 !important;
+    color: white !important;
+    background: #1BA0D7 !important;
+}
+
+/* Target all possible button selectors */
+form button, [data-testid="stForm"] button {
+    background-color: #5CB3D9 !important;
+    background: #5CB3D9 !important;
+    color: white !important;
+}
+
+/* FORCE FORM CENTERING */
+div[data-testid="stForm"] {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    width: 100% !important;
+}
+
+/* CENTER TEXT INPUT */
+.stTextInput {
+    display: flex !important;
+    justify-content: center !important;
+    width: 100% !important;
+}
+
+.stTextInput > div {
+    max-width: 600px !important;
+    width: 100% !important;
+}
+</style>
+""", unsafe_allow_html=True)
+
+# Use form for automatic input clearing
+with st.form(key="chat_form", clear_on_submit=True):
+    user_input = st.text_input(
+        "Ask about Cisco automation certs, exam prep, or technical topics:",
+        placeholder="Type your question here...",
+        key="user_input_form",
+        label_visibility="collapsed"
+    )
+    submit_button = st.form_submit_button("Send")
+
+if submit_button and user_input:
+    # Add user message to session state
+    st.session_state.messages.append({"role": "user", "content": user_input})
+    
+    # Show thinking indicator
+    with st.spinner("⚡ Searching Cisco documentation and generating comprehensive response..."):
+        # Get response from hybrid RAG system
+        response = chat(user_input)
+    
+    # Add assistant response to session state
+    st.session_state.messages.append({"role": "assistant", "content": response})
+    
+    # Rerun to show new messages
+    st.rerun()
 
 # Display chat messages if any exist
 if st.session_state.messages:
@@ -342,10 +422,10 @@ cert_image_path = "public/Automation_Cert_badges_Current_Future.png"
 if os.path.exists(cert_image_path):
     try:
         cert_image = Image.open(cert_image_path)
-        # Center the certification image
-        col1, col2, col3 = st.columns([1, 2, 1])
-        with col2:
-            st.image(cert_image, use_container_width=True)
+        # Center the certification image at original size
+        st.markdown('<div style="text-align: center;">', unsafe_allow_html=True)
+        st.image(cert_image)
+        st.markdown('</div>', unsafe_allow_html=True)
         
         # Add certification evolution text
         st.markdown("""
@@ -379,8 +459,8 @@ with st.sidebar:
 st.markdown("---")
 st.markdown("""
 <div style="text-align: center; color: #666; font-size: 0.9em;">
-    Built with ❤️ for the Cisco certification community | 
-    <a href="https://github.com/your-repo" target="_blank">Open Source</a> | 
+    Built with ❤️ for the <a href="https://learningnetwork.cisco.com/s/communities" target="_blank">Cisco Certification Communities</a> | 
+    Open Source | 
     Powered by Google Gemini AI
 </div>
 """, unsafe_allow_html=True)
