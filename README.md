@@ -218,7 +218,7 @@ echo "TOKENIZERS_PARALLELISM=false" >> .env
 
 **Example .env file:**
 ```env
-GOOGLE_API_KEY=AIzaSyAepQxUh3yx0W5j70oKOMQNqnsgRcS6TCU
+GOOGLE_API_KEY=your_google_gemini_api_key_here
 SERPAPI_KEY=your_serpapi_key_here
 EMBEDDING_MODEL=paraphrase-MiniLM-L3-v2
 PYTHONUNBUFFERED=1
