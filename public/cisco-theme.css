@@ -19,13 +19,17 @@ img[src*="chainlit"] {
 }
 
 /* Style all buttons and interactive elements with Cisco blue */
-/* Target various button selectors used by Chainlit */
+/* Target Chainlit's actual button selectors */
 button,
 .MuiButton-root,
 .MuiIconButton-root,
 [role="button"],
 input[type="submit"],
-.stButton > button,
+.cl-button,
+.cl-send-button,
+[data-cy="chat-input-send-button"],
+[data-testid="send-button"],
+.chakra-button,
 .css-1x8cf1d,
 .css-19rxjzo {
   background-color: var(--cisco-blue) !important;
@@ -37,7 +41,12 @@ input[type="submit"],
 button:hover,
 .MuiButton-root:hover,
 .MuiIconButton-root:hover,
-[role="button"]:hover {
+[role="button"]:hover,
+.cl-button:hover,
+.cl-send-button:hover,
+[data-cy="chat-input-send-button"]:hover,
+[data-testid="send-button"]:hover,
+.chakra-button:hover {
   background-color: var(--cisco-dark-blue) !important;
   color: white !important;
 }
@@ -45,7 +54,9 @@ button:hover,
 /* Style links */
 a,
 .MuiLink-root,
-[role="link"] {
+[role="link"],
+.cl-link,
+.chakra-link {
   color: var(--cisco-blue) !important;
 }
 
@@ -100,10 +111,13 @@ select:focus {
 img,
 .markdown-body img,
 .stMarkdown img,
-[role="img"] {
+[role="img"],
+.cl-markdown img,
+.chakra-image {
   display: block !important;
   margin: 0 auto !important;
   max-width: 100%;
+  text-align: center !important;
 }
 
 /* Specific styling for logo image with multiple selectors */
@@ -119,10 +133,26 @@ img[src*="Cisco-automation-certification-station"],
 
 /* Force centering with additional wrapper targeting */
 p:has(img[alt*="Cisco Automation Certification Station"]),
-div:has(img[alt*="Cisco Automation Certification Station"]) {
+div:has(img[alt*="Cisco Automation Certification Station"]),
+.cl-markdown p:has(img),
+.cl-markdown div:has(img),
+.markdown-body p:has(img),
+.markdown-body div:has(img) {
   text-align: center !important;
   display: block !important;
   margin: 0 auto !important;
+}
+
+/* Additional centering for Chainlit markdown */
+.cl-markdown,
+.cl-markdown > *,
+.cl-message-content {
+  text-align: center !important;
+}
+
+.cl-markdown img {
+  margin: 0 auto !important;
+  display: block !important;
 }
 
 /* Specific styling for certification evolution image */

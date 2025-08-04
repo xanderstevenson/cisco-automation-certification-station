@@ -5,8 +5,8 @@ from hybrid_rag_gpt import chat
 async def on_message(message: cl.Message):
     user_query = message.content
 
-    # Show thinking indicator for better UX during processing
-    thinking_msg = cl.Message(content="🤔 Analyzing your question and searching through Cisco documentation...")
+    # Show professional thinking indicator for better UX during processing
+    thinking_msg = cl.Message(content="⚡ Searching Cisco documentation and generating comprehensive response...")
     await thinking_msg.send()
 
     # Generate response using hybrid RAG with Gemini

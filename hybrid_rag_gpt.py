@@ -18,9 +18,9 @@ genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 # Use Gemini 1.5 Flash for faster responses (optimized for speed)
 model = genai.GenerativeModel("gemini-1.5-flash")
 
-# Optimized generation config for fastest responses with accuracy
+# Optimized generation config for comprehensive responses with good speed
 fast_generation_config = genai.types.GenerationConfig(
-    max_output_tokens=850,  # Optimized for speed while maintaining detail
+    max_output_tokens=1500,  # Increased for comprehensive certification responses
     temperature=0.4,  # Lower for faster, more focused responses
     top_p=0.8,  # Slightly reduced for speed
     top_k=30  # Reduced for faster token selection
