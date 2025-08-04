@@ -43,9 +43,9 @@ USER appuser
 # Expose port
 EXPOSE 8080
 
-# Health check
+# Health check for Streamlit
 HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \
-    CMD curl -f http://localhost:8080/_stcore/health || exit 1
+    CMD curl -f http://localhost:8080/healthz || exit 1
 
-# Start command
-CMD ["chainlit", "run", "app.py", "--host", "0.0.0.0", "--port", "8080"]
+# Start command for Streamlit
+CMD ["streamlit", "run", "streamlit_app.py", "--server.port=8080", "--server.address=0.0.0.0", "--server.headless=true", "--server.fileWatcherType=none", "--browser.gatherUsageStats=false"]
