@@ -12,6 +12,11 @@ import threading
 # Load environment variables from .env file
 load_dotenv()
 
+# Ensure API key is available
+if not os.getenv("GOOGLE_API_KEY"):
+    print("ERROR: Google API key not found. Please check your environment variables.")
+    raise ValueError("GOOGLE_API_KEY environment variable is required")
+
 # Configure Gemini API
 genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 

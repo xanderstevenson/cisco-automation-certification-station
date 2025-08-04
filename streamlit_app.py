@@ -286,12 +286,10 @@ st.markdown('##### Ask about Cisco automation certs, exam prep, or technical top
 # Aggressive CSS to fix button and centering issues
 st.markdown("""
 <style>
-/* FORCE CENTER EVERYTHING */
+/* REMOVE GLOBAL CENTERING - Only center specific elements */
 .main .block-container {
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    text-align: center !important;
+    max-width: 800px !important;
+    margin: 0 auto !important;
 }
 
 /* ULTRA AGGRESSIVE BUTTON STYLING */
