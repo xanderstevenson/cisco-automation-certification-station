@@ -347,7 +347,7 @@ if submit_button and user_input:
     st.session_state.messages.append({"role": "user", "content": user_input})
     
     # Show thinking indicator
-    with st.spinner("⚡ Searching Cisco documentation and generating comprehensive response..."):
+    with st.spinner("⚡ Searching Cisco resources and generating comprehensive response..."):
         # Get response from hybrid RAG system
         response = chat(user_input)
     
@@ -361,7 +361,7 @@ if submit_button and user_input:
 if st.session_state.messages:
     st.markdown("---")
     st.markdown("### 💬 Conversation")
-    for message in st.session_state.messages:
+    for message in reversed(st.session_state.messages):
         with st.container():
             if message["role"] == "user":
                 st.markdown(f'<div class="chat-message user-message"><strong>You:</strong> {message["content"]}</div>', unsafe_allow_html=True)
