@@ -318,18 +318,12 @@ form button, [data-testid="stForm"] button {
     color: white !important;
 }
 
-/* FORCE FORM CENTERING */
+/* REMOVE CENTERING - Keep form and input left-aligned */
 div[data-testid="stForm"] {
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
     width: 100% !important;
 }
 
-/* CENTER TEXT INPUT */
 .stTextInput {
-    display: flex !important;
-    justify-content: center !important;
     width: 100% !important;
 }
 
@@ -422,10 +416,8 @@ cert_image_path = "public/Automation_Cert_badges_Current_Future.png"
 if os.path.exists(cert_image_path):
     try:
         cert_image = Image.open(cert_image_path)
-        # Center the certification image at original size
-        st.markdown('<div style="text-align: center;">', unsafe_allow_html=True)
+        # Display certification image at original size (left-aligned)
         st.image(cert_image)
-        st.markdown('</div>', unsafe_allow_html=True)
         
         # Add certification evolution text
         st.markdown("""
