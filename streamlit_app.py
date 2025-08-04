@@ -32,34 +32,43 @@ st.markdown("""
     background-color: white !important;
 }
 
-/* Ensure main container has white background */
+/* Constrain app width and center it */
 .main .block-container {
+    max-width: 1000px !important;
+    padding-top: 0rem !important;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+    margin: 0 auto !important;
     background-color: white !important;
 }
 
 /* Main app styling */
 .main {
-    padding: 1rem 2rem !important;
+    padding: 0 !important;
     color: #000000 !important;
     background-color: white !important;
 }
 
-/* Reduce top margin */
-.main .block-container {
-    padding-top: 1rem !important;
-    background-color: white !important;
-}
-
-/* Header styling */
+/* Minimize header spacing and center image */
 .cisco-header {
     text-align: center;
-    margin-bottom: 1rem;
+    margin: 0 !important;
+    padding: 0 !important;
 }
 
-.cisco-logo {
-    display: block;
-    margin: 0 auto 1rem auto;
-    max-width: 400px;
+/* Remove extra spacing from Streamlit elements */
+.element-container {
+    margin-bottom: 0.25rem !important;
+}
+
+/* Reduce spacing between elements */
+div[data-testid="stVerticalBlock"] > div {
+    gap: 0.25rem !important;
+}
+
+/* Tighter spacing for sections */
+.stMarkdown {
+    margin-bottom: 0.5rem !important;
 }
 
 /* Button styling */
@@ -169,6 +178,67 @@ a:hover {
 #MainMenu {visibility: hidden;}
 footer {visibility: hidden;}
 header {visibility: hidden;}
+
+/* Streamlit Connection Error Styling */
+.stConnectionStatus {
+    background-color: #f8f9fa !important;
+    color: #212529 !important;
+    border: 2px solid #dc3545 !important;
+    border-radius: 8px !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+}
+
+.stConnectionStatus [data-testid="stNotificationContentError"] {
+    background-color: #fff5f5 !important;
+    color: #721c24 !important;
+    border-left: 4px solid #dc3545 !important;
+    padding: 1rem !important;
+}
+
+.stConnectionStatus h3 {
+    color: #dc3545 !important;
+    font-weight: 600 !important;
+}
+
+.stConnectionStatus p {
+    color: #495057 !important;
+    font-size: 0.9rem !important;
+    line-height: 1.5 !important;
+}
+
+.stConnectionStatus code {
+    background-color: #f1f3f4 !important;
+    color: #d63384 !important;
+    padding: 0.2rem 0.4rem !important;
+    border-radius: 4px !important;
+    font-family: 'Monaco', 'Consolas', monospace !important;
+}
+
+/* Alternative: Cisco-themed connection error */
+.stConnectionStatus {
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%) !important;
+    border: 2px solid var(--cisco-blue) !important;
+    color: #2c3e50 !important;
+}
+
+.stConnectionStatus [data-testid="stNotificationContentError"] {
+    background-color: rgba(27, 160, 215, 0.1) !important;
+    border-left: 4px solid var(--cisco-blue) !important;
+    color: #2c3e50 !important;
+}
+
+.stConnectionStatus h3 {
+    color: var(--cisco-dark-blue) !important;
+}
+
+/* Ensure all text in error popup is readable */
+.stConnectionStatus * {
+    color: #2c3e50 !important;
+}
+
+.stConnectionStatus strong {
+    color: var(--cisco-dark-blue) !important;
+}
 </style>
 """, unsafe_allow_html=True)
 
