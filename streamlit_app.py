@@ -336,10 +336,10 @@ else:
     st.markdown('<h3 style="text-align: center;">🔧 Cisco Automation Certification Station</h3>', unsafe_allow_html=True)
 
 # Add "Learn with Cisco" heading bigger and closer to logo
-st.markdown('<h4 style="text-align: center; margin-top: 0.1rem; margin-bottom: 1rem; font-size: 16px;"><a href="https://www.cisco.com/site/us/en/learn/training-certifications/index.html" target="_blank" style="color: #1BA0D7; text-decoration: none; font-weight: 600;">Learn with Cisco</a></h4>', unsafe_allow_html=True)
+st.markdown('<h3 style="text-align: center; margin-top: -0.5rem; margin-bottom: 1rem; font-size: 18px;"><a href="https://www.cisco.com/site/us/en/learn/training-certifications/index.html" target="_blank" style="color: #1BA0D7; text-decoration: none; font-weight: 600;">Learn with Cisco</a></h3>', unsafe_allow_html=True)
 
 # Move heading above text box (not centered)
-st.markdown('<h5 style="text-align: center; margin-bottom: 1rem;">Ask about Cisco automation certs, exam prep, or technical topics:</h5>', unsafe_allow_html=True)
+st.markdown('<h5 style="text-align: center; margin-bottom: 1rem;">Ask about Cisco automation certifications, exam preparation, or technical topics:</h5>', unsafe_allow_html=True)
 
 # Aggressive CSS to fix button and centering issues
 st.markdown("""
@@ -490,7 +490,6 @@ Welcome to your AI-powered Cisco automation certification advisor. I'm here to h
   - **[Cisco Learning Network](https://learningnetwork.cisco.com)** - Helpful community, exam prep, and expert discussions
   - **[Cisco Networking Academy](https://netacad.com)** - Free online courses, in-person learning, certification-aligned pathways
 
-<br>
 
 - **[Cisco DevNet](https://developer.cisco.com)** - Developer resources to innovate, code, and build
   - **[DevNet Learning Labs](https://developer.cisco.com/learning/)** - Hands-on automation practice to improve knowledge and skills
@@ -521,6 +520,9 @@ if os.path.exists(cert_image_path):
         st.markdown("""
         **Beginning February 3, 2026, Cisco DevNet certifications will evolve to an Automation track. These updated certifications feature major updates to the exams and training materials with an even greater focus on automation and AI-ready networking skills.**
         """)
+        
+        # Add spacing before footer
+        st.markdown('<br>', unsafe_allow_html=True)
     except:
         pass
 
@@ -551,7 +553,7 @@ with st.sidebar:
 
 # Footer
 st.markdown("""
-<div style="text-align: center; color: #666; font-size: 0.9em; margin-top: 1rem; margin-bottom: 0;">
+<div style="text-align: center; color: #666; font-size: 0.9em; margin-top: 0.5rem; margin-bottom: -1rem;">
     Built with ❤️ for the <a href="https://learningnetwork.cisco.com/s/communities" target="_blank">Cisco Certification Communities</a> | 
     Open Source | 
     Powered by Google Gemini AI
