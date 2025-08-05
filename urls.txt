@@ -21,6 +21,59 @@ https://u.cisco.com/paths/developing-applications-automating-workflows-using-cis
 https://u.cisco.com/exams/cisco-exam-review-devnet-associate-4532
 https://u.cisco.com/exams/cisco-exam-review-devcor-4531
 
+# Exam-Specific Technical Documentation (High-Value for Passing)
+# YANG/NETCONF/RESTCONF - Core exam topics across all automation certs
+https://developer.cisco.com/docs/ios-xe/16.12.x/programmability/b_xe_16_12_programmability_guide/b_xe_16_12_programmability_guide_chapter_010.html
+https://www.cisco.com/c/en/us/td/docs/ios-xml/ios/prog/configuration/166/b_166_programmability_cg/restconf_prog_int.html
+https://developer.cisco.com/docs/ios-xe/
+https://developer.cisco.com/docs/nx-os/
+
+# Python Network Programming - Essential for CCNA/CCNP Automation
+https://developer.cisco.com/learning/tracks/netprog-eng/
+https://developer.cisco.com/learning/labs/intro-python-part1/step/1
+https://developer.cisco.com/learning/labs/rest-api-fundamentals/step/1
+
+# DNA Center & SD-WAN - Critical for AUTOCOR exam
+https://developer.cisco.com/docs/dna-center/
+https://developer.cisco.com/docs/sd-wan/
+https://www.cisco.com/c/en/us/solutions/enterprise-networks/dna-center/training.html
+
+# Infrastructure as Code - Major AUTOCOR/CCIE topic
+https://developer.cisco.com/docs/terraform/
+https://developer.cisco.com/learning/tracks/terraform/
+
+# ACI & Data Center Automation - CCIE Automation requirement
+https://developer.cisco.com/docs/aci/
+https://www.cisco.com/c/en/us/solutions/data-center-virtualization/application-centric-infrastructure/learning-center.html
+
+# Critical Missing Resources for Comprehensive Exam Prep
+# Ansible Automation - Major topic across all automation exams
+https://docs.ansible.com/ansible/latest/network/getting_started/network_differences.html
+https://docs.ansible.com/ansible/latest/collections/cisco/ios/index.html
+https://docs.ansible.com/ansible/latest/collections/cisco/nxos/index.html
+https://docs.ansible.com/ansible/latest/collections/cisco/aci/index.html
+
+# Git/Version Control - Essential for automation workflows
+https://git-scm.com/book/en/v2/Getting-Started-About-Version-Control
+https://developer.cisco.com/learning/labs/git-basic-workflows/step/1
+
+# Network Programmability Fundamentals - Core exam concepts
+https://www.cisco.com/c/en/us/td/docs/ios-xml/ios/prog/configuration/166/b_166_programmability_cg/network_prog_yang.html
+https://tools.ietf.org/rfc/rfc6020.txt
+https://tools.ietf.org/rfc/rfc6241.txt
+
+# API Testing & Development - Critical for all automation exams
+https://developer.cisco.com/learning/labs/postman-101/step/1
+https://developer.cisco.com/learning/labs/coding-101-rest-basics-ga/step/1
+
+# CI/CD Pipelines - Advanced automation topic
+https://developer.cisco.com/learning/labs/cicd-3tier/step/1
+https://docs.gitlab.com/ee/ci/
+
+# Network Testing & Validation - Important for automation reliability
+https://developer.cisco.com/learning/labs/pyats-intro/step/1
+https://pubhub.devnetcloud.com/media/pyats/docs/index.html
+
 # Additional Resources
 https://u.cisco.com/path/network-automation-engineer
 https://u.cisco.com/path/developing-applications-using-cisco-core-platforms-and-apis

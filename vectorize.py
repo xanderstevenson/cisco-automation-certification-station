@@ -2,7 +2,9 @@ import os
 import requests
 from PyPDF2 import PdfReader
 from bs4 import BeautifulSoup
-from rag.vector_store import build_vector_store
+import faiss
+import pickle
+from sentence_transformers import SentenceTransformer
 
 DOCS_DIR = "docs"
 URLS_FILE = "urls.txt"
@@ -45,6 +47,44 @@ def load_text_from_urls(urls_file):
             except Exception as e:
                 print(f"[!] Error fetching {url}: {e}")
     return documents
+
+def build_vector_store(texts, model_name="paraphrase-MiniLM-L3-v2", chunk_size=500, chunk_overlap=50):
+    """Build FAISS vector store from text documents"""
+    print(f"🔧 Building vector store with {len(texts)} documents...")
+    
+    # Initialize sentence transformer
+    model = SentenceTransformer(model_name)
+    
+    # Chunk the texts
+    chunks = []
+    for text in texts:
+        # Simple chunking strategy
+        for i in range(0, len(text), chunk_size - chunk_overlap):
+            chunk = text[i:i + chunk_size]
+            if len(chunk.strip()) > 20:  # Only keep meaningful chunks
+                chunks.append(chunk.strip())
+    
+    print(f"📝 Created {len(chunks)} text chunks")
+    
+    # Create embeddings
+    print("🔄 Generating embeddings...")
+    embeddings = model.encode(chunks, show_progress_bar=True)
+    
+    # Build FAISS index
+    dimension = embeddings.shape[1]
+    index = faiss.IndexFlatL2(dimension)
+    index.add(embeddings.astype('float32'))
+    
+    # Create output directory
+    os.makedirs("rag/index", exist_ok=True)
+    
+    # Save FAISS index and texts
+    faiss.write_index(index, "rag/index/faiss.index")
+    with open("rag/index/texts.pkl", "wb") as f:
+        pickle.dump(chunks, f)
+    
+    print(f"💾 Saved vector store: {len(chunks)} chunks, {dimension}D embeddings")
+    return index, chunks
 
 def vectorize_all():
     print("📄 Loading documents (PDFs + URLs)...")

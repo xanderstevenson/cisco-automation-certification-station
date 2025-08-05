@@ -335,6 +335,9 @@ if os.path.exists(logo_path):
 else:
     st.markdown('<h3 style="text-align: center;">🔧 Cisco Automation Certification Station</h3>', unsafe_allow_html=True)
 
+# Add "Learn with Cisco" link below logo
+st.markdown('<div style="text-align: center; margin: 1rem 0;"><a href="https://www.cisco.com/site/us/en/learn/training-certifications/index.html" target="_blank" style="color: #1BA0D7; text-decoration: none; font-weight: 600;">📚 Learn with Cisco</a></div>', unsafe_allow_html=True)
+
 # Move heading above text box (not centered)
 st.markdown('<h5 style="text-align: center; margin-bottom: 1rem;">Ask about Cisco automation certs, exam prep, or technical topics:</h5>', unsafe_allow_html=True)
 
@@ -415,7 +418,7 @@ if submit_button and user_input:
     st.session_state.messages.append({"role": "user", "content": sanitized_input})
     
     # Show thinking indicator
-    with st.spinner("⚡ Searching Cisco resources and generating comprehensive response..."):
+    with st.spinner("⚡ Searching Cisco resources and generating a comprehensive response..."):
         # Get response from hybrid RAG system
         response = chat(sanitized_input)
     
@@ -457,14 +460,14 @@ Welcome to your AI-powered Cisco automation certification advisor. I'm here to h
 - **Hands-On Practice**: Find sandbox environments and practical exercises
 - **Career Planning**: Navigate your automation certification journey
 
-#### Key Resources I'll Recommend
+#### Key Resources I'll Source From and Recommend
 
 - **[Cisco U.](https://u.cisco.com)** - Official training paths and practice exams
 - **[Cisco Learning Network](https://learningnetwork.cisco.com)** - Community, exam prep, and expert discussions
 - **[Cisco Networking Academy](https://netacad.com)** - Free online courses, in-person learning, certification-aligned pathways
-- **[DevNet](https://developer.cisco.com)** - Developer resources and documentation
-- **[DevNet Sandboxes](https://developer.cisco.com/site/sandbox/)** - Free lab environments for testing
+- **[Cisco DevNet](https://developer.cisco.com)** - Developer resources and documentation
 - **[DevNet Learning Labs](https://developer.cisco.com/learning/)** - Hands-on automation practice
+- **[DevNet Sandboxes](https://developer.cisco.com/site/sandbox/)** - Free lab environments for testing
 
 #### Ready to Get Started?
 
@@ -501,19 +504,20 @@ with st.sidebar:
     - [Cisco U.](https://u.cisco.com)
     - [Cisco Learning Network](https://learningnetwork.cisco.com)
     - [Cisco Networking Academy](https://netacad.com)
-    - [DevNet](https://developer.cisco.com)
+    - [Cisco DevNet](https://developer.cisco.com)
+    - [DevNet Learning Labs](https://developer.cisco.com/learning/)
     - [DevNet Sandboxes](https://developer.cisco.com/site/sandbox/)
     
     **System Features:**
-    - 📄 11 Cisco PDFs + 9 web URLs
+    - 📄 10 Cisco PDFs + 61 web URLs
     - 🌐 Real-time web search via SerpAPI
-    - 🤖 Google Gemini AI responses
+    - 🤖 Google AI Studio, Google Cloud Run, and Google Gemini AI
     - ⚡ ~6-8 second response times
     """)
     
     st.markdown("## ⚙️ System Status")
     st.success("✅ Hybrid RAG System Online")
-    st.info("📊 209 Document Chunks Indexed")
+    st.info("📊 4,324 Document Chunks Indexed")
     st.info("🔍 FAISS Vector Search Ready")
 
 # Footer
