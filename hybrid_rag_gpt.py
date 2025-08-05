@@ -5,9 +5,11 @@ import google.generativeai as genai
 from dotenv import load_dotenv
 from serpapi import GoogleSearch
 import gc
-from rag.retriever import retrieve_answer, cleanup_memory
 import concurrent.futures
 import threading
+import faiss
+import pickle
+from sentence_transformers import SentenceTransformer
 
 # Load environment variables from .env file
 load_dotenv()
@@ -16,6 +18,55 @@ load_dotenv()
 if not os.getenv("GOOGLE_API_KEY"):
     print("ERROR: Google API key not found. Please check your environment variables.")
     raise ValueError("GOOGLE_API_KEY environment variable is required")
+
+# Initialize embedding model and FAISS index
+embedding_model = None
+faiss_index = None
+texts = None
+
+def load_vector_store():
+    """Load FAISS vector store and texts"""
+    global embedding_model, faiss_index, texts
+    if embedding_model is None:
+        model_name = os.getenv("EMBEDDING_MODEL", "paraphrase-MiniLM-L3-v2")
+        embedding_model = SentenceTransformer(model_name)
+    
+    if faiss_index is None:
+        try:
+            faiss_index = faiss.read_index("rag/index/faiss.index")
+            with open("rag/index/texts.pkl", "rb") as f:
+                texts = pickle.load(f)
+        except Exception as e:
+            print(f"Error loading vector store: {e}")
+            return False
+    return True
+
+def retrieve_answer(query: str, k: int = 5) -> str:
+    """Retrieve relevant documents for the query"""
+    if not load_vector_store():
+        return "Error: Could not load document index."
+    
+    try:
+        # Encode query
+        query_embedding = embedding_model.encode([query])
+        
+        # Search FAISS index
+        distances, indices = faiss_index.search(query_embedding, k)
+        
+        # Get relevant texts
+        relevant_texts = []
+        for idx in indices[0]:
+            if idx < len(texts):
+                relevant_texts.append(texts[idx])
+        
+        return "\n\n".join(relevant_texts)
+    except Exception as e:
+        print(f"Error in retrieve_answer: {e}")
+        return "Error retrieving documents."
+
+def cleanup_memory():
+    """Clean up memory after processing"""
+    gc.collect()
 
 # Configure Gemini API
 genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
