@@ -79,6 +79,22 @@ div[data-testid="stVerticalBlock"] > div {
     margin-bottom: 0.5rem !important;
 }
 
+/* All links styling - Cisco blue */
+a, a:link, a:visited, a:hover, a:active {
+    color: #1BA0D7 !important;
+    text-decoration: none !important;
+}
+
+a:hover {
+    color: #0E7A9F !important;
+    text-decoration: underline !important;
+}
+
+/* Sidebar links styling */
+.css-1d391kg a, .css-1d391kg a:link, .css-1d391kg a:visited {
+    color: #1BA0D7 !important;
+}
+
 /* Button styling */
 .stButton > button {
     background-color: var(--cisco-blue) !important;
@@ -342,14 +358,27 @@ with st.form(key="chat_form", clear_on_submit=True):
     )
     submit_button = st.form_submit_button("Send")
 
+# Process user input when submitted
 if submit_button and user_input:
+    # Input validation and sanitization
+    if len(user_input.strip()) == 0:
+        st.warning("⚠️ Please enter a valid question.")
+        st.stop()
+    
+    if len(user_input) > 2000:
+        st.error("⚠️ Question too long. Please limit to 2000 characters.")
+        st.stop()
+    
+    # Basic input sanitization
+    sanitized_input = user_input.strip()[:2000]
+    
     # Add user message to session state
-    st.session_state.messages.append({"role": "user", "content": user_input})
+    st.session_state.messages.append({"role": "user", "content": sanitized_input})
     
     # Show thinking indicator
     with st.spinner("⚡ Searching Cisco resources and generating comprehensive response..."):
         # Get response from hybrid RAG system
-        response = chat(user_input)
+        response = chat(sanitized_input)
     
     # Add assistant response to session state
     st.session_state.messages.append({"role": "assistant", "content": response})
@@ -385,17 +414,18 @@ Welcome to your AI-powered Cisco automation certification advisor. I'm here to h
 
 - **Certification Guidance**: Get expert advice on exam preparation strategies
 - **Technical Questions**: Deep dive into YANG, NETCONF, RESTCONF, APIs, and automation frameworks
-- **Learning Resources**: Discover the best Cisco U courses, DevNet labs, and practice exams
+- **Learning Resources**: Discover the best Cisco U. courses, DevNet labs, and practice exams
 - **Hands-On Practice**: Find sandbox environments and practical exercises
 - **Career Planning**: Navigate your automation certification journey
 
 #### Key Resources I'll Recommend
 
-- **[Cisco U](https://u.cisco.com)** - Official training paths and practice exams
-- **[Cisco Networking Academy](https://www.netacad.com)** - Free online courses, in-person learning, certification-aligned pathways
+- **[Cisco U.](https://u.cisco.com)** - Official training paths and practice exams
 - **[Cisco Learning Network](https://learningnetwork.cisco.com)** - Community, exam prep, and expert discussions
+- **[Cisco Networking Academy](https://netacad.com)** - Free online courses, in-person learning, certification-aligned pathways
+- **[DevNet](https://developer.cisco.com)** - Developer resources and documentation
+- **[DevNet Sandboxes](https://developer.cisco.com/site/sandbox/)** - Free lab environments for testing
 - **[DevNet Learning Labs](https://developer.cisco.com/learning/)** - Hands-on automation practice
-- **[DevNet Sandbox](https://developer.cisco.com/site/sandbox/)** - Free lab environments
 
 #### Ready to Get Started?
 
@@ -429,15 +459,17 @@ with st.sidebar:
     st.markdown("## 📚 Resources")
     st.markdown("""
     **Official Cisco Learning:**
-    - [Cisco U](https://u.cisco.com)
+    - [Cisco U.](https://u.cisco.com)
     - [Cisco Learning Network](https://learningnetwork.cisco.com)
+    - [Cisco Networking Academy](https://netacad.com)
     - [DevNet](https://developer.cisco.com)
+    - [DevNet Sandboxes](https://developer.cisco.com/site/sandbox/)
     
     **System Features:**
-    - 📄 11 Official Cisco PDFs
-    - 🌐 Real-time web search
-    - 🤖 Google Gemini AI
-    - ⚡ Sub-second responses
+    - 📄 11 Cisco PDFs + 9 web URLs
+    - 🌐 Real-time web search via SerpAPI
+    - 🤖 Google Gemini AI responses
+    - ⚡ ~6-8 second response times
     """)
     
     st.markdown("## ⚙️ System Status")
