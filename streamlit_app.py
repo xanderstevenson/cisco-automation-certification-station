@@ -72,8 +72,8 @@ st.markdown("""
 /* Dark mode logo enhancement for better readability */
 @media (prefers-color-scheme: dark) {
     .cisco-logo-container img {
-        filter: drop-shadow(0 0 1px rgba(255,255,255,0.8)) drop-shadow(0 0 2px rgba(255,255,255,0.4)) !important;
-        -webkit-filter: drop-shadow(0 0 1px rgba(255,255,255,0.8)) drop-shadow(0 0 2px rgba(255,255,255,0.4)) !important;
+        filter: drop-shadow(0 0 0.5px rgba(255,255,255,0.6)) !important;
+        -webkit-filter: drop-shadow(0 0 0.5px rgba(255,255,255,0.6)) !important;
     }
 }
 
