@@ -336,7 +336,7 @@ else:
     st.markdown('<h3 style="text-align: center;">🔧 Cisco Automation Certification Station</h3>', unsafe_allow_html=True)
 
 # Add "Learn with Cisco" heading bigger and closer to logo
-st.markdown('<h3 style="text-align: center; margin-top: -0.5rem; margin-bottom: 1rem; font-size: 18px;"><a href="https://www.cisco.com/site/us/en/learn/training-certifications/index.html" target="_blank" style="color: #1BA0D7; text-decoration: none; font-weight: 600;">Learn with Cisco</a></h3>', unsafe_allow_html=True)
+st.markdown('<h3 style="text-align: center; margin-top: -1rem; margin-bottom: 1rem; font-size: 18px;"><a href="https://www.cisco.com/site/us/en/learn/training-certifications/index.html" target="_blank" style="color: #1BA0D7; text-decoration: none; font-weight: 600;">Learn with Cisco</a></h3>', unsafe_allow_html=True)
 
 # Move heading above text box (not centered)
 st.markdown('<h5 style="text-align: center; margin-bottom: 1rem;">Ask about Cisco automation certifications, exam preparation, or technical topics:</h5>', unsafe_allow_html=True)
@@ -489,6 +489,7 @@ Welcome to your AI-powered Cisco automation certification advisor. I'm here to h
   - **[Cisco U.](https://u.cisco.com)** - Official learning paths and practice exams
   - **[Cisco Learning Network](https://learningnetwork.cisco.com)** - Helpful community, exam prep, and expert discussions
   - **[Cisco Networking Academy](https://netacad.com)** - Free online courses, in-person learning, certification-aligned pathways
+
 
 
 - **[Cisco DevNet](https://developer.cisco.com)** - Developer resources to innovate, code, and build
