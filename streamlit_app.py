@@ -79,7 +79,36 @@ div[data-testid="stVerticalBlock"] > div {
     margin-bottom: 0.5rem !important;
 }
 
-/* All links styling - Cisco blue */
+/* Hide Streamlit footer */
+footer[data-testid="stDecoration"] {
+    display: none !important;
+}
+
+.css-1dp5vir {
+    display: none !important;
+}
+
+/* Hide "Made with Streamlit" */
+.css-cio0dv {
+    display: none !important;
+}
+
+/* Reduce bottom spacing */
+.main .block-container {
+    padding-bottom: 1rem !important;
+}
+
+/* Remove excessive bottom margin */
+body {
+    margin-bottom: 0 !important;
+}
+
+/* Compact footer spacing */
+.stMarkdown:last-child {
+    margin-bottom: 0 !important;
+}
+
+/* All links styling - Cisco blue with stronger selectors */
 a, a:link, a:visited, a:hover, a:active {
     color: #1BA0D7 !important;
     text-decoration: none !important;
@@ -88,6 +117,16 @@ a, a:link, a:visited, a:hover, a:active {
 a:hover {
     color: #0E7A9F !important;
     text-decoration: underline !important;
+}
+
+/* Main content links - stronger selectors */
+.main a, .main a:link, .main a:visited {
+    color: #1BA0D7 !important;
+}
+
+/* Markdown links */
+.stMarkdown a, .stMarkdown a:link, .stMarkdown a:visited {
+    color: #1BA0D7 !important;
 }
 
 /* Sidebar links styling */
@@ -297,7 +336,7 @@ else:
     st.markdown('<h3 style="text-align: center;">🔧 Cisco Automation Certification Station</h3>', unsafe_allow_html=True)
 
 # Move heading above text box (not centered)
-st.markdown('##### Ask about Cisco automation certs, exam prep, or technical topics:')
+st.markdown('<h5 style="text-align: center; margin-bottom: 1rem;">Ask about Cisco automation certs, exam prep, or technical topics:</h5>', unsafe_allow_html=True)
 
 # Aggressive CSS to fix button and centering issues
 st.markdown("""
@@ -478,9 +517,8 @@ with st.sidebar:
     st.info("🔍 FAISS Vector Search Ready")
 
 # Footer
-st.markdown("---")
 st.markdown("""
-<div style="text-align: center; color: #666; font-size: 0.9em;">
+<div style="text-align: center; color: #666; font-size: 0.9em; margin-top: 1rem; margin-bottom: 0;">
     Built with ❤️ for the <a href="https://learningnetwork.cisco.com/s/communities" target="_blank">Cisco Certification Communities</a> | 
     Open Source | 
     Powered by Google Gemini AI
