@@ -536,7 +536,7 @@ with st.sidebar:
     - [DevNet Docs](https://developer.cisco.com/docs/)
     
     **System Features:**
-    - 📄 10 Cisco PDFs + 61 web URLs
+    - 📄 10 Cisco PDFs + 62 web URLs
     - 🌐 Real-time web search via SerpAPI
     - 🤖 Google AI Studio, Google Cloud Run, and Google Gemini AI
     - ⚡ ~6-8 second response times
@@ -544,7 +544,7 @@ with st.sidebar:
     
     st.markdown("## ⚙️ System Status")
     st.success("✅ Hybrid RAG System Online")
-    st.info("📊 4,324 Document Chunks Indexed")
+    st.info("📊 4,325 Document Chunks Indexed")
     st.info("🔍 FAISS Vector Search Ready")
 
 # Footer
