@@ -14,10 +14,11 @@ from sentence_transformers import SentenceTransformer
 # Load environment variables from .env file
 load_dotenv()
 
-# Ensure API key is available
-if not os.getenv("GOOGLE_API_KEY"):
-    print("ERROR: Google API key not found. Please check your environment variables.")
-    raise ValueError("GOOGLE_API_KEY environment variable is required")
+# Check API key availability (but don't fail at import time)
+api_key = os.getenv("GOOGLE_API_KEY")
+if not api_key:
+    print("WARNING: Google API key not found. Please check your environment variables.")
+    # Don't raise error at import time - let the app start and show error in UI
 
 # Initialize embedding model and FAISS index
 embedding_model = None
@@ -69,7 +70,10 @@ def cleanup_memory():
     gc.collect()
 
 # Configure Gemini API
-genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
+if api_key:
+    genai.configure(api_key=api_key)
+else:
+    print("WARNING: Gemini API not configured - no API key available")
 
 # Use Gemini 1.5 Flash for faster responses (optimized for speed)
 model = genai.GenerativeModel("gemini-1.5-flash")
@@ -164,6 +168,10 @@ Always provide specific, clickable URLs when recommending resources. Focus on of
 
 def chat(user_query):
     """Hybrid RAG chat function using Gemini API"""
+    # Check if API key is available
+    if not api_key:
+        return "❌ **Configuration Error**: Google API key is not configured. Please check your environment variables and redeploy the application."
+    
     try:
         # Check if this is a simple greeting or casual interaction
         casual_patterns = ['hi', 'hello', 'hey', 'thanks', 'thank you', 'bye', 'goodbye']
