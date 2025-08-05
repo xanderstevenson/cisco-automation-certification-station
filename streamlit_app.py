@@ -335,8 +335,8 @@ if os.path.exists(logo_path):
 else:
     st.markdown('<h3 style="text-align: center;">🔧 Cisco Automation Certification Station</h3>', unsafe_allow_html=True)
 
-# Add "Learn with Cisco" link below logo with matching spacing
-st.markdown('<div style="text-align: center; margin-bottom: 1rem;"><a href="https://www.cisco.com/site/us/en/learn/training-certifications/index.html" target="_blank" style="color: #1BA0D7; text-decoration: none; font-weight: 600;">Learn with Cisco</a></div>', unsafe_allow_html=True)
+# Add "Learn with Cisco" link below logo with swapped spacing
+st.markdown('<div style="text-align: center; margin-top: 0.5rem; margin-bottom: 1.5rem;"><a href="https://www.cisco.com/site/us/en/learn/training-certifications/index.html" target="_blank" style="color: #1BA0D7; text-decoration: none; font-weight: 600;">Learn with Cisco</a></div>', unsafe_allow_html=True)
 
 # Move heading above text box (not centered)
 st.markdown('<h5 style="text-align: center; margin-bottom: 1rem;">Ask about Cisco automation certs, exam prep, or technical topics:</h5>', unsafe_allow_html=True)
@@ -491,6 +491,7 @@ Welcome to your AI-powered Cisco automation certification advisor. I'm here to h
 - **[Cisco DevNet](https://developer.cisco.com)** - Developer resources and documentation
 - **[DevNet Learning Labs](https://developer.cisco.com/learning/)** - Hands-on automation practice
 - **[DevNet Sandboxes](https://developer.cisco.com/site/sandbox/)** - Free lab environments for testing
+- **[DevNet Docs](https://developer.cisco.com/docs/)** - Technical documentation for all Cisco technologies
 
 #### Ready to Get Started?
 
@@ -530,6 +531,7 @@ with st.sidebar:
     - [Cisco DevNet](https://developer.cisco.com)
     - [DevNet Learning Labs](https://developer.cisco.com/learning/)
     - [DevNet Sandboxes](https://developer.cisco.com/site/sandbox/)
+    - [DevNet Docs](https://developer.cisco.com/docs/)
     
     **System Features:**
     - 📄 10 Cisco PDFs + 61 web URLs
