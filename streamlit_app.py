@@ -463,7 +463,6 @@ if st.session_state.messages:
                 st.markdown(f'<div class="chat-message bot-message"><strong>Cisco Expert:</strong><br/><br/>{message["content"]}</div>', unsafe_allow_html=True)
 
 # Welcome content below chat (or initially visible)
-st.markdown("---")
 
 # Welcome message with normal paragraph text
 st.markdown("""
