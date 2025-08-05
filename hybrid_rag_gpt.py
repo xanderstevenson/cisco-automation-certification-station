@@ -179,8 +179,10 @@ system_prompt = """You are a knowledgeable network automation expert who also pr
 
 Always provide specific, clickable URLs when recommending resources. Focus on official Cisco materials and avoid third-party recommendations unless specifically relevant."""
 
-def chat(user_query):
-    """Hybrid RAG chat function using Gemini API"""
+def chat(user_query, conversation_history=None):
+    """Hybrid RAG chat function using Gemini API with conversation memory"""
+    if conversation_history is None:
+        conversation_history = []
     # Check if API key is available
     if not api_key:
         return "❌ **Configuration Error**: Google API key is not configured. Please check your environment variables and redeploy the application."
@@ -192,12 +194,20 @@ def chat(user_query):
         
         if is_casual:
             # For casual interactions, respond directly without document search
-            simple_prompt = f"""{system_prompt}
+            # Build conversation context
+            conversation_context = ""
+            if conversation_history:
+                conversation_context = "\n\n**Previous Conversation:**\n"
+                for msg in conversation_history[-4:]:  # Last 4 messages for context
+                    role = "You" if msg['role'] == 'assistant' else "User"
+                    conversation_context += f"{role}: {msg['content'][:200]}...\n"
+            
+            simple_prompt = f"""{system_prompt}{conversation_context}
 
-**User Message:** {user_query}
+**Current User Message:** {user_query}
 
 **Instructions:** 
-Respond naturally and briefly to this casual interaction. Be friendly and helpful, and let the user know you're here to help with Cisco certification questions when they're ready.
+Respond naturally and briefly to this casual interaction. Be friendly and helpful, and let the user know you're here to help with Cisco certification questions when they're ready. If the user is asking about a previous question or response, reference the conversation history above.
 """
             response = model.generate_content(simple_prompt)
             return response.text
@@ -220,10 +230,18 @@ Respond naturally and briefly to this casual interaction. Be friendly and helpfu
                 
                 print(f"[DEBUG] Parallel search completed. Doc context: {len(doc_context)}, Web context: {len(web_context)}")
                 
-                # Step 3: Construct streamlined prompt
-                enhanced_prompt = f"""{system_prompt}
+                # Step 3: Construct streamlined prompt with conversation history
+                # Build conversation context for technical queries
+                conversation_context = ""
+                if conversation_history:
+                    conversation_context = "\n\n**Previous Conversation:**\n"
+                    for msg in conversation_history[-4:]:  # Last 4 messages for context
+                        role = "You" if msg['role'] == 'assistant' else "User"
+                        conversation_context += f"{role}: {msg['content'][:200]}...\n"
+                
+                enhanced_prompt = f"""{system_prompt}{conversation_context}
 
-**User Question:** {user_query}
+**Current User Question:** {user_query}
 
 **Documentation Context:**
 {doc_context}
@@ -232,7 +250,7 @@ Respond naturally and briefly to this casual interaction. Be friendly and helpfu
 {web_context}
 
 **Instructions:** 
-Provide a comprehensive, detailed answer as a Cisco certification expert. For certification-specific queries:
+Provide a comprehensive, detailed answer as a Cisco certification expert. If the user is referencing a previous question or asking for clarification, use the conversation history above for context. For certification-specific queries:
 1. Extract and list specific exam topics from the PDF documentation when available
 2. Create structured study plans with learning resources from Cisco U, DevNet Labs, and Sandbox
 3. Reference exact exam objectives, weightings, and preparation strategies
@@ -265,14 +283,22 @@ Use the context above extensively and cite sources naturally. Be thorough and pr
                     doc_only_context = doc_search(user_query)
                     print(f"[DEBUG] Document-only context length: {len(doc_only_context)}")
                     
-                    fallback_prompt = f"""{system_prompt}
+                    # Build conversation context for fallback
+                    conversation_context = ""
+                    if conversation_history:
+                        conversation_context = "\n\n**Previous Conversation:**\n"
+                        for msg in conversation_history[-4:]:  # Last 4 messages for context
+                            role = "You" if msg['role'] == 'assistant' else "User"
+                            conversation_context += f"{role}: {msg['content'][:200]}...\n"
+                    
+                    fallback_prompt = f"""{system_prompt}{conversation_context}
 
-**User Question:** {user_query}
+**Current User Question:** {user_query}
 
 **Available Documentation:**
 {doc_only_context}
 
-**Instructions:** Answer based on the documentation above. Be helpful and direct.
+**Instructions:** Answer based on the documentation above. Be helpful and direct. If the user is referencing a previous question, use the conversation history for context.
 """
                     response = model.generate_content(fallback_prompt)
                     return response.text

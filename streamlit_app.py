@@ -72,8 +72,8 @@ st.markdown("""
 /* Dark mode logo enhancement for better readability */
 @media (prefers-color-scheme: dark) {
     .cisco-logo-container img {
-        filter: drop-shadow(0 0 3px white) drop-shadow(0 0 6px white) drop-shadow(0 0 9px rgba(255,255,255,0.8)) !important;
-        -webkit-filter: drop-shadow(0 0 3px white) drop-shadow(0 0 6px white) drop-shadow(0 0 9px rgba(255,255,255,0.8)) !important;
+        filter: drop-shadow(0 0 1px rgba(255,255,255,0.8)) drop-shadow(0 0 2px rgba(255,255,255,0.4)) !important;
+        -webkit-filter: drop-shadow(0 0 1px rgba(255,255,255,0.8)) drop-shadow(0 0 2px rgba(255,255,255,0.4)) !important;
     }
 }
 
@@ -458,8 +458,8 @@ if submit_button and user_input:
     
     # Show thinking indicator
     with st.spinner("⚡ Searching Cisco resources and generating a comprehensive response..."):
-        # Get response from hybrid RAG system
-        response = chat(sanitized_input)
+        # Get response from hybrid RAG system with conversation history
+        response = chat(sanitized_input, conversation_history=st.session_state.messages)
     
     # Add assistant response to session state
     st.session_state.messages.append({"role": "assistant", "content": response})
