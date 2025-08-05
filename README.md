@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="public/Cisco-automation-certification-station-light.png" alt="Cisco Automation Certification Station">
+  <img src="public/Cisco-automation-certification-station.png" alt="Cisco Automation Certification Station">
 </div>
 
 
