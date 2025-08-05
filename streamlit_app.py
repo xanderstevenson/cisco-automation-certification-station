@@ -508,8 +508,8 @@ Welcome to your AI-powered Cisco automation certification advisor. I'm here to h
 
 """, unsafe_allow_html=True)
 
-# Add extra spacing between main resource sections
-st.markdown('<br><br>', unsafe_allow_html=True)
+# Add spacing between main resource sections
+st.markdown('<br>', unsafe_allow_html=True)
 
 st.markdown("""
 - **[Cisco DevNet](https://developer.cisco.com)** - Developer resources to innovate, code, and build
