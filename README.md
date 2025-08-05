@@ -371,16 +371,19 @@ gcloud config set project $PROJECT_ID
 # Enable required APIs
 gcloud services enable cloudbuild.googleapis.com run.googleapis.com
 
+# Load environment variables (IMPORTANT: Required for proper API key configuration)
+source .env
+
 # Build and deploy in one command
 gcloud builds submit --tag gcr.io/$PROJECT_ID/cisco-automation-chatbot
-gcloud run deploy cisco-automation-certification-station \
+source .env && gcloud run deploy cisco-automation-certification-station \
   --image gcr.io/$PROJECT_ID/cisco-automation-chatbot \
   --region us-central1 \
   --allow-unauthenticated \
   --memory 2Gi \
   --cpu 2 \
   --timeout 900 \
-  --set-env-vars GOOGLE_API_KEY=your_api_key,EMBEDDING_MODEL=paraphrase-MiniLM-L3-v2
+  --set-env-vars GOOGLE_API_KEY=$GOOGLE_API_KEY,SERPAPI_KEY=$SERPAPI_KEY,EMBEDDING_MODEL=paraphrase-MiniLM-L3-v2,PYTHONUNBUFFERED=1,TOKENIZERS_PARALLELISM=false
 ```
 
 **Features:**
@@ -605,6 +608,37 @@ git commit -m "Add amazing feature: detailed description"
 # 5. Push and create pull request
 git push origin feature/amazing-feature
 ```
+
+## Alternative Deployment Options
+
+This repository includes configuration files for multiple deployment platforms to provide flexibility for different use cases:
+
+### Chainlit Interface
+- **Files**: `app.py`, `chainlit.md`, `.chainlit/config.toml`
+- **Use Case**: Alternative chat interface with different UI/UX
+- **Deployment**: Run `chainlit run app.py` for local development
+- **Features**: Built-in chat interface, different theming options
+
+### Render.com Deployment
+- **Files**: `render.yaml`, `requirements-lite.txt`
+- **Use Case**: Free tier deployment with memory optimizations
+- **Limitations**: 512MB memory limit, may require performance trade-offs
+- **Setup**: Connect repository to Render.com and deploy using `render.yaml`
+
+### Docker Legacy Support
+- **Files**: `Dockerfile` (original), `requirements.txt`
+- **Use Case**: Custom containerized deployments
+- **Note**: `Dockerfile.streamlit` is recommended for production
+
+### Why Multiple Options?
+
+These alternative configurations are maintained to:
+- Support different deployment preferences
+- Provide fallback options if primary deployment fails
+- Enable community contributions across different platforms
+- Demonstrate platform-agnostic architecture
+
+**Recommendation**: Use Streamlit + Google Cloud Run for production deployments, but feel free to explore alternatives based on your specific needs.
 
 ## License
 
