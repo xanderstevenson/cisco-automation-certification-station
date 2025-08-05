@@ -42,7 +42,7 @@ st.markdown("""
 
 /* Constrain app width and center it */
 .main .block-container {
-    max-width: 1000px !important;
+    max-width: 1200px !important;
     padding-top: 0rem !important;
     padding-left: 1rem !important;
     padding-right: 1rem !important;
@@ -67,6 +67,22 @@ st.markdown("""
 /* Remove extra spacing from Streamlit elements */
 .element-container {
     margin-bottom: 0.25rem !important;
+}
+
+/* Dark mode logo enhancement for better readability */
+@media (prefers-color-scheme: dark) {
+    .cisco-logo-container img {
+        filter: drop-shadow(0 0 3px white) drop-shadow(0 0 6px white) drop-shadow(0 0 9px rgba(255,255,255,0.8)) !important;
+        -webkit-filter: drop-shadow(0 0 3px white) drop-shadow(0 0 6px white) drop-shadow(0 0 9px rgba(255,255,255,0.8)) !important;
+    }
+}
+
+/* Light mode - ensure no shadow interference */
+@media (prefers-color-scheme: light) {
+    .cisco-logo-container img {
+        filter: none !important;
+        -webkit-filter: none !important;
+    }
 }
 
 /* Reduce spacing between elements */
@@ -319,9 +335,9 @@ if os.path.exists(logo_path):
         logo_data = base64.b64encode(f.read()).decode()
     
     st.markdown(f"""
-    <div style="
+    <div class="cisco-logo-container" style="
+        background-color: white;
         width: 100%;
-        background: white;
         padding: 20px 0;
         text-align: center;
         margin: 0;
