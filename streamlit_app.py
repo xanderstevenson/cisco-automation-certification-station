@@ -335,8 +335,8 @@ if os.path.exists(logo_path):
 else:
     st.markdown('<h3 style="text-align: center;">🔧 Cisco Automation Certification Station</h3>', unsafe_allow_html=True)
 
-# Add "Learn with Cisco" link below logo
-st.markdown('<div style="text-align: center; margin: 1rem 0;"><a href="https://www.cisco.com/site/us/en/learn/training-certifications/index.html" target="_blank" style="color: #1BA0D7; text-decoration: none; font-weight: 600;">📚 Learn with Cisco</a></div>', unsafe_allow_html=True)
+# Add "Learn with Cisco" link below logo with matching spacing
+st.markdown('<div style="text-align: center; margin-bottom: 1rem;"><a href="https://www.cisco.com/site/us/en/learn/training-certifications/index.html" target="_blank" style="color: #1BA0D7; text-decoration: none; font-weight: 600;">Learn with Cisco</a></div>', unsafe_allow_html=True)
 
 # Move heading above text box (not centered)
 st.markdown('<h5 style="text-align: center; margin-bottom: 1rem;">Ask about Cisco automation certs, exam prep, or technical topics:</h5>', unsafe_allow_html=True)
@@ -386,6 +386,29 @@ div[data-testid="stForm"] {
 .stTextInput > div {
     max-width: 600px !important;
     width: 100% !important;
+}
+
+/* HIDE STREAMLIT FOOTER */
+footer {
+    visibility: hidden !important;
+}
+
+.stDeployButton {
+    visibility: hidden !important;
+}
+
+/* Hide "Made with Streamlit" */
+.viewerBadge_container__1QSob {
+    display: none !important;
+}
+
+/* Hide Streamlit menu */
+#MainMenu {
+    visibility: hidden !important;
+}
+
+header[data-testid="stHeader"] {
+    display: none !important;
 }
 </style>
 """, unsafe_allow_html=True)
