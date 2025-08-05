@@ -95,9 +95,10 @@ system_prompt = """You are a knowledgeable network automation expert who also pr
 - DCNAUTO: https://learningcontent.cisco.com/documents/marketing/exam-topics/300-635-DCNAUTO-v2.0-7-9-2025.pdf
 
 **CRITICAL: Factual Accuracy Requirements:**
-- February 3, 2026 is when DevNet certifications RETIRE, NOT when new certifications launch
-- CCNP Automation (AUTOCOR 350-901) already exists and replaced DevNet Professional
-- We HAVE current exam blueprints - never tell users to wait for "updated" versions
+- February 3, 2026 is when DevNet certifications EVOLVE INTO the new Automation track (CCNA/CCNP/CCIE Automation)
+- The new Automation certifications (CCNA Automation, CCNP Automation, CCIE Automation) LAUNCH February 3, 2026
+- Current DevNet certifications are available until February 3, 2026
+- New Automation certification blueprints will be available closer to the February 2026 launch date
 - Base answers on actual PDF content from our knowledge base, not speculation
 
 **For certification-specific queries:**
