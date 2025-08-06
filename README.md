@@ -10,7 +10,29 @@ A production-ready Hybrid Retrieval-Augmented Generation (RAG) system designed f
 - [CCIE Automation](https://learningcontent.cisco.com/documents/marketing/exam-topics/CCIE_Automation_V1.1_BP.pdf)
 - [Automating Cisco Enterprise Solutions (ENAUTO)](https://www.cisco.com/site/us/en/learn/training-certifications/exams/enauto.html)
 - [Automating Cisco Data Center Networking Solutions (DCNAUTO)](https://learningcontent.cisco.com/documents/marketing/exam-topics/300-635-DCNAUTO-v2.0-7-9-2025.pdf)
+- [DevNet Associate](https://learningnetwork.cisco.com/s/devnet-associate-exam-topics)
+- [DevNet Professional (DEVCOR)](https://learningnetwork.cisco.com/s/devcor-exam-topics)
 
+## 🚀 Current Status
+
+**✅ FULLY OPERATIONAL** - The system is currently deployed and working perfectly at:
+
+**🌐 Live Demo:** https://cisco-automation-certification-station-730208496446.us-central1.run.app
+
+**Recent Fixes (August 2025):**
+- ✅ **Conversation Memory**: AI now maintains context across conversations
+- ✅ **DevNet Professional Support**: Full access to DEVCOR exam topics and blueprints
+- ✅ **Certification Mapping**: Clear understanding that DevNet certifications are being renamed to Automation certifications (same exams, new names)
+- ✅ **Spelling Tolerance**: Better handling of minor typos in user input
+- ✅ **Response Quality**: Comprehensive answers based on actual exam blueprints
+
+**Key Features Working:**
+- 🤖 **AI Chat Interface**: Streamlit-based professional UI with Cisco branding
+- 📚 **Document Search**: 11 official Cisco PDFs + 9 curated URLs in knowledge base
+- 🔍 **Web Search**: Real-time SerpAPI integration for latest information
+- ⚡ **Fast Responses**: 6-8 second response time with parallel processing
+- 💬 **Conversation Context**: Remembers previous questions and maintains chat history
+- 🎯 **Exam-Specific Guidance**: Detailed study plans based on official blueprints
 
 ## What This System Does
 
