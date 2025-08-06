@@ -144,29 +144,33 @@ system_prompt = """You are a knowledgeable network automation expert who also pr
 
 **Key learning paths for automation certifications:**
 - Network Automation Engineer path
-- Developing Applications Using Cisco Core Platforms APIs
+- https://learningnetwork.cisco.com/s/devnet-associate-exam-topics
+- https://learningnetwork.cisco.com/s/devcor-exam-topics
 - Implementing Automation for Enterprise/Service Provider Solutions
 - Understanding Cisco Network Automation Essentials
 
 **IMPORTANT - We have ALL the exam blueprints available:**
+- DevNet Associate: https://learningnetwork.cisco.com/s/devnet-associate-exam-topics
+- DevNet Professional (DEVCOR): https://learningnetwork.cisco.com/s/devcor-exam-topics
 - CCNA Automation: https://learningcontent.cisco.com/documents/marketing/exam-topics/200-901-CCNA-Auto-v2.0-7-9-2025.pdf
 - CCNP Automation (AUTOCOR): https://learningcontent.cisco.com/documents/marketing/exam-topics/350-901-AUTOCOR-v2.0-7-9-2025.pdf
 - CCIE Automation: https://learningcontent.cisco.com/documents/marketing/exam-topics/CCIE_Automation_V1.1_BP.pdf
 - ENAUTO: https://learningcontent.cisco.com/documents/marketing/exam-topics/300-435-ENAUTO-v2.0-7-9-2025.pdf
 - DCNAUTO: https://learningcontent.cisco.com/documents/marketing/exam-topics/300-635-DCNAUTO-v2.0-7-9-2025.pdf
 
-**CRITICAL: Factual Accuracy Requirements:**
-- February 3, 2026 is when DevNet certifications EVOLVE INTO the new Automation track (CCNA/CCNP/CCIE Automation)
-- The new Automation certifications (CCNA Automation, CCNP Automation, CCIE Automation) LAUNCH February 3, 2026
-- Current DevNet certifications are available until February 3, 2026
-- New Automation certification blueprints will be available closer to the February 2026 launch date
-- Base answers on actual PDF content from our knowledge base, not speculation
+**CRITICAL: DevNet to Automation Certification RENAMING (February 3, 2026):**
+- DevNet certifications are being RENAMED to Automation certifications - SAME EXAMS, NEW NAMES
+- DevNet Associate → CCNA Automation (same exam content, new certification name)
+- DevNet Professional → CCNP Automation (same exam content, new certification name)
+- DevNet Expert → CCIE Automation (same exam content, new certification name)
+- DEVCOR (350-901) exam → AUTOCOR (350-901) exam (SAME EXAM, just renamed)
+- Current DevNet certifications available until February 3, 2026
+- After February 3, 2026: same exams continue but under new Automation certification names
 
-**CCNP Automation Certification Structure (February 2026):**
+**CCNP Automation = DevNet Professional (February 2026):**
 - CCNP Automation requires: AUTOCOR (350-901) Core Exam + ONE Concentration Exam
-- DevNet Specialist certifications CAN be used as concentration exams for CCNP Automation
-- DevNet Professional structure becomes CCNP Automation structure (Core + Concentration)
-- DevNet Specialist exams (like DevOps) will be renamed but remain valid concentrations
+- This is IDENTICAL to current DevNet Professional structure (DEVCOR + concentration)
+- DevNet Specialist certifications become concentration exams for CCNP Automation
 - Example: AUTOCOR (350-901) + DevNet DevOps Specialist = CCNP Automation certification
 
 **For certification-specific queries:**
@@ -190,10 +194,7 @@ def chat(user_query, conversation_history=None):
     try:
         # Check if this is a simple greeting or casual interaction
         casual_patterns = ['hi', 'hello', 'hey', 'thanks', 'thank you', 'bye', 'goodbye']
-        # Don't treat questions about previous conversations as casual
-        conversation_keywords = ['last', 'previous', 'before', 'earlier', 'question', 'answer', 'asked', 'said']
-        has_conversation_reference = any(keyword in user_query.lower() for keyword in conversation_keywords)
-        is_casual = any(pattern in user_query.lower().strip() for pattern in casual_patterns) and len(user_query.strip()) < 20 and not has_conversation_reference
+        is_casual = any(pattern in user_query.lower().strip() for pattern in casual_patterns) and len(user_query.strip()) < 20
         
         if is_casual:
             # For casual interactions, respond directly without document search
