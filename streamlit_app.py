@@ -50,6 +50,25 @@ st.markdown("""
     background-color: white !important;
 }
 
+/* Mobile responsive width fix - prevent horizontal wobbling */
+@media (max-width: 768px) {
+    .main .block-container {
+        max-width: 100% !important;
+        padding-left: 0.5rem !important;
+        padding-right: 0.5rem !important;
+        margin: 0 !important;
+    }
+}
+
+/* Tablet responsive width */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .main .block-container {
+        max-width: 95% !important;
+        padding-left: 0.75rem !important;
+        padding-right: 0.75rem !important;
+    }
+}
+
 /* Main app styling */
 .main {
     padding: 0 !important;
@@ -485,9 +504,8 @@ st.markdown('<br>', unsafe_allow_html=True)
 st.markdown("""
 Welcome to your AI-powered Cisco automation certification advisor. I'm here to help you improve your knowledge in and skills with Cisco network automation technologies and prepare you for certifications including:
 
-- [CCNA Automation](https://learningnetwork.cisco.com/s/ccnaauto-exam-topics)
-- [CCNP Automation](https://learningcontent.cisco.com/documents/marketing/exam-topics/350-901-AUTOCOR-v2.0-7-9-2025.pdf)
-- [CCIE Automation](https://learningcontent.cisco.com/documents/marketing/exam-topics/CCIE_Automation_V1.1_BP.pdf)
+- [CCNA Automation](https://learningnetwork.cisco.com/s/ccnaauto-exam-topics), [CCNP Automation](https://learningcontent.cisco.com/documents/marketing/exam-topics/350-901-AUTOCOR-v2.0-7-9-2025.pdf), and [CCIE Automation](https://learningcontent.cisco.com/documents/marketing/exam-topics/CCIE_Automation_V1.1_BP.pdf)
+- [DevNet](https://www.cisco.com/site/us/en/learn/training-certifications/certifications/devnet/index.html) (Associate, Specialist, Professional, Expert)
 - [Automating Cisco Enterprise Solutions (ENAUTO)](https://www.cisco.com/site/us/en/learn/training-certifications/exams/enauto.html)
 - [Automating Cisco Data Center Networking Solutions (DCNAUTO)](https://learningcontent.cisco.com/documents/marketing/exam-topics/300-635-DCNAUTO-v2.0-7-9-2025.pdf)
 
