@@ -24,8 +24,8 @@ RUN apt-get update && apt-get install -y \
 COPY requirements-lite.txt .
 
 # Install Python dependencies with uv (much faster)
-# Install PyTorch first (CPU-only)
-RUN uv pip install --system torch==2.2.0 --index-url https://download.pytorch.org/whl/cpu
+# Install PyTorch first (CPU-only) - Updated for uint64 compatibility
+RUN uv pip install --system torch==2.3.1 --index-url https://download.pytorch.org/whl/cpu
 
 # Install FAISS separately to avoid build issues
 RUN uv pip install --system faiss-cpu==1.8.0 --only-binary=faiss-cpu
