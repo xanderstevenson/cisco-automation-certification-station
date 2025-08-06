@@ -23,8 +23,8 @@ RUN pip install uv
 # Copy requirements first for better caching
 COPY requirements-streamlit.txt .
 
-# Install PyTorch first (CPU-only for smaller image)
-RUN uv pip install --system torch==2.2.0 --index-url https://download.pytorch.org/whl/cpu
+# Install PyTorch first (CPU-only for smaller image) - Updated version for compatibility
+RUN uv pip install --system torch==2.3.1 --index-url https://download.pytorch.org/whl/cpu
 
 # Install FAISS separately to avoid build issues
 RUN uv pip install --system --only-binary=faiss-cpu faiss-cpu==1.8.0
