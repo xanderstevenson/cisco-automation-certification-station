@@ -190,7 +190,10 @@ def chat(user_query, conversation_history=None):
     try:
         # Check if this is a simple greeting or casual interaction
         casual_patterns = ['hi', 'hello', 'hey', 'thanks', 'thank you', 'bye', 'goodbye']
-        is_casual = any(pattern in user_query.lower().strip() for pattern in casual_patterns) and len(user_query.strip()) < 20
+        # Don't treat questions about previous conversations as casual
+        conversation_keywords = ['last', 'previous', 'before', 'earlier', 'question', 'answer', 'asked', 'said']
+        has_conversation_reference = any(keyword in user_query.lower() for keyword in conversation_keywords)
+        is_casual = any(pattern in user_query.lower().strip() for pattern in casual_patterns) and len(user_query.strip()) < 20 and not has_conversation_reference
         
         if is_casual:
             # For casual interactions, respond directly without document search
@@ -199,7 +202,7 @@ def chat(user_query, conversation_history=None):
             if conversation_history:
                 conversation_context = "\n\n**Previous Conversation:**\n"
                 for msg in conversation_history[-4:]:  # Last 4 messages for context
-                    role = "You" if msg['role'] == 'assistant' else "User"
+                    role = "Assistant" if msg['role'] == 'assistant' else "User"
                     conversation_context += f"{role}: {msg['content'][:200]}...\n"
             
             simple_prompt = f"""{system_prompt}{conversation_context}
@@ -236,7 +239,7 @@ Respond naturally and briefly to this casual interaction. Be friendly and helpfu
                 if conversation_history:
                     conversation_context = "\n\n**Previous Conversation:**\n"
                     for msg in conversation_history[-4:]:  # Last 4 messages for context
-                        role = "You" if msg['role'] == 'assistant' else "User"
+                        role = "Assistant" if msg['role'] == 'assistant' else "User"
                         conversation_context += f"{role}: {msg['content'][:200]}...\n"
                 
                 enhanced_prompt = f"""{system_prompt}{conversation_context}
