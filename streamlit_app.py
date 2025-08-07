@@ -5,11 +5,12 @@ Open-source alternative to Chainlit for commercial deployment
 """
 
 import streamlit as st
-import os
 from hybrid_rag_gpt import chat
 from PIL import Image
 import base64
 import time
+from collections import defaultdict
+import hashlib
 # Page configuration
 st.set_page_config(
     page_title="Cisco Automation Certification Station",
@@ -499,6 +500,66 @@ header[data-testid="stHeader"] {
 </style>
 """, unsafe_allow_html=True)
 
+# Rate limiting configuration
+if 'user_requests' not in st.session_state:
+    st.session_state.user_requests = defaultdict(list)
+
+MAX_REQUESTS_PER_MINUTE = 10
+RATE_LIMIT_WINDOW = 60  # seconds
+
+def get_user_identifier():
+    """Get a unique identifier for rate limiting (IP-based fallback to session)"""
+    try:
+        # Try to get real IP from headers (works in most deployments)
+        forwarded_for = st.context.headers.get("X-Forwarded-For")
+        if forwarded_for:
+            return hashlib.md5(forwarded_for.split(',')[0].strip().encode()).hexdigest()[:12]
+        
+        real_ip = st.context.headers.get("X-Real-IP") 
+        if real_ip:
+            return hashlib.md5(real_ip.encode()).hexdigest()[:12]
+            
+    except:
+        pass
+    
+    # Fallback to session-based limiting
+    if 'user_id' not in st.session_state:
+        st.session_state.user_id = hashlib.md5(str(time.time()).encode()).hexdigest()[:12]
+    return st.session_state.user_id
+
+def check_rate_limit():
+    """Check if user has exceeded rate limit"""
+    user_id = get_user_identifier()
+    now = time.time()
+    
+    # Clean old requests outside the time window
+    st.session_state.user_requests[user_id] = [
+        req_time for req_time in st.session_state.user_requests[user_id] 
+        if now - req_time < RATE_LIMIT_WINDOW
+    ]
+    
+    # Check if user has exceeded limit
+    if len(st.session_state.user_requests[user_id]) >= MAX_REQUESTS_PER_MINUTE:
+        return False, len(st.session_state.user_requests[user_id])
+    
+    # Add current request
+    st.session_state.user_requests[user_id].append(now)
+    return True, len(st.session_state.user_requests[user_id])
+
+def show_rate_limit_message(request_count):
+    """Display rate limit exceeded message"""
+    st.error(f"""
+    🚫 **Rate Limit Exceeded**
+    
+    You've made {request_count} requests in the last minute. 
+    Please wait before sending another message.
+    
+    **Limit**: {MAX_REQUESTS_PER_MINUTE} requests per minute
+    **Why**: This helps keep costs manageable and ensures fair access for everyone.
+    
+    ⏰ Try again in about a minute!
+    """)
+
 # Use form for automatic input clearing
 with st.form(key="chat_form", clear_on_submit=True):
     user_input = st.text_input(
@@ -511,6 +572,12 @@ with st.form(key="chat_form", clear_on_submit=True):
 
 # Process user input when submitted
 if submit_button and user_input:
+    # Check rate limit first
+    allowed, request_count = check_rate_limit()
+    if not allowed:
+        show_rate_limit_message(request_count)
+        st.stop()
+    
     # Input validation and sanitization
     if len(user_input.strip()) == 0:
         st.warning("⚠️ Please enter a valid question.")
