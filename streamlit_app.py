@@ -5,24 +5,101 @@ Open-source alternative to Chainlit for commercial deployment
 """
 
 import streamlit as st
+import os
 from hybrid_rag_gpt import chat
 from PIL import Image
 import base64
 import time
 from collections import defaultdict
 import hashlib
+
 # Page configuration
 st.set_page_config(
     page_title="Cisco Automation Certification Station",
-    page_icon="public/Cisco-automation-certification-station.png",
+    page_icon="🔧",
     layout="wide",
-    initial_sidebar_state="collapsed",
-    menu_items={
-        'Get Help': None,
-        'Report a bug': None,
-        'About': None
-    }
+    initial_sidebar_state="collapsed"
 )
+
+# Initialize session state for loading
+if 'models_loaded' not in st.session_state:
+    st.session_state.models_loaded = False
+if 'loading_complete' not in st.session_state:
+    st.session_state.loading_complete = False
+
+# Show loading screen immediately if models aren't loaded
+if not st.session_state.models_loaded:
+    # Custom loading screen with Cisco branding
+    st.markdown("""
+    <div style="
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 80vh;
+        background: linear-gradient(135deg, #1BA0D7 0%, #0D5F8A 100%);
+        color: white;
+        text-align: center;
+        border-radius: 10px;
+        margin: 20px 0;
+        padding: 40px;
+    ">
+        <div style="font-size: 3em; margin-bottom: 20px;">🔧</div>
+        <h1 style="color: white; margin-bottom: 10px;">Cisco Automation Certification Station</h1>
+        <h3 style="color: #E8F4FD; margin-bottom: 30px;">Loading AI Models & Resources...</h3>
+        <div style="
+            width: 300px;
+            height: 6px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        ">
+            <div style="
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(90deg, #00D4AA, #1BA0D7, #00D4AA);
+                border-radius: 3px;
+                animation: loading 2s ease-in-out infinite;
+            "></div>
+        </div>
+        <p style="color: #E8F4FD; font-size: 1.1em;">⚡ Preparing hybrid RAG system...</p>
+        <p style="color: #E8F4FD; font-size: 1.1em;">📚 Loading certification knowledge base...</p>
+        <p style="color: #E8F4FD; font-size: 1.1em;">🤖 Initializing AI models...</p>
+    </div>
+    
+    <style>
+    @keyframes loading {
+        0% { transform: translateX(-100%); }
+        50% { transform: translateX(0%); }
+        100% { transform: translateX(100%); }
+    }
+    </style>
+    """, unsafe_allow_html=True)
+    
+    # Preload models in background
+    try:
+        # Test if chat function works (this will load models)
+        from hybrid_rag_gpt import chat
+        
+        # Perform a lightweight test to initialize models
+        test_response = chat("test", preload_only=True)
+        
+        # Mark models as loaded
+        st.session_state.models_loaded = True
+        st.session_state.loading_complete = True
+        
+        # Force rerun to show main interface
+        st.rerun()
+        
+    except Exception as e:
+        st.error(f"Error loading models: {str(e)}")
+        st.info("Continuing with on-demand loading...")
+        st.session_state.models_loaded = True
+        st.rerun()
+    
+    # Stop here until models are loaded
+    st.stop()
 
 # Note: Removed custom HTML loading screen to eliminate double loading screen issue
 # Keeping only the nice Streamlit loading screen that works properly

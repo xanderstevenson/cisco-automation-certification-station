@@ -211,10 +211,20 @@ system_prompt = """You are a knowledgeable network automation expert who also pr
 - Format as proper markdown links when possible
 - Provide specific URLs from verified list rather than generic descriptions"""
 
-def chat(user_query, conversation_history=None):
+def chat(user_input, conversation_history=None, preload_only=False):
     """Hybrid RAG chat function using Gemini API with conversation memory"""
     if conversation_history is None:
         conversation_history = []
+    
+    # If preload_only is True, just initialize models and return
+    if preload_only:
+        try:
+            load_vector_store()
+            genai.configure(api_key=api_key)
+            model = genai.GenerativeModel('gemini-1.5-flash')
+            return "Models preloaded successfully"
+        except Exception as e:
+            return f"Preload failed: {str(e)}"
     # Check if API key is available
     if not api_key:
         return "❌ **Configuration Error**: Google API key is not configured. Please check your environment variables and redeploy the application."
