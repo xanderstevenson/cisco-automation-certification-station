@@ -474,7 +474,6 @@ if not st.session_state.system_ready:
     st.rerun()  # Refresh to show main interface
 
 # CSS Background Approach with base64 encoding for image rendering
-import base64
 
 logo_path = "public/Cisco-automation-certification-station.png"
 if os.path.exists(logo_path):
