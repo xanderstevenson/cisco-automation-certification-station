@@ -21,10 +21,62 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
+# Initialize system loading state IMMEDIATELY
+if "system_ready" not in st.session_state:
+    st.session_state.system_ready = False
 
-
-# Note: Removed custom HTML loading screen to eliminate double loading screen issue
-# Keeping only the nice Streamlit loading screen that works properly
+# Show custom loading screen IMMEDIATELY if system not ready
+if not st.session_state.system_ready:
+    # Add top padding
+    st.markdown('<div style="padding-top: 3rem;"></div>', unsafe_allow_html=True)
+    
+    # Display certification badges image at original size
+    st.image("public/Automation_Cert_badges.png")
+    
+    st.markdown("""
+    <div style="text-align: center; padding: 1rem;">
+        <h2>Cisco Automation Certification Station</h2>
+        <p>Initializing AI models and knowledge base...</p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Show loading progress
+    progress_bar = st.progress(0)
+    status_text = st.empty()
+    
+    # ACTUALLY preload models during loading screen (not fake progress)
+    try:
+        # Step 1: Load embedding models
+        progress_bar.progress(25)
+        status_text.text("Loading embedding models...")
+        from rag.retriever import DocumentRetriever
+        retriever = DocumentRetriever()
+        
+        # Step 2: Initialize vector store
+        progress_bar.progress(50)
+        status_text.text("Initializing vector store...")
+        # Vector store loads automatically with retriever
+        
+        # Step 3: Load AI models (Google Gemini)
+        progress_bar.progress(75)
+        status_text.text("Loading AI models...")
+        from hybrid_rag_gpt import chat
+        # Test connection to ensure models are ready
+        
+        # Step 4: System ready
+        progress_bar.progress(100)
+        status_text.text("System ready!")
+        time.sleep(0.5)  # Brief pause to show completion
+        
+    except Exception as e:
+        # If preloading fails, continue anyway
+        progress_bar.progress(100)
+        status_text.text(f"Loading complete (some components will load on demand)")
+        time.sleep(0.5)
+    
+    # Mark system as ready and rerun to show main interface
+    st.session_state.system_ready = True
+    st.rerun()
 
 # Load external CSS file
 def load_css(file_name):
@@ -353,62 +405,7 @@ header {visibility: hidden;}
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
-# Initialize system loading state
-if "system_ready" not in st.session_state:
-    st.session_state.system_ready = False
 
-# Cold start loading screen
-if not st.session_state.system_ready:
-    # Add more top padding
-    st.markdown('<div style="padding-top: 3rem;"></div>', unsafe_allow_html=True)
-    
-    # Display certification badges image at original size
-    st.image("public/Automation_Cert_badges.png")
-    
-    st.markdown("""
-    <div style="text-align: center; padding: 1rem;">
-        <h2>Cisco Automation Certification Station</h2>
-        <p>Initializing AI models and knowledge base...</p>
-    </div>
-    """, unsafe_allow_html=True)
-    
-    # Show loading progress
-    progress_bar = st.progress(0)
-    status_text = st.empty()
-    
-    # ACTUALLY preload models during loading screen (not fake progress)
-    try:
-        # Step 1: Load embedding models
-        progress_bar.progress(25)
-        status_text.text("Loading embedding models...")
-        from rag.retriever import DocumentRetriever
-        retriever = DocumentRetriever()
-        
-        # Step 2: Initialize vector store
-        progress_bar.progress(50)
-        status_text.text("Initializing vector store...")
-        # Vector store loads automatically with retriever
-        
-        # Step 3: Load AI models (Google Gemini)
-        progress_bar.progress(75)
-        status_text.text("Loading AI models...")
-        from hybrid_rag_gpt import chat
-        # Test connection to ensure models are ready
-        
-        # Step 4: System ready
-        progress_bar.progress(100)
-        status_text.text("System ready!")
-        time.sleep(0.5)  # Brief pause to show completion
-        
-    except Exception as e:
-        # If preloading fails, continue anyway
-        progress_bar.progress(100)
-        status_text.text(f"Loading complete (some components will load on demand)")
-        time.sleep(0.5)
-    
-    # Mark system as ready
-    st.session_state.system_ready = True
-    st.rerun()  # Refresh to show main interface
 
 # CSS Background Approach with base64 encoding for image rendering
 
