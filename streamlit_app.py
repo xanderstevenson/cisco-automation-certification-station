@@ -21,16 +21,19 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# Initialize system loading state
+# Force immediate display of loading screen by showing it FIRST before any other logic
+# This ensures users see the custom loading page immediately when Streamlit starts
+
+# Always show loading screen first, then check if system is ready
 if "system_ready" not in st.session_state:
     st.session_state.system_ready = False
 
-# Show custom loading screen immediately if system not ready
+# Display loading screen IMMEDIATELY - no conditions
 if not st.session_state.system_ready:
     # Add top padding
     st.markdown('<div style="padding-top: 3rem;"></div>', unsafe_allow_html=True)
     
-    # Display certification badges image at original size
+    # Display certification badges image at original size  
     st.image("public/Automation_Cert_badges.png")
     
     st.markdown("""
@@ -44,35 +47,38 @@ if not st.session_state.system_ready:
     progress_bar = st.progress(0)
     status_text = st.empty()
     
-    # ACTUALLY preload models during loading screen
+    # ACTUALLY preload models during loading screen - make this take longer so users see it
     try:
-        # Step 1: Load embedding models
+        # Step 1: Load embedding models (add delay to show progress)
         progress_bar.progress(25)
         status_text.text("Loading embedding models...")
+        time.sleep(1)  # Let users see this step
         from rag.retriever import DocumentRetriever
         retriever = DocumentRetriever()
         
         # Step 2: Initialize vector store
         progress_bar.progress(50)
         status_text.text("Initializing vector store...")
+        time.sleep(1)  # Let users see this step
         # Vector store loads automatically with retriever
         
         # Step 3: Load AI models (Google Gemini)
         progress_bar.progress(75)
         status_text.text("Loading AI models...")
+        time.sleep(1)  # Let users see this step
         from hybrid_rag_gpt import chat
         # Test connection to ensure models are ready
         
         # Step 4: System ready
         progress_bar.progress(100)
         status_text.text("System ready!")
-        time.sleep(0.5)  # Brief pause to show completion
+        time.sleep(1)  # Let users see completion
         
     except Exception as e:
         # If preloading fails, continue anyway
         progress_bar.progress(100)
         status_text.text(f"Loading complete (some components will load on demand)")
-        time.sleep(0.5)
+        time.sleep(1)
     
     # Mark system as ready and rerun to show main interface
     st.session_state.system_ready = True
