@@ -16,7 +16,7 @@ import hashlib
 # Page configuration
 st.set_page_config(
     page_title="Cisco Automation Certification Station",
-    page_icon="🔧",
+    page_icon="🏅",
     layout="wide",
     initial_sidebar_state="collapsed"
 )
@@ -433,7 +433,7 @@ if os.path.exists(logo_path):
     </div>
     """, unsafe_allow_html=True)
 else:
-    st.markdown('<h3 style="text-align: center;">🔧 Cisco Automation Certification Station</h3>', unsafe_allow_html=True)
+    st.markdown('<h3 style="text-align: center;">🏅 Cisco Automation Certification Station</h3>', unsafe_allow_html=True)
 
 # Add "Learn with Cisco" heading bigger and closer to logo (matching logo-to-CISCO spacing)
 st.markdown('<h3 style="text-align: center; margin-top: -1.5rem; margin-bottom: 1rem; font-size: 18px;"><a href="https://www.cisco.com/site/us/en/learn/training-certifications/index.html" target="_blank" style="color: #1BA0D7; text-decoration: none; font-weight: 600;">Learn with Cisco</a></h3>', unsafe_allow_html=True)
