@@ -3,6 +3,7 @@
 
 # Core Framework
 streamlit==1.28.1
+flask==2.3.3
 
 # AI and ML Libraries
 google-generativeai==0.3.2

@@ -163,7 +163,7 @@
             } else {
                 statusText.textContent = 'Redirecting to application...';
                 setTimeout(() => {
-                    window.location.reload();
+                    window.location.href = '/app';
                 }, 1000);
             }
         }
@@ -175,7 +175,7 @@
         setTimeout(() => {
             if (progress < 100) {
                 statusText.textContent = 'Loading application interface...';
-                window.location.reload();
+                window.location.href = '/app';
             }
         }, 15000);
     </script>

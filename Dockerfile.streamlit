@@ -45,11 +45,11 @@ COPY .env .
 RUN useradd -m -u 1000 streamlit && chown -R streamlit:streamlit /app
 USER streamlit
 
-# Expose Streamlit port
-EXPOSE 8501
+# Expose Flask server port
+EXPOSE 8080
 
-# Health check
-HEALTHCHECK CMD curl --fail http://localhost:8501/_stcore/health
+# Health check for Flask server
+HEALTHCHECK CMD curl --fail http://localhost:8080/
 
-# Run Streamlit app
-CMD ["streamlit", "run", "streamlit_app.py", "--server.port=8501", "--server.address=0.0.0.0", "--server.headless=true", "--server.fileWatcherType=none", "--browser.gatherUsageStats=false"]
+# Run Flask server (which starts Streamlit internally)
+CMD ["python", "server.py"]
