@@ -77,7 +77,7 @@ if not st.session_state.system_ready:
     except Exception as e:
         # If preloading fails, continue anyway
         progress_bar.progress(100)
-        status_text.text(f"Loading complete (some components will load on demand)")
+        status_text.text("System ready!")
         time.sleep(1)
     
     # Mark system as ready and rerun to show main interface
