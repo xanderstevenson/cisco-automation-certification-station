@@ -13,9 +13,14 @@ import time
 # Page configuration
 st.set_page_config(
     page_title="Cisco Automation Certification Station",
-    page_icon="🎖️",
+    page_icon="public/Cisco-automation-certification-station.png",
     layout="wide",
-    initial_sidebar_state="collapsed"
+    initial_sidebar_state="collapsed",
+    menu_items={
+        'Get Help': None,
+        'Report a bug': None,
+        'About': None
+    }
 )
 
 # Load external CSS file
@@ -351,9 +356,12 @@ if "system_ready" not in st.session_state:
 
 # Cold start loading screen
 if not st.session_state.system_ready:
+    # Display certification badges image
+    st.image("public/Automation_Cert_badges.png", width=400)
+    
     st.markdown("""
-    <div style="text-align: center; padding: 2rem;">
-        <h2>🚀 Cisco Automation Certification Station</h2>
+    <div style="text-align: center; padding: 1rem;">
+        <h2>Cisco Automation Certification Station</h2>
         <p>Initializing AI models and knowledge base...</p>
     </div>
     """, unsafe_allow_html=True)

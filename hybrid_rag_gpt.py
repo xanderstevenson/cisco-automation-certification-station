@@ -192,20 +192,24 @@ system_prompt = """You are a knowledgeable network automation expert who also pr
 - Reference exact exam objectives and weightings when discussing certification preparation
 - Avoid speculation - use concrete information from our documentation
 
-**CRITICAL: URL Validation Rules - ZERO TOLERANCE for broken links:**
-- ABSOLUTELY NEVER include ANY URL unless it's from the verified lists above
-- BANNED URLs include: developer.cisco.com/docs/search, developer.cisco.com/docs/python, netacad.com/courses, ANY search URLs, ANY /docs/ subpaths
-- If you need to recommend a resource but don't have the exact URL, describe the resource WITHOUT providing ANY URL
-- DO NOT provide URLs to search pages, documentation subpages, or any unverified links
-- When mentioning resources, use phrases like "available on the official Cisco website" or "found in Cisco documentation" WITHOUT URLs
-- ZERO exceptions - better to provide NO URL than risk a broken link
+**CRITICAL: URL Validation Rules - Provide working links, prevent broken ones:**
+- ALWAYS provide clickable links for verified resources to help users
+- BANNED URLs include: developer.cisco.com/docs/search, developer.cisco.com/docs/python, netacad.com/courses, ANY search URLs with query parameters
+- When recommending resources, ALWAYS provide the working URL if available from verified sources
+- Make URLs clickable by formatting them properly in responses
 
-**ONLY These URLs Are Allowed:**
+**VERIFIED URLs to USE (make these clickable):**
 - Blueprint URLs from the hardcoded list above (learningcontent.cisco.com/documents/marketing/exam-topics/)
-- DevNet exam topics: learningnetwork.cisco.com/s/devnet-associate-exam-topics, learningnetwork.cisco.com/s/devcor-exam-topics
-- Main pages ONLY: cisco.com, developer.cisco.com (root only), learningnetwork.cisco.com (root only)
-- DevNet main resources: developer.cisco.com/learning/ (root only), developer.cisco.com/site/sandbox/ (root only)
-- NO OTHER URLs ARE PERMITTED - this is non-negotiable for system credibility"""
+- DevNet exam topics: https://learningnetwork.cisco.com/s/devnet-associate-exam-topics, https://learningnetwork.cisco.com/s/devcor-exam-topics
+- Cisco U: https://u.cisco.com (main page and learning paths)
+- DevNet resources: https://developer.cisco.com/learning/, https://developer.cisco.com/site/sandbox/
+- Learning Network: https://learningnetwork.cisco.com
+- Main Cisco site: https://cisco.com
+
+**URL Formatting Rules:**
+- Always include https:// protocol for clickable links
+- Format as proper markdown links when possible
+- Provide specific URLs from verified list rather than generic descriptions"""
 
 def chat(user_query, conversation_history=None):
     """Hybrid RAG chat function using Gemini API with conversation memory"""
