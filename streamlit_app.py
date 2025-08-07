@@ -6,9 +6,8 @@ Open-source alternative to Chainlit for commercial deployment
 
 import streamlit as st
 import os
-# Lazy import heavy dependencies to speed up initial page load
-# from hybrid_rag_gpt import chat  # Import only when needed
-# from PIL import Image  # Import only when needed
+from hybrid_rag_gpt import chat
+from PIL import Image
 import base64
 import time
 # Page configuration
@@ -377,18 +376,20 @@ if not st.session_state.system_ready:
     progress_bar = st.progress(0)
     status_text = st.empty()
     
-    # Faster initialization progress simulation
+    # Extended initialization to ensure system is fully ready
     for i in range(100):
         progress_bar.progress(i + 1)
-        if i < 25:
+        if i < 20:
             status_text.text("Loading embedding models...")
-        elif i < 50:
+        elif i < 40:
             status_text.text("Initializing vector store...")
-        elif i < 75:
-            status_text.text("Preparing AI system...")
+        elif i < 60:
+            status_text.text("Loading AI models...")
+        elif i < 80:
+            status_text.text("Preparing hybrid RAG system...")
         else:
             status_text.text("System ready!")
-        time.sleep(0.01)  # Faster visual effect for quicker loading
+        time.sleep(0.05)  # Longer delay to ensure system is fully loaded
     
     # Mark system as ready
     st.session_state.system_ready = True
@@ -527,21 +528,12 @@ if submit_button and user_input:
     
     # Show thinking indicator
     with st.spinner("⚡ Searching Cisco resources and generating a comprehensive response..."):
-        # Lazy import heavy dependencies only when needed
+        # Get response from hybrid RAG system with conversation history
         try:
-            from hybrid_rag_gpt import chat
-        except ImportError as e:
-            st.error(f"❌ Error importing chat module: {str(e)}")
+            response = chat(sanitized_input, conversation_history=st.session_state.messages)
+        except Exception as e:
+            st.error(f"❌ Error generating response: {str(e)}")
             response = "I apologize, but I'm experiencing technical difficulties. Please try again later."
-        else:
-            # Get response from hybrid RAG system with conversation history
-            conversation_history = [(msg["role"], msg["content"]) for msg in st.session_state.messages[:-1]]
-            
-            try:
-                response = chat(sanitized_input, conversation_history)
-            except Exception as e:
-                st.error(f"❌ Error generating response: {str(e)}")
-                response = "I apologize, but I'm experiencing technical difficulties. Please try again later."
     
     # Add assistant response to session state
     st.session_state.messages.append({"role": "assistant", "content": response})
