@@ -1,4 +1,6 @@
 chainlit
+flask
+streamlit
 transformers
 huggingface_hub
 sentence-transformers
