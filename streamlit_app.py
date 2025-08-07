@@ -5,7 +5,6 @@ Open-source alternative to Chainlit for commercial deployment
 """
 
 import streamlit as st
-import streamlit.components.v1
 import os
 from hybrid_rag_gpt import chat
 from PIL import Image
@@ -24,19 +23,8 @@ st.set_page_config(
     }
 )
 
-# Custom loading page to eliminate blank screen and Streamlit branding
-if "app_initialized" not in st.session_state:
-    # Serve custom loading HTML
-    with open("loading.html", "r") as f:
-        loading_html = f.read()
-    
-    st.components.v1.html(loading_html, height=800, scrolling=False)
-    
-    # Mark app as initialized after a delay
-    import time
-    time.sleep(2)  # Give time for loading page to display
-    st.session_state.app_initialized = True
-    st.rerun()
+# Note: Removed custom HTML loading screen to eliminate double loading screen issue
+# Keeping only the nice Streamlit loading screen that works properly
 
 # Load external CSS file
 def load_css(file_name):
