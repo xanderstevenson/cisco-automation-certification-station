@@ -9,6 +9,7 @@ import os
 from hybrid_rag_gpt import chat
 from PIL import Image
 import base64
+import time
 # Page configuration
 st.set_page_config(
     page_title="Cisco Automation Certification Station",
@@ -340,9 +341,43 @@ header {visibility: hidden;}
 </style>
 """, unsafe_allow_html=True)
 
-# Initialize session state for chat history
+# Initialize session state for conversation history
 if "messages" not in st.session_state:
     st.session_state.messages = []
+
+# Initialize system loading state
+if "system_ready" not in st.session_state:
+    st.session_state.system_ready = False
+
+# Cold start loading screen
+if not st.session_state.system_ready:
+    st.markdown("""
+    <div style="text-align: center; padding: 2rem;">
+        <h2>🚀 Cisco Automation Certification Station</h2>
+        <p>Initializing AI models and knowledge base...</p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Show loading progress
+    progress_bar = st.progress(0)
+    status_text = st.empty()
+    
+    # Simulate initialization progress
+    for i in range(100):
+        progress_bar.progress(i + 1)
+        if i < 30:
+            status_text.text("Loading embedding models...")
+        elif i < 60:
+            status_text.text("Initializing vector store...")
+        elif i < 90:
+            status_text.text("Preparing AI system...")
+        else:
+            status_text.text("System ready!")
+        time.sleep(0.02)  # Small delay for visual effect
+    
+    # Mark system as ready
+    st.session_state.system_ready = True
+    st.rerun()  # Refresh to show main interface
 
 # CSS Background Approach with base64 encoding for image rendering
 import base64

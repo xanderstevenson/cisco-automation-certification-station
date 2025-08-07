@@ -26,19 +26,30 @@ faiss_index = None
 texts = None
 
 def load_vector_store():
-    """Load FAISS vector store and texts"""
+    """Load FAISS vector store and texts - optimized for fast startup and response"""
     global embedding_model, faiss_index, texts
-    if embedding_model is None:
-        model_name = os.getenv("EMBEDDING_MODEL", "paraphrase-MiniLM-L3-v2")
-        embedding_model = SentenceTransformer(model_name)
     
+    # Load embedding model with optimized startup
+    if embedding_model is None:
+        print("[LOADING] Initializing embedding model...")
+        model_name = os.getenv("EMBEDDING_MODEL", "paraphrase-MiniLM-L3-v2")
+        try:
+            embedding_model = SentenceTransformer(model_name)
+            print(f"[READY] Embedding model {model_name} ready")
+        except Exception as e:
+            print(f"[ERROR] Failed to load embedding model: {e}")
+            return False
+    
+    # Load FAISS index with optimized startup
     if faiss_index is None:
+        print("[LOADING] Initializing vector store...")
         try:
             faiss_index = faiss.read_index("rag/index/faiss.index")
             with open("rag/index/texts.pkl", "rb") as f:
                 texts = pickle.load(f)
+            print("[READY] Vector store ready")
         except Exception as e:
-            print(f"Error loading vector store: {e}")
+            print(f"[ERROR] Error loading vector store: {e}")
             return False
     return True
 
@@ -181,19 +192,20 @@ system_prompt = """You are a knowledgeable network automation expert who also pr
 - Reference exact exam objectives and weightings when discussing certification preparation
 - Avoid speculation - use concrete information from our documentation
 
-**CRITICAL: URL Validation Rules - NEVER recommend broken links:**
-- ONLY use URLs from our verified knowledge base and hardcoded blueprint list above
-- NEVER make up or guess URLs (like developer.cisco.com/docs/python or netacad.com/courses/ccna)
-- If you need to recommend a resource but don't have the exact URL, describe the resource WITHOUT providing a URL
-- When in doubt, use general official sites: cisco.com, developer.cisco.com (main page), learningnetwork.cisco.com (main page)
-- ALWAYS verify URLs are from our curated list before including them in responses
-- Better to provide NO URL than a broken URL that damages credibility
+**CRITICAL: URL Validation Rules - ZERO TOLERANCE for broken links:**
+- ABSOLUTELY NEVER include ANY URL unless it's from the verified lists above
+- BANNED URLs include: developer.cisco.com/docs/search, developer.cisco.com/docs/python, netacad.com/courses, ANY search URLs, ANY /docs/ subpaths
+- If you need to recommend a resource but don't have the exact URL, describe the resource WITHOUT providing ANY URL
+- DO NOT provide URLs to search pages, documentation subpages, or any unverified links
+- When mentioning resources, use phrases like "available on the official Cisco website" or "found in Cisco documentation" WITHOUT URLs
+- ZERO exceptions - better to provide NO URL than risk a broken link
 
-**Verified URL Sources ONLY:**
-- Blueprint URLs from the hardcoded list above
-- URLs from our knowledge base (urls.txt content)
-- Official main pages: cisco.com, developer.cisco.com, learningnetwork.cisco.com
-- DevNet main resources: developer.cisco.com/learning/, developer.cisco.com/site/sandbox/"""
+**ONLY These URLs Are Allowed:**
+- Blueprint URLs from the hardcoded list above (learningcontent.cisco.com/documents/marketing/exam-topics/)
+- DevNet exam topics: learningnetwork.cisco.com/s/devnet-associate-exam-topics, learningnetwork.cisco.com/s/devcor-exam-topics
+- Main pages ONLY: cisco.com, developer.cisco.com (root only), learningnetwork.cisco.com (root only)
+- DevNet main resources: developer.cisco.com/learning/ (root only), developer.cisco.com/site/sandbox/ (root only)
+- NO OTHER URLs ARE PERMITTED - this is non-negotiable for system credibility"""
 
 def chat(user_query, conversation_history=None):
     """Hybrid RAG chat function using Gemini API with conversation memory"""
