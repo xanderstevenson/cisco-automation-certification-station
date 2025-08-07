@@ -27,12 +27,14 @@ A production-ready Hybrid Retrieval-Augmented Generation (RAG) system designed f
 - ✅ **Response Quality**: Comprehensive answers based on actual exam blueprints
 
 **Key Features Working:**
-- 🤖 **AI Chat Interface**: Streamlit-based professional UI with Cisco branding
+- 🤖 **AI Chat Interface**: Streamlit-based professional UI with Cisco branding and responsive design
 - 📚 **Document Search**: 11 official Cisco PDFs + 9 curated URLs in knowledge base
 - 🔍 **Web Search**: Real-time SerpAPI integration for latest information
 - ⚡ **Fast Responses**: 6-8 second response time with parallel processing
 - 💬 **Conversation Context**: Remembers previous questions and maintains chat history
 - 🎯 **Exam-Specific Guidance**: Detailed study plans based on official blueprints
+- 🔗 **Working URL Validation**: Provides only verified, clickable resource links
+- 📱 **Mobile Responsive**: Optimized for all screen sizes with proper CSS media queries
 
 ## What This System Does
 
