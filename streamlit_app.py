@@ -6,8 +6,9 @@ Open-source alternative to Chainlit for commercial deployment
 
 import streamlit as st
 import os
-from hybrid_rag_gpt import chat
-from PIL import Image
+# Lazy import heavy dependencies to speed up initial page load
+# from hybrid_rag_gpt import chat  # Import only when needed
+# from PIL import Image  # Import only when needed
 import base64
 import time
 # Page configuration
@@ -359,8 +360,11 @@ if "system_ready" not in st.session_state:
 
 # Cold start loading screen
 if not st.session_state.system_ready:
-    # Display certification badges image
-    st.image("public/Automation_Cert_badges.png", width=400)
+    # Add more top padding
+    st.markdown('<div style="padding-top: 3rem;"></div>', unsafe_allow_html=True)
+    
+    # Display certification badges image at original size
+    st.image("public/Automation_Cert_badges.png")
     
     st.markdown("""
     <div style="text-align: center; padding: 1rem;">
@@ -373,18 +377,18 @@ if not st.session_state.system_ready:
     progress_bar = st.progress(0)
     status_text = st.empty()
     
-    # Simulate initialization progress
+    # Faster initialization progress simulation
     for i in range(100):
         progress_bar.progress(i + 1)
-        if i < 30:
+        if i < 25:
             status_text.text("Loading embedding models...")
-        elif i < 60:
+        elif i < 50:
             status_text.text("Initializing vector store...")
-        elif i < 90:
+        elif i < 75:
             status_text.text("Preparing AI system...")
         else:
             status_text.text("System ready!")
-        time.sleep(0.02)  # Small delay for visual effect
+        time.sleep(0.01)  # Faster visual effect for quicker loading
     
     # Mark system as ready
     st.session_state.system_ready = True
@@ -523,8 +527,21 @@ if submit_button and user_input:
     
     # Show thinking indicator
     with st.spinner("⚡ Searching Cisco resources and generating a comprehensive response..."):
-        # Get response from hybrid RAG system with conversation history
-        response = chat(sanitized_input, conversation_history=st.session_state.messages)
+        # Lazy import heavy dependencies only when needed
+        try:
+            from hybrid_rag_gpt import chat
+        except ImportError as e:
+            st.error(f"❌ Error importing chat module: {str(e)}")
+            response = "I apologize, but I'm experiencing technical difficulties. Please try again later."
+        else:
+            # Get response from hybrid RAG system with conversation history
+            conversation_history = [(msg["role"], msg["content"]) for msg in st.session_state.messages[:-1]]
+            
+            try:
+                response = chat(sanitized_input, conversation_history)
+            except Exception as e:
+                st.error(f"❌ Error generating response: {str(e)}")
+                response = "I apologize, but I'm experiencing technical difficulties. Please try again later."
     
     # Add assistant response to session state
     st.session_state.messages.append({"role": "assistant", "content": response})
