@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cisco Automation Certification Station</title>
+    <link rel="icon" href="public/Cisco-automation-certification-station.png" type="image/png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: #2c3e50;
+        }
+        
+        .loading-container {
+            text-align: center;
+            max-width: 800px;
+            padding: 4rem 2rem 2rem 2rem;
+        }
+        
+        .cisco-logo {
+            width: auto;
+            height: auto;
+            max-width: 100%;
+            margin-bottom: 2rem;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1));
+        }
+        
+        .loading-title {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #1BA0D7;
+            margin-bottom: 1rem;
+        }
+        
+        .loading-subtitle {
+            font-size: 1.1rem;
+            color: #6c757d;
+            margin-bottom: 2rem;
+        }
+        
+        .progress-container {
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto 1rem;
+            background-color: #e9ecef;
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .progress-bar {
+            height: 8px;
+            background: linear-gradient(90deg, #1BA0D7, #5CB3D9);
+            border-radius: 25px;
+            transition: width 0.3s ease;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        
+        .status-text {
+            font-size: 0.9rem;
+            color: #495057;
+            margin-bottom: 2rem;
+            min-height: 1.2rem;
+        }
+        
+        .cisco-branding {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            font-size: 0.8rem;
+            color: #6c757d;
+        }
+        
+        .cisco-branding a {
+            color: #1BA0D7;
+            text-decoration: none;
+        }
+        
+        .cisco-branding a:hover {
+            text-decoration: underline;
+        }
+        
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #1BA0D7;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-left: 10px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="loading-container">
+        <img src="public/Automation_Cert_badges.png" alt="Cisco Automation Certification Badges" class="cisco-logo">
+        
+        <h1 class="loading-title">Cisco Automation Certification Station</h1>
+        <p class="loading-subtitle">Initializing AI models and knowledge base...</p>
+        
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+        
+        <div class="status-text" id="statusText">Starting system...</div>
+        
+        <div class="loading-spinner"></div>
+    </div>
+    
+    <div class="cisco-branding">
+        Powered by <a href="https://www.cisco.com" target="_blank">Cisco</a> | 
+        <a href="https://cloud.google.com" target="_blank">Google Cloud</a>
+    </div>
+    
+    <script>
+        let progress = 0;
+        const progressBar = document.getElementById('progressBar');
+        const statusText = document.getElementById('statusText');
+        
+        const statusMessages = [
+            'Starting system...',
+            'Loading embedding models...',
+            'Initializing vector store...',
+            'Preparing AI system...',
+            'Almost ready...',
+            'System ready!'
+        ];
+        
+        function updateProgress() {
+            if (progress < 100) {
+                progress += Math.random() * 15;
+                if (progress > 100) progress = 100;
+                
+                progressBar.style.width = progress + '%';
+                
+                const messageIndex = Math.floor((progress / 100) * (statusMessages.length - 1));
+                statusText.textContent = statusMessages[messageIndex];
+                
+                setTimeout(updateProgress, 500 + Math.random() * 1000);
+            } else {
+                statusText.textContent = 'Redirecting to application...';
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1000);
+            }
+        }
+        
+        // Start progress animation
+        setTimeout(updateProgress, 500);
+        
+        // Auto-redirect after 15 seconds if Streamlit hasn't loaded
+        setTimeout(() => {
+            if (progress < 100) {
+                statusText.textContent = 'Loading application interface...';
+                window.location.reload();
+            }
+        }, 15000);
+    </script>
+</body>
+</html>
