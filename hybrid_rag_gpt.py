@@ -230,6 +230,10 @@ def chat(user_input, conversation_history=None, preload_only=False):
         return "❌ **Configuration Error**: Google API key is not configured. Please check your environment variables and redeploy the application."
     
     try:
+        # Initialize Gemini model
+        genai.configure(api_key=api_key)
+        model = genai.GenerativeModel('gemini-1.5-flash')
+        
         # Check if this is a simple greeting or casual interaction
         casual_patterns = ['hi', 'hello', 'hey', 'thanks', 'thank you', 'bye', 'goodbye']
         is_casual = any(pattern in user_input.lower().strip() for pattern in casual_patterns) and len(user_input.strip()) < 20
