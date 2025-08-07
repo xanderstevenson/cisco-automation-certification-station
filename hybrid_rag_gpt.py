@@ -232,7 +232,7 @@ def chat(user_input, conversation_history=None, preload_only=False):
     try:
         # Check if this is a simple greeting or casual interaction
         casual_patterns = ['hi', 'hello', 'hey', 'thanks', 'thank you', 'bye', 'goodbye']
-        is_casual = any(pattern in user_query.lower().strip() for pattern in casual_patterns) and len(user_query.strip()) < 20
+        is_casual = any(pattern in user_input.lower().strip() for pattern in casual_patterns) and len(user_input.strip()) < 20
         
         if is_casual:
             # For casual interactions, respond directly without document search
@@ -246,7 +246,7 @@ def chat(user_input, conversation_history=None, preload_only=False):
             
             simple_prompt = f"""{system_prompt}{conversation_context}
 
-**Current User Message:** {user_query}
+**Current User Message:** {user_input}
 
 **Instructions:** 
 Respond naturally and briefly to this casual interaction. Be friendly and helpful, and let the user know you're here to help with Cisco certification questions when they're ready. If the user is asking about a previous question or response, reference the conversation history above.
@@ -256,15 +256,15 @@ Respond naturally and briefly to this casual interaction. Be friendly and helpfu
         else:
             # For technical questions, use optimized RAG pipeline
             try:
-                print(f"[DEBUG] Processing technical query: {user_query}")
+                print(f"[DEBUG] Processing technical query: {user_input}")
                 
                 # Step 1 & 2: Run document and web search in parallel for speed
                 print("[DEBUG] Starting parallel document and web search...")
                 
                 with concurrent.futures.ThreadPoolExecutor(max_workers=2) as executor:
                     # Submit both searches concurrently
-                    doc_future = executor.submit(doc_search, user_query)
-                    web_future = executor.submit(web_search, user_query)
+                    doc_future = executor.submit(doc_search, user_input)
+                    web_future = executor.submit(web_search, user_input)
                     
                     # Get results as they complete
                     doc_context = doc_future.result()
@@ -283,7 +283,7 @@ Respond naturally and briefly to this casual interaction. Be friendly and helpfu
                 
                 enhanced_prompt = f"""{system_prompt}{conversation_context}
 
-**Current User Question:** {user_query}
+**Current User Question:** {user_input}
 
 **Documentation Context:**
 {doc_context}
@@ -322,7 +322,7 @@ Use the context above extensively and cite sources naturally. Be thorough and pr
                 # Fallback to document-only response if full pipeline fails
                 try:
                     print("[DEBUG] Attempting document-only fallback...")
-                    doc_only_context = doc_search(user_query)
+                    doc_only_context = doc_search(user_input)
                     print(f"[DEBUG] Document-only context length: {len(doc_only_context)}")
                     
                     # Build conversation context for fallback
@@ -335,7 +335,7 @@ Use the context above extensively and cite sources naturally. Be thorough and pr
                     
                     fallback_prompt = f"""{system_prompt}{conversation_context}
 
-**Current User Question:** {user_query}
+**Current User Question:** {user_input}
 
 **Available Documentation:**
 {doc_only_context}
