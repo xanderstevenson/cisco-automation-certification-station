@@ -163,7 +163,7 @@
             } else {
                 statusText.textContent = 'Redirecting to application...';
                 setTimeout(() => {
-                    window.location.href = '/app';
+                    window.location.href = '/?app=ready';
                 }, 1000);
             }
         }
@@ -171,13 +171,11 @@
         // Start progress animation
         setTimeout(updateProgress, 500);
         
-        // Auto-redirect after 15 seconds if Streamlit hasn't loaded
+        // Simple approach: redirect to same URL after 10 seconds (Streamlit will be ready)
         setTimeout(() => {
-            if (progress < 100) {
-                statusText.textContent = 'Loading application interface...';
-                window.location.href = '/app';
-            }
-        }, 15000);
+            statusText.textContent = 'Redirecting to application...';
+            window.location.href = '/?app=ready';
+        }, 10000);
     </script>
 </body>
 </html>

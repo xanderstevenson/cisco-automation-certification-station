@@ -6,17 +6,26 @@ Open-source alternative to Chainlit for commercial deployment
 
 import streamlit as st
 import os
-from hybrid_rag_gpt import chat
 from PIL import Image
 import base64
 import time
 from collections import defaultdict
 import hashlib
 
+# LAZY LOADING: Don't import heavy ML models at startup - import only when needed
+def get_chat_function():
+    """Lazy load the chat function to avoid startup delays"""
+    try:
+        from hybrid_rag_gpt import chat
+        return chat
+    except ImportError as e:
+        st.error(f"❌ Could not load AI models: {e}")
+        return None
+
 # Page configuration
 st.set_page_config(
     page_title="Cisco Automation Certification Station",
-    page_icon="🏅",
+    page_icon="public/Cisco-automation-certification-station.png",
     layout="wide",
     initial_sidebar_state="collapsed"
 )
@@ -24,22 +33,71 @@ st.set_page_config(
 # Force immediate display of loading screen by showing it FIRST before any other logic
 # This ensures users see the custom loading page immediately when Streamlit starts
 
-# Always show loading screen first, then check if system is ready
+# DISABLE built-in loading - show cool content immediately
 if "system_ready" not in st.session_state:
-    st.session_state.system_ready = False
+    st.session_state.system_ready = False  # Enable loading screen again
 
-# Display loading screen IMMEDIATELY - no conditions
+# Show loading screen if system not ready
 if not st.session_state.system_ready:
-    # Add top padding
-    st.markdown('<div style="padding-top: 3rem;"></div>', unsafe_allow_html=True)
-    
-    # Display certification badges image at original size  
-    st.image("public/Automation_Cert_badges.png")
-    
     st.markdown("""
-    <div style="text-align: center; padding: 1rem;">
-        <h2>Cisco Automation Certification Station</h2>
-        <p>Initializing AI models and knowledge base...</p>
+    <style>
+        .loading-container {
+            text-align: center;
+            max-width: 800px;
+            padding: 4rem 2rem 2rem 2rem;
+            margin: 0 auto;
+        }
+        .cisco-logo {
+            width: auto;
+            height: auto;
+            max-width: 100%;
+            margin-bottom: 2rem;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1));
+        }
+        .loading-title {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #1BA0D7;
+            margin-bottom: 1rem;
+        }
+        .loading-subtitle {
+            font-size: 1.1rem;
+            color: #6c757d;
+            margin-bottom: 2rem;
+        }
+        .progress-container {
+            width: 100%;
+            height: 8px;
+            background-color: #e9ecef;
+            border-radius: 4px;
+            margin: 1rem 0;
+            overflow: hidden;
+        }
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #1BA0D7 0%, #0d7aa7 100%);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #1BA0D7;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-left: 10px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+    <div class="loading-container">
+        <img src="public/Automation_Cert_badges.png" alt="Cisco Automation Certification Badges" class="cisco-logo">
+        <div class="loading-title">Cisco Automation Certification Station</div>
+        <div class="loading-subtitle">Initializing AI models and knowledge base...</div>
     </div>
     """, unsafe_allow_html=True)
     
@@ -48,49 +106,62 @@ if not st.session_state.system_ready:
     status_text = st.empty()
     
     # ACTUALLY preload models during loading screen - make this take longer so users see it
+    # Step 1: Load embedding models (add delay to show progress)
+    progress_bar.progress(25)
+    status_text.text("Loading embedding models...")
+    time.sleep(1)  # Let users see this step
+    
     try:
-        # Step 1: Load embedding models (add delay to show progress)
-        progress_bar.progress(25)
-        status_text.text("Loading embedding models...")
-        time.sleep(1)  # Let users see this step
         from rag.retriever import DocumentRetriever
         retriever = DocumentRetriever()
-        
-        # Step 2: Initialize vector store
-        progress_bar.progress(50)
-        status_text.text("Initializing vector store...")
-        time.sleep(1)  # Let users see this step
-        # Vector store loads automatically with retriever
-        
-        # Step 3: Load AI models (Google Gemini)
-        progress_bar.progress(75)
-        status_text.text("Loading AI models...")
-        time.sleep(1)  # Let users see this step
-        from hybrid_rag_gpt import chat
-        # Test connection to ensure models are ready
-        
-        # Step 4: System ready
-        progress_bar.progress(100)
-        status_text.text("System ready!")
-        time.sleep(1)  # Let users see completion
-        
+        status_text.text("✅ Embedding models loaded!")
     except Exception as e:
-        # If preloading fails, continue anyway
-        progress_bar.progress(100)
-        status_text.text("System ready!")
-        time.sleep(1)
+        status_text.text("⚠️ Embedding models loading...")
+        print(f"Warning: Could not load retriever: {e}")
     
-    # Mark system as ready and rerun to show main interface
+    # Step 2: Initialize vector store
+    progress_bar.progress(50)
+    status_text.text("Initializing vector store...")
+    time.sleep(1)  # Let users see this step
+    status_text.text("✅ Vector store ready!")
+    
+    # Step 3: Load AI models (Google Gemini)
+    progress_bar.progress(75)
+    status_text.text("Loading AI models...")
+    time.sleep(1)  # Let users see this step
+    
+    try:
+        from hybrid_rag_gpt import chat
+        status_text.text("✅ AI models loaded!")
+    except Exception as e:
+        status_text.text("⚠️ AI models loading...")
+        print(f"Warning: Could not load chat: {e}")
+    
+    # Step 4: System ready - ALWAYS reach this point
+    progress_bar.progress(100)
+    status_text.text("🎉 System ready!")
+    time.sleep(0.5)  # Brief pause to show completion
+    
+    # Mark system as ready - NO RERUN, seamless transition
     st.session_state.system_ready = True
-    st.rerun()
+    
+    # Clear loading screen elements
+    progress_bar.empty()
+    status_text.empty()
+    
+    # Small delay for smooth transition
+    time.sleep(0.3)
 
-# Load external CSS file
-def load_css(file_name):
-    with open(file_name) as f:
-        st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
+else:
+    # Perfect working app displays when system is ready
 
-# Load the external CSS
-load_css('style.css')
+    # Load external CSS file
+    def load_css(file_name):
+        with open(file_name) as f:
+            st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
+
+    # Load the external CSS
+    load_css('style.css')
 
 # Custom CSS for Cisco branding
 st.markdown("""
@@ -613,7 +684,11 @@ if submit_button and user_input:
     with st.spinner("⚡ Searching Cisco resources and generating a comprehensive response..."):
         # Get response from hybrid RAG system with conversation history
         try:
-            response = chat(sanitized_input, conversation_history=st.session_state.messages)
+            chat = get_chat_function()
+            if chat:
+                response = chat(sanitized_input, conversation_history=st.session_state.messages)
+            else:
+                response = "I apologize, but the AI models are currently unavailable. Please try again later."
         except Exception as e:
             st.error(f"❌ Error generating response: {str(e)}")
             response = "I apologize, but I'm experiencing technical difficulties. Please try again later."

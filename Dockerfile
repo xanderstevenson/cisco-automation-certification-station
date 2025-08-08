@@ -47,5 +47,15 @@ EXPOSE 8080
 HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \
     CMD curl -f http://localhost:8080/healthz || exit 1
 
-# Start command for Streamlit (revert to working approach)
-CMD ["streamlit", "run", "streamlit_app.py", "--server.port=8080", "--server.address=0.0.0.0", "--server.headless=true", "--server.fileWatcherType=none", "--browser.gatherUsageStats=false"]
+# Use Python server approach for clean port switching
+CMD ["python3", "server.py"]
+
+# Install nginx and curl for proxy functionality
+USER root
+RUN apt-get update && apt-get install -y nginx curl && rm -rf /var/lib/apt/lists/*
+USER appuser
+
+# Create index.html that immediately shows loading.html
+RUN echo '<!DOCTYPE html><html><head><meta http-equiv="refresh" content="0; url=loading.html"><title>Loading...</title></head><body><script>window.location.href="loading.html";</script></body></html>' > index.html
+
+# Python server handles the loading screen and Streamlit startup

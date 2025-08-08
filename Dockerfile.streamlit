@@ -52,4 +52,4 @@ EXPOSE 8080
 HEALTHCHECK CMD curl --fail http://localhost:8080/
 
 # Run Flask server (which starts Streamlit internally)
-CMD ["python", "server.py"]
+CMD ["streamlit", "run", "streamlit_app.py", "--server.port", "8080", "--server.address", "0.0.0.0", "--server.headless", "true", "--server.enableCORS", "false", "--server.enableXsrfProtection", "false"]
