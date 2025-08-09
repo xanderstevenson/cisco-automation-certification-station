@@ -35,7 +35,14 @@ st.set_page_config(
 
 # DISABLE built-in loading - show cool content immediately
 if "system_ready" not in st.session_state:
-    st.session_state.system_ready = False  # Enable loading screen again
+    # Check if we're being accessed from FastAPI with app=ready parameter
+    query_params = st.query_params
+    if 'app' in query_params and query_params.get('app', [''])[0] == "ready":
+        # Skip loading screen when accessed from FastAPI
+        st.session_state.system_ready = True
+        print("✅ Skipping loading screen - models already loaded by FastAPI")
+    else:
+        st.session_state.system_ready = False  # Enable loading screen for direct access
 
 # Show loading screen if system not ready
 if not st.session_state.system_ready:
