@@ -5,23 +5,15 @@ WORKDIR /app
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
     build-essential \
-    swig \
-    libblas-dev \
-    liblapack-dev \
+    curl \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy requirements first for better caching
-COPY requirements-lite.txt .
+COPY requirements.txt .
 
-# Install PyTorch first (CPU only version to save space)
-RUN pip install --no-cache-dir torch==2.3.1 --index-url https://download.pytorch.org/whl/cpu
-
-# Install FAISS separately to avoid compilation issues
-RUN pip install --no-cache-dir --only-binary :all: faiss-cpu==1.8.0
-
-# Install remaining dependencies
-RUN pip install --no-cache-dir -r requirements-lite.txt
+# Install dependencies
+RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy application code and static files
 COPY . .
@@ -33,15 +25,12 @@ RUN chmod -R a+rX /app/public
 RUN useradd -m appuser
 USER appuser
 
-# Expose ports
-EXPOSE $PORT $STREAMLIT_PORT
+# Expose port 8080 (Cloud Run default)
+EXPOSE 8080
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=30s --start-period=120s --retries=3 \
-    CMD curl --fail http://localhost:$PORT/ || exit 1
+    CMD curl --fail http://localhost:8080/healthz || exit 1
 
-# Copy the updated FastAPI server
-COPY fastapi_server_updated.py .
-
-# Set the entrypoint
-ENTRYPOINT ["python", "fastapi_server_updated.py"]
+# Set the entrypoint to our FastAPI-only version
+ENTRYPOINT ["python", "fastapi_only.py"]

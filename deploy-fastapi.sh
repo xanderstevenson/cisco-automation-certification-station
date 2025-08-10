@@ -123,8 +123,8 @@ gcloud services enable \
 echo -e "\n${CYAN}Building and pushing Docker image...${NC}"
 IMAGE_NAME="gcr.io/$PROJECT_ID/$SERVICE_NAME"
 
-echo -e "${YELLOW}Building with Cloud Build...${NC}"
-gcloud builds submit --tag "$IMAGE_NAME" --timeout=1800s --quiet
+echo -e "${YELLOW}Building with Cloud Build using FastAPI Dockerfile...${NC}"
+gcloud builds submit --tag "$IMAGE_NAME" --file=Dockerfile.fastapi --timeout=1800s --quiet
 
 # Deploy to Cloud Run
 echo -e "\n${GREEN}Deploying to Cloud Run...${NC}"
