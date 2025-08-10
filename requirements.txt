@@ -1,15 +1,17 @@
-chainlit
-flask
-streamlit
-transformers
-huggingface_hub
+# Minimal requirements based on actual imports
+# FastAPI-only Cisco Automation Certification Station
+
+# Web Framework
+fastapi
+uvicorn
+
+# AI and RAG System  
+google-generativeai
 sentence-transformers
 faiss-cpu
-python-dotenv
-torch
-PyPDF2
-beautifulsoup4
-requests
-numpy<2.0
-google-generativeai
+
+# Search API
 google-search-results
+
+# Configuration
+python-dotenv
