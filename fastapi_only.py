@@ -152,7 +152,7 @@ async def main_app():
         /* Learn with Cisco heading */
         .learn-cisco-heading {{
             text-align: center;
-            margin-top: -1.5rem;
+            margin-top: 0.5rem; /* add extra spacing from logo */
             margin-bottom: 1rem;
             font-size: 18px;
         }}
@@ -171,7 +171,7 @@ async def main_app():
         .chat-title {{
             text-align: center;
             margin-bottom: 1rem;
-            font-size: 1.1rem;
+            font-size: 1.3rem; /* increased by 2px */
         }}
 
         .chat-form {{
@@ -336,6 +336,39 @@ async def main_app():
                 margin-right: 0;
             }}
         }}
+        /* Sidebar button */
+        #menuButton {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            width: 40px;
+            height: 40px;
+            border: none;
+            border-radius: 5px;
+            background-color: var(--cisco-blue);
+            color: #fff;
+            cursor: pointer;
+            z-index: 1000;
+        }
+
+        /* Sidebar */
+        #sidebar {
+            position: fixed;
+            top: 0;
+            left: -260px; /* hidden by default */
+            width: 250px;
+            height: 100%;
+            background-color: #ffffff;
+            box-shadow: 2px 0 6px rgba(0,0,0,0.1);
+            transition: left 0.3s ease;
+            padding: 1rem;
+            overflow-y: auto;
+            z-index: 999;
+        }
+
+        #sidebar.open {
+            left: 0;
+        }
     </style>
 </head>
 <body>
@@ -432,6 +465,15 @@ async def main_app():
         </div>
     </div>
 
+    <!-- Sidebar toggle button -->
+    <button id="menuButton">☰</button>
+
+    <!-- Sidebar content -->
+    <div id="sidebar">
+        <h3>Menu</h3>
+        <p>Additional links or information can go here.</p>
+    </div>
+
     <script>
         const chatForm = document.getElementById('chatForm');
         const chatInput = document.getElementById('chatInput');
@@ -502,7 +544,7 @@ async def main_app():
                 messageDiv.innerHTML = `<strong>Cisco Expert:</strong><br/><br/>${{formatResponse(content)}}`;
             }}
             
-            chatMessages.appendChild(messageDiv);
+            chatMessages.prepend(messageDiv); /* newest on top */
             messageDiv.scrollIntoView({{ behavior: 'smooth' }});
         }}
 
@@ -526,6 +568,14 @@ async def main_app():
 
         // Focus on input when page loads
         chatInput.focus();
+
+        /* Sidebar toggle logic */
+        const sidebar = document.getElementById('sidebar');
+        const menuButton = document.getElementById('menuButton');
+
+        menuButton.addEventListener('click', () => {
+            sidebar.classList.toggle('open');
+        });
     </script>
 </body>
 </html>
