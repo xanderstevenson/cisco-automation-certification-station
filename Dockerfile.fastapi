@@ -33,20 +33,15 @@ RUN chmod -R a+rX /app/public
 RUN useradd -m appuser
 USER appuser
 
-# Set environment variables
-ENV PYTHONUNBUFFERED=1
-ENV TOKENIZERS_PARALLELISM=false
-ENV PORT=8080
-
-# Expose the port
-EXPOSE 8080
+# Expose ports
+EXPOSE $PORT $STREAMLIT_PORT
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=30s --start-period=120s --retries=3 \
-    CMD curl --fail http://localhost:8080/ || exit 1
+    CMD curl --fail http://localhost:$PORT/ || exit 1
 
-# Copy the fixed FastAPI proxy server
-COPY fastapi_proxy_fixed.py .
+# Copy the updated FastAPI server
+COPY fastapi_server_updated.py .
 
-# Command to run the application
-CMD ["python", "fastapi_proxy_fixed.py"]
+# Set the entrypoint
+ENTRYPOINT ["python", "fastapi_server_updated.py"]
