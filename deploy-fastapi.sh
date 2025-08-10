@@ -124,7 +124,7 @@ echo -e "\n${CYAN}Building and pushing Docker image...${NC}"
 IMAGE_NAME="gcr.io/$PROJECT_ID/$SERVICE_NAME"
 
 echo -e "${YELLOW}Building with Cloud Build using FastAPI Dockerfile...${NC}"
-gcloud builds submit --tag "$IMAGE_NAME" --file=Dockerfile.fastapi --timeout=1800s --quiet
+gcloud builds submit --config=cloudbuild-fastapi.yaml --timeout=1800s --quiet
 
 # Deploy to Cloud Run
 echo -e "\n${GREEN}Deploying to Cloud Run...${NC}"
