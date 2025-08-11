@@ -136,9 +136,7 @@ async def main_app():
             margin: 0 auto;
             padding: 20px;
             background-color: white;
-            position: relative;  /* Ensure proper stacking context */
-            left: 0;  /* Reset any offset */
-            transform: none;  /* Reset any transforms */
+            box-sizing: border-box;  /* Ensure padding is included in width */
         }}
 
         /* Logo container */
@@ -519,26 +517,13 @@ async def main_app():
         }}
 
         function formatResponse(text) {{
-            // Convert markdown-like formatting to HTML
+            // The response should already be in HTML format
+            // Just ensure URLs are clickable and handle line breaks
             let formatted = text
-                // Convert markdown links [text](url) to HTML links
-                .replace(/\\[(.*?)\\]\\((https?:[^)]+)\\)/g, '<a href="$2" target="_blank">$1</a>')
-                // Convert ** to strong
-                .replace(/\\*\\*(.*?)\\*\\*/g, '<strong>$1</strong>')
-                // Convert remaining *text* to italics
-                .replace(/\\*([^\\*]+)\\*/g, '<em>$1</em>')
-                // Convert code blocks
-                .replace(/`([^`]+)`/g, '<code>$1</code>')
+                // Convert any plain URLs to clickable links
+                .replace(/(?<!href="|">)(https?:\\/\\/[^\\s<)]+)/g, '<a href="$1" target="_blank">$1</a>')
                 // Convert newlines to <br/>
-                .replace(/\\n/g, '<br/>')
-                // Only convert bullet points in lists
-                .replace(/^\\* (.*)$/gm, function(match, content) {
-                    // Only add bullet if it's part of a list (multiple lines starting with *)
-                    if (text.match(/(^|\n)\\* .*(\n\\* .*)+/)) {
-                        return '• ' + content;
-                    }
-                    return content;
-                });
+                .replace(/\\n/g, '<br/>');
             
             return formatted;
         }}

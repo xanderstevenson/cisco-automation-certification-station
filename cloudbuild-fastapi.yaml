@@ -1,7 +1,7 @@
 steps:
-  # Build the container image using the FastAPI Dockerfile
+  # Build the container image using the FastAPI Dockerfile with no cache
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-f', 'Dockerfile.fastapi', '-t', 'gcr.io/$PROJECT_ID/cisco-automation-certification-station', '.']
+    args: ['build', '--no-cache', '-f', 'Dockerfile.fastapi', '-t', 'gcr.io/$PROJECT_ID/cisco-automation-certification-station', '.']
 
   # Push the container image to Container Registry
   - name: 'gcr.io/cloud-builders/docker'

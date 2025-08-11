@@ -28,11 +28,7 @@ RUN chmod -R a+rX /app/public
 # Set environment variables for runtime
 ENV EMBEDDING_MODEL="paraphrase-MiniLM-L3-v2"
 
-# Copy and load environment variables
-COPY .env .
-RUN set -a && . ./.env && set +a && \
-    echo "export GOOGLE_API_KEY=$GOOGLE_API_KEY" >> /etc/profile && \
-    echo "export SERPAPI_API_KEY=$SERPAPI_API_KEY" >> /etc/profile
+# Environment variables will be set at runtime via Cloud Run
 
 # Create non-root user for security
 RUN useradd -m appuser
