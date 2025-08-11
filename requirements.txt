@@ -1,17 +1,17 @@
-# Minimal requirements based on actual imports
-# FastAPI-only Cisco Automation Certification Station
-
 # Web Framework
 fastapi
 uvicorn
 
-# AI and RAG System  
-google-generativeai
-sentence-transformers
-faiss-cpu
+# AI and RAG System
+google-generativeai  # Gemini API
+sentence-transformers  # Text embeddings
+faiss-cpu  # Vector similarity search
+torch  # Required by sentence-transformers (CPU version)
 
 # Search API
-google-search-results
+google-search-results  # SerpAPI for web search
 
-# Configuration
-python-dotenv
+# Utilities
+python-dotenv  # Environment variables
+requests  # HTTP client (used by FastAPI for health checks)
+python-multipart  # File handling
