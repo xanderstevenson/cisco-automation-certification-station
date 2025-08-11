@@ -1,5 +1,10 @@
 <div align="center">
-  <img src="public/Cisco-automation-certification-station.png" alt="Cisco Automation Certification Station">
+  <img src="public/Cisco-automation-certification-station-light.png" alt="Cisco Automation Certification Station" width="600">
+  
+  [![License](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+  [![Python 3.12](https://img.shields.io/badge/python-3.12-blue.svg)](https://www.python.org/downloads/)
+  [![Docker](https://img.shields.io/badge/Docker-2CA5E0?style=flat&logo=docker&logoColor=white)](https://www.docker.com/)
+  [![Google Cloud Run](https://img.shields.io/badge/Google%20Cloud%20Run-4285F4?style=flat&logo=google-cloud&logoColor=white)](https://cloud.google.com/run)
 </div>
 
 
@@ -19,22 +24,22 @@ A production-ready Hybrid Retrieval-Augmented Generation (RAG) system designed f
 
 **🌐 Live Demo:** https://cisco-automation-certification-station-730208496446.us-central1.run.app
 
-**Recent Fixes (August 2025):**
-- ✅ **Conversation Memory**: AI now maintains context across conversations
-- ✅ **DevNet Professional Support**: Full access to DEVCOR exam topics and blueprints
-- ✅ **Certification Mapping**: Clear understanding that DevNet certifications are being renamed to Automation certifications (same exams, new names)
-- ✅ **Spelling Tolerance**: Better handling of minor typos in user input
-- ✅ **Response Quality**: Comprehensive answers based on actual exam blueprints
+**Recent Updates (August 2025):**
+- 🚀 **Migrated to FastAPI**: Replaced Streamlit with a lightweight FastAPI implementation
+- ⚡ **Improved Performance**: Faster response times with optimized model loading
+- 🏗️ **Simplified Architecture**: Single-process design for better reliability
+- 📱 **Enhanced Mobile Experience**: Fully responsive design with improved touch support
+- 🔒 **Better Security**: Reduced attack surface with minimal dependencies
 
-**Key Features Working:**
-- 🤖 **AI Chat Interface**: Streamlit-based professional UI with Cisco branding and responsive design
-- 📚 **Document Search**: 11 official Cisco PDFs + 9 curated URLs in knowledge base
+**Key Features:**
+- 🤖 **AI Chat Interface**: FastAPI-based professional UI with Cisco branding
+- 📚 **Document Search**: 11 official Cisco PDFs + curated URLs in knowledge base
 - 🔍 **Web Search**: Real-time SerpAPI integration for latest information
-- ⚡ **Fast Responses**: 6-8 second response time with parallel processing
-- 💬 **Conversation Context**: Remembers previous questions and maintains chat history
+- ⚡ **Fast Responses**: Optimized response times with parallel processing
+- 💬 **Conversation Context**: Maintains chat history and context
 - 🎯 **Exam-Specific Guidance**: Detailed study plans based on official blueprints
-- 🔗 **Working URL Validation**: Provides only verified, clickable resource links
-- 📱 **Mobile Responsive**: Optimized for all screen sizes with proper CSS media queries
+- 🔗 **Resource Links**: Verified, clickable resource links
+- 📱 **Mobile First**: Fully responsive design for all devices
 
 ## What This System Does
 
@@ -52,31 +57,30 @@ This application serves as an intelligent certification advisor that:
 
 ```mermaid
 flowchart TD
-    A[👤 User Query] --> B{🧠 Intelligent Router}
+    A[👤 User Query] --> B{🧠 FastAPI Server}
     
-    B -->|Casual Greeting| C[💬 Direct Response]
-    B -->|Technical Question| D[🔍 Hybrid RAG Pipeline]
+    B -->|Loads| C[📱 Responsive UI]
+    B -->|Handles| D[🔍 Hybrid RAG Pipeline]
     
-    C --> E[✅ Quick Reply]
+    D --> E[📚 Document Search]
+    D --> F[🌐 Web Search]
     
-    D --> F[📚 Document Search]
-    D --> G[🌐 Web Search]
+    E --> G[(🗂️ FAISS Vector Store<br/>209 Chunks)]
+    F --> H[🔎 SerpAPI<br/>Real-time Results]
     
-    F --> H[(🗂️ FAISS Vector Store<br/>209 Chunks)]
-    G --> I[🔎 SerpAPI<br/>Real-time Results]
+    G --> I[🔗 Context Fusion]
+    H --> I
     
-    H --> J[🔗 Context Fusion]
-    I --> J
+    I --> J[🤖 Google Gemini 1.5 Flash]
     
-    J --> K[🤖 Google Gemini<br/>1.5 Flash AI]
-    
-    K --> L[📋 Comprehensive Response<br/>• Technical Details<br/>• Source Citations<br/>• Study Plans<br/>• Learning Paths]
+    J --> K[📋 Comprehensive Response]
     
     style A fill:#e1f5fe
-    style B fill:#fff3e0
+    style B fill:#e8f5e9
+    style C fill:#e3f2fd
     style D fill:#f3e5f5
-    style K fill:#e8f5e8
-    style L fill:#fff8e1
+    style J fill:#e8f5e8
+    style K fill:#fff8e1
 ```
 
 ### System Components Architecture
@@ -84,35 +88,33 @@ flowchart TD
 ```mermaid
 graph TB
     subgraph "🖥️ Frontend Layer"
-        UI[Streamlit Web Interface<br/>• Chat History<br/>• File Upload<br/>• Cisco Theme]
+        UI[FastAPI Web Interface<br/>• Chat History<br/>• Cisco Theme<br/>• Responsive Design]
     end
     
-    subgraph "⚙️ Processing Layer"
-        ROUTER[Query Router<br/>• Intent Classification<br/>• Route Selection]
-        RAG[Hybrid RAG Engine<br/>• Parallel Processing<br/>• Context Fusion]
+    subgraph "⚙️ API Layer"
+        API[FastAPI Endpoints<br/>• WebSocket Chat<br/>• Static Files<br/>• Health Checks]
     end
     
     subgraph "🤖 AI & Data Layer"
-        GEMINI[Google Gemini 1.5 Flash<br/>• Text Generation<br/>• Context Aware<br/>• Fast Response]
-        SERP[SerpAPI<br/>• Real-time Search<br/>• Current Information]
+        RAG[Hybrid RAG Engine<br/>• Document Search<br/>• Web Search<br/>• Context Fusion]
+        GEMINI[Google Gemini 1.5 Flash<br/>• Text Generation<br/>• Fast Response]
+        SERP[SerpAPI<br/>• Real-time Search]
     end
     
     subgraph "💾 Storage Layer"
         VECTOR[(FAISS Vector Store<br/>• 384-dim Embeddings<br/>• Fast Similarity Search)]
         DOCS[(Document Collection<br/>• 11 Cisco PDFs<br/>• 9 Official URLs)]
-        CONFIG[(Configuration<br/>• Environment Variables<br/>• Model Settings)]
     end
     
-    UI --> ROUTER
-    ROUTER --> RAG
+    UI --> API
+    API --> RAG
     RAG --> GEMINI
     RAG --> SERP
     RAG --> VECTOR
     VECTOR --> DOCS
-    RAG --> CONFIG
     
     style UI fill:#e3f2fd
-    style ROUTER fill:#fff3e0
+    style API fill:#e8f5e9
     style RAG fill:#f3e5f5
     style GEMINI fill:#e8f5e8
     style VECTOR fill:#fce4ec
@@ -143,11 +145,13 @@ The system processes documents through a sophisticated vectorization pipeline:
 The system is built using the following key technologies:
 
 ### Core Framework
-- **Python 3.12**: Required for PyTorch compatibility and optimal performance
-- **Streamlit**: Modern web interface for chat applications with real-time streaming
-- **Google Gemini 1.5 Flash**: Fast, free AI model for response generation
+- **Python 3.12**: Optimized for performance and modern async features
+- **FastAPI**: High-performance web framework with automatic docs
+- **Google Gemini 1.5 Flash**: Fast, efficient AI model for response generation
 - **FAISS**: Facebook AI Similarity Search for efficient vector operations
 - **Sentence Transformers**: State-of-the-art text embedding models
+- **WebSockets**: Real-time bidirectional communication
+- **Jinja2**: Templating engine for dynamic HTML generation
 
 ### Document Processing
 - **PyPDF2**: PDF text extraction and metadata handling
@@ -160,19 +164,22 @@ The system is built using the following key technologies:
 - **Pickle**: Efficient serialization for text chunk storage
 
 ### Deployment
-- **Docker**: Containerization for consistent deployment
+- **Docker**: Lightweight containerization
 - **Google Cloud Run**: Serverless container platform with auto-scaling
-- **UV Package Manager**: Fast Python package installation and management
+- **Multi-stage Builds**: Optimized container images
+- **Health Checks**: Automatic monitoring and recovery
+- **Environment Variables**: Secure configuration management
 
 ## Prerequisites
 
 Before setting up this system, ensure you have:
 
-- **Python 3.12**: Required for PyTorch compatibility and optimal performance
+- **Python 3.12**: Required for optimal performance
+- **Docker**: For containerized deployment
+- **Google Cloud SDK**: If deploying to Google Cloud Run
 - **Google API Key**: Free from Google AI Studio for Gemini API access
 - **SerpAPI Key**: Optional for web search integration (free tier available)
-- **Git**: For cloning the repository
-- **UV Package Manager**: Recommended for faster dependency installation (or pip as fallback)
+- **Git**: For version control and cloning the repository
 
 ## Step-by-Step Setup Instructions
 
@@ -194,10 +201,25 @@ git config http.postBuffer 524288000
 # The FAISS index and text files are ~400KB total and may exceed default limits
 ```
 
-### Step 2: Set Up Python Environment
+### Step 2: Set Up with Docker
 
-**Option A: Using UV (Recommended)**
 ```bash
+# Build the Docker image
+docker build -t cisco-automation -f Dockerfile.fastapi .
+
+# Run locally
+docker run -p 8080:8080 -e GOOGLE_API_KEY=your_key_here cisco-automation
+```
+
+Or for development with live reload:
+
+```bash
+# Install dependencies
+pip install -r requirements.txt
+
+# Run with auto-reload
+uvicorn fastapi_only:app --reload --host 0.0.0.0 --port 8080
+```
 # Install UV if not already installed
 curl -LsSf https://astral.sh/uv/install.sh | sh
 
@@ -349,35 +371,17 @@ cisco-automation-certification-station/
 │
 ├── docs/                       # Cisco certification PDFs (10 files)
 │   ├── 200-901-CCNAAUTO_v.1.1.pdf
-│   ├── 300-435-ENAUTO-v2.0-7-9-2025.pdf
-│   ├── 300-635-DCNAUTO-v2.0-7-9-2025.pdf
-│   ├── 350-901-AUTOCOR-v2.0-7-9-2025.pdf
-│   ├── CCIE_Automation_Lab_V1.1_BP.pdf
-│   ├── CCIE_Automation_equipment_list_v1.1.pdf
-│   ├── Automation-Certification&Learning-Update.pdf
-│   ├── Cisco-Certifications-Portfolio-Updates.pdf
-│   ├── Learn-with-Cisco-evolving.pdf
-│   └── cisco-certification-career-path.pdf
-│
-├── rag/                        # RAG system components
-│   ├── __init__.py
-│   ├── vector_store.py         # FAISS vector store creation
-│   ├── retriever.py           # Document retrieval with lazy loading
-│   └── index/                  # Generated vector store files
-│       ├── faiss.index         # FAISS similarity search index (321KB)
-│       └── texts.pkl           # Text chunks and metadata (101KB)
-│
-├── public/                     # Static files for Streamlit UI
 │   ├── Cisco-automation-certification-station.png
 │   ├── Automation_Cert_badges_Current_Future.png
-│   └── cisco-theme.css         # Custom Cisco blue theme
+│   └── Cisco-automation-certification-station-light.png
 │
-├── .streamlit/                  # Streamlit configuration
-│   ├── config.toml            # UI customization and settings
-│   └── translations/          # Internationalization files
+├── rag/                      # RAG implementation
+│   ├── __init__.py
+│   ├── retriever.py         # Document retrieval logic
+│   └── vector_store.py      # FAISS vector store implementation
 │
-└── .venv/                      # Virtual environment (created during setup)
-    └── ...
+├── requirements.txt          # Python dependencies
+└── urls.txt                 # List of URLs for knowledge base
 ```
 
 ## Deployment Options
