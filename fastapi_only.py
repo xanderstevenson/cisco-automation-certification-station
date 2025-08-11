@@ -136,6 +136,9 @@ async def main_app():
             margin: 0 auto;
             padding: 20px;
             background-color: white;
+            position: relative;  /* Ensure proper stacking context */
+            left: 0;  /* Reset any offset */
+            transform: none;  /* Reset any transforms */
         }}
 
         /* Logo container */
@@ -336,39 +339,7 @@ async def main_app():
                 margin-right: 0;
             }}
         }}
-        /* Sidebar button */
-        #menuButton {
-            position: fixed;
-            top: 15px;
-            left: 15px;
-            width: 40px;
-            height: 40px;
-            border: none;
-            border-radius: 5px;
-            background-color: var(--cisco-blue);
-            color: #fff;
-            cursor: pointer;
-            z-index: 1000;
-        }
 
-        /* Sidebar */
-        #sidebar {
-            position: fixed;
-            top: 0;
-            left: -260px; /* hidden by default */
-            width: 250px;
-            height: 100%;
-            background-color: #ffffff;
-            box-shadow: 2px 0 6px rgba(0,0,0,0.1);
-            transition: left 0.3s ease;
-            padding: 1rem;
-            overflow-y: auto;
-            z-index: 999;
-        }
-
-        #sidebar.open {
-            left: 0;
-        }
     </style>
 </head>
 <body>
@@ -465,14 +436,7 @@ async def main_app():
         </div>
     </div>
 
-    <!-- Sidebar toggle button -->
-    <button id="menuButton">☰</button>
 
-    <!-- Sidebar content -->
-    <div id="sidebar">
-        <h3>Menu</h3>
-        <p>Additional links or information can go here.</p>
-    </div>
 
     <script>
         const chatForm = document.getElementById('chatForm');
@@ -545,7 +509,7 @@ async def main_app():
             }}
             
             chatMessages.prepend(messageDiv); /* newest on top */
-            messageDiv.scrollIntoView({{ behavior: 'smooth' }});
+            // No auto-scroll needed since messages appear at top
         }}
 
         function escapeHtml(text) {{
@@ -557,11 +521,24 @@ async def main_app():
         function formatResponse(text) {{
             // Convert markdown-like formatting to HTML
             let formatted = text
+                // Convert markdown links [text](url) to HTML links
+                .replace(/\\[(.*?)\\]\\((https?:[^)]+)\\)/g, '<a href="$2" target="_blank">$1</a>')
+                // Convert ** to strong
                 .replace(/\\*\\*(.*?)\\*\\*/g, '<strong>$1</strong>')
-                .replace(/\\*(.*?)\\*/g, '<em>$1</em>')
-                .replace(/`(.*?)`/g, '<code>$1</code>')
+                // Convert remaining *text* to italics
+                .replace(/\\*([^\\*]+)\\*/g, '<em>$1</em>')
+                // Convert code blocks
+                .replace(/`([^`]+)`/g, '<code>$1</code>')
+                // Convert newlines to <br/>
                 .replace(/\\n/g, '<br/>')
-                .replace(/(https?:\\/\\/[^\\s]+)/g, '<a href="$1" target="_blank">$1</a>');
+                // Only convert bullet points in lists
+                .replace(/^\\* (.*)$/gm, function(match, content) {
+                    // Only add bullet if it's part of a list (multiple lines starting with *)
+                    if (text.match(/(^|\n)\\* .*(\n\\* .*)+/)) {
+                        return '• ' + content;
+                    }
+                    return content;
+                });
             
             return formatted;
         }}
@@ -569,13 +546,7 @@ async def main_app():
         // Focus on input when page loads
         chatInput.focus();
 
-        /* Sidebar toggle logic */
-        const sidebar = document.getElementById('sidebar');
-        const menuButton = document.getElementById('menuButton');
 
-        menuButton.addEventListener('click', () => {
-            sidebar.classList.toggle('open');
-        });
     </script>
 </body>
 </html>

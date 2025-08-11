@@ -46,7 +46,6 @@ ehthumbs.db
 Thumbs.db
 
 # Project specific
-.env
 *.log
 .chainlit/
 

@@ -34,7 +34,7 @@ def load_vector_store():
         print("[LOADING] Initializing embedding model...")
         model_name = os.getenv("EMBEDDING_MODEL", "paraphrase-MiniLM-L3-v2")
         try:
-            embedding_model = SentenceTransformer(model_name)
+            embedding_model = SentenceTransformer(model_name, cache_folder='/app/models')
             print(f"[READY] Embedding model {model_name} ready")
         except Exception as e:
             print(f"[ERROR] Failed to load embedding model: {e}")
@@ -81,10 +81,9 @@ def cleanup_memory():
     gc.collect()
 
 # Configure Gemini API
-if api_key:
-    genai.configure(api_key=api_key)
-else:
-    print("WARNING: Gemini API not configured - no API key available")
+if not api_key:
+    raise ValueError("GOOGLE_API_KEY environment variable must be set")
+genai.configure(api_key=api_key)
 
 # Use Gemini 1.5 Flash for faster responses (optimized for speed)
 model = genai.GenerativeModel("gemini-1.5-flash")

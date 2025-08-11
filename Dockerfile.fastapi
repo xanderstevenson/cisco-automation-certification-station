@@ -15,11 +15,24 @@ COPY requirements.txt .
 # Install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
+# Create model cache directory and pre-download the model
+RUN mkdir -p /app/models && \
+    python -c "from sentence_transformers import SentenceTransformer; model = SentenceTransformer('paraphrase-MiniLM-L3-v2', cache_folder='/app/models')"
+
 # Copy application code and static files
 COPY . .
 
 # Ensure the public directory is readable
 RUN chmod -R a+rX /app/public
+
+# Set environment variables for runtime
+ENV EMBEDDING_MODEL="paraphrase-MiniLM-L3-v2"
+
+# Copy and load environment variables
+COPY .env .
+RUN set -a && . ./.env && set +a && \
+    echo "export GOOGLE_API_KEY=$GOOGLE_API_KEY" >> /etc/profile && \
+    echo "export SERPAPI_API_KEY=$SERPAPI_API_KEY" >> /etc/profile
 
 # Create non-root user for security
 RUN useradd -m appuser
@@ -32,5 +45,5 @@ EXPOSE 8080
 HEALTHCHECK --interval=30s --timeout=30s --start-period=120s --retries=3 \
     CMD curl --fail http://localhost:8080/healthz || exit 1
 
-# Set the entrypoint to our FastAPI-only version
+# Set the entrypoint back to FastAPI
 ENTRYPOINT ["python", "fastapi_only.py"]
