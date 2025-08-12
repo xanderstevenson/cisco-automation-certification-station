@@ -337,7 +337,7 @@ Use the context above extensively and cite sources naturally. Be thorough and pr
    - Ordered lists: <ol style="margin: 0.25em 0;"><li style="margin: 0.125em 0;">First item</li><li style="margin: 0.125em 0;">Second item</li></ol>
 3. Format links as HTML anchor tags with target="_blank" and do not show raw URLs:
    <a href="https://example.com" target="_blank">Resource Name</a>
-4. Use proper paragraph spacing:
+4. Use proper paragraph spacing and formatting:
    - Use ONLY a single <br/> between paragraphs and sections
    - NEVER use multiple <br/> tags or blank lines
    - Keep headings on the same line as their content
@@ -346,6 +346,8 @@ Use the context above extensively and cite sources naturally. Be thorough and pr
    - Format as a continuous flow with minimal breaks
    - Use <strong> tags for visual structure
    - Keep certification relevance immediately after main content
+   - ALWAYS spell "Cisco U." with a period
+   - NEVER leave more than one blank line between any sections
 5. Keep related content together:
    - Don't split sentences across lines unnecessarily
    - Keep list items with their introductory text
@@ -401,7 +403,7 @@ Answer based on the documentation above. Be helpful and direct. If the user is r
    - Ordered lists: <ol style="margin: 0.25em 0;"><li style="margin: 0.125em 0;">First item</li><li style="margin: 0.125em 0;">Second item</li></ol>
 3. Format links as HTML anchor tags with target="_blank" and do not show raw URLs:
    <a href="https://example.com" target="_blank">Resource Name</a>
-4. Use proper paragraph spacing:
+4. Use proper paragraph spacing and formatting:
    - Use ONLY a single <br/> between paragraphs and sections
    - NEVER use multiple <br/> tags or blank lines
    - Keep headings on the same line as their content
@@ -410,6 +412,8 @@ Answer based on the documentation above. Be helpful and direct. If the user is r
    - Format as a continuous flow with minimal breaks
    - Use <strong> tags for visual structure
    - Keep certification relevance immediately after main content
+   - ALWAYS spell "Cisco U." with a period
+   - NEVER leave more than one blank line between any sections
 5. Keep related content together:
    - Don't split sentences across lines unnecessarily
    - Keep list items with their introductory text
