@@ -329,16 +329,23 @@ Provide a comprehensive, detailed answer as a Cisco certification expert. If the
 <li>Provide specific course URLs and learning paths from the knowledge base</li>
 </ol>
 
-Use the context above extensively and cite sources naturally. Be thorough and practical, leveraging all available PDF content for certification guidance. Format your response using proper HTML:
+Use the context above extensively and cite sources naturally. Be thorough and practical, leveraging all available PDF content for certification guidance. Format your response using proper HTML with consistent spacing:
 
 1. Use <strong>text</strong> for emphasis (never use asterisks)
-2. Use proper HTML lists:
-   - Unordered lists: <ul><li>Item 1</li><li>Item 2</li></ul>
-   - Ordered lists: <ol><li>First item</li><li>Second item</li></ol>
-3. Format links as HTML anchor tags with target="_blank" and do not show raw URLs
-   Example: <a href="https://example.com" target="_blank">Resource Name</a>
-4. Use <br/> for line breaks (not markdown line breaks)
-5. NEVER use markdown formatting (no asterisks, no dashes for bullets)
+2. Use proper HTML lists with consistent spacing:
+   - Unordered lists: <ul style="margin: 1em 0;"><li style="margin: 0.5em 0;">Item 1</li><li style="margin: 0.5em 0;">Item 2</li></ul>
+   - Ordered lists: <ol style="margin: 1em 0;"><li style="margin: 0.5em 0;">First item</li><li style="margin: 0.5em 0;">Second item</li></ol>
+3. Format links as HTML anchor tags with target="_blank" and do not show raw URLs:
+   <a href="https://example.com" target="_blank">Resource Name</a>
+4. Use proper paragraph spacing:
+   - Add <br/><br/> between major sections
+   - Use single <br/> for line breaks within sections
+   - Never leave orphaned punctuation on separate lines
+5. Keep related content together:
+   - Don't split sentences across lines unnecessarily
+   - Keep list items with their introductory text
+   - Keep punctuation with its preceding text
+6. NEVER use markdown formatting (no asterisks, no dashes for bullets)
 """
                 
                 # Step 4: Generate response with Gemini (with timeout handling)
@@ -381,16 +388,23 @@ Use the context above extensively and cite sources naturally. Be thorough and pr
 {doc_only_context}
 
 <strong>Instructions:</strong><br/>
-Answer based on the documentation above. Be helpful and direct. If the user is referencing a previous question, use the conversation history for context. Format your response using proper HTML:
+Answer based on the documentation above. Be helpful and direct. If the user is referencing a previous question, use the conversation history for context. Format your response using proper HTML with consistent spacing:
 
 1. Use <strong>text</strong> for emphasis (never use asterisks)
-2. Use proper HTML lists:
-   - Unordered lists: <ul><li>Item 1</li><li>Item 2</li></ul>
-   - Ordered lists: <ol><li>First item</li><li>Second item</li></ol>
-3. Format links as HTML anchor tags with target="_blank" and do not show raw URLs
-   Example: <a href="https://example.com" target="_blank">Resource Name</a>
-4. Use <br/> for line breaks (not markdown line breaks)
-5. NEVER use markdown formatting (no asterisks, no dashes for bullets)
+2. Use proper HTML lists with consistent spacing:
+   - Unordered lists: <ul style="margin: 1em 0;"><li style="margin: 0.5em 0;">Item 1</li><li style="margin: 0.5em 0;">Item 2</li></ul>
+   - Ordered lists: <ol style="margin: 1em 0;"><li style="margin: 0.5em 0;">First item</li><li style="margin: 0.5em 0;">Second item</li></ol>
+3. Format links as HTML anchor tags with target="_blank" and do not show raw URLs:
+   <a href="https://example.com" target="_blank">Resource Name</a>
+4. Use proper paragraph spacing:
+   - Add <br/><br/> between major sections
+   - Use single <br/> for line breaks within sections
+   - Never leave orphaned punctuation on separate lines
+5. Keep related content together:
+   - Don't split sentences across lines unnecessarily
+   - Keep list items with their introductory text
+   - Keep punctuation with its preceding text
+6. NEVER use markdown formatting (no asterisks, no dashes for bullets)
 """
                     response = model.generate_content(fallback_prompt)
                     return response.text
