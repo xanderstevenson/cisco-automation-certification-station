@@ -329,7 +329,16 @@ Provide a comprehensive, detailed answer as a Cisco certification expert. If the
 <li>Provide specific course URLs and learning paths from the knowledge base</li>
 </ol>
 
-Use the context above extensively and cite sources naturally. Be thorough and practical, leveraging all available PDF content for certification guidance. Format all links as HTML anchor tags with target="_blank" and do not show raw URLs. For example, use '<a href="https://example.com" target="_blank">Resource Name</a>' instead of showing the URL.
+Use the context above extensively and cite sources naturally. Be thorough and practical, leveraging all available PDF content for certification guidance. Format your response using proper HTML:
+
+1. Use <strong>text</strong> for emphasis (never use asterisks)
+2. Use proper HTML lists:
+   - Unordered lists: <ul><li>Item 1</li><li>Item 2</li></ul>
+   - Ordered lists: <ol><li>First item</li><li>Second item</li></ol>
+3. Format links as HTML anchor tags with target="_blank" and do not show raw URLs
+   Example: <a href="https://example.com" target="_blank">Resource Name</a>
+4. Use <br/> for line breaks (not markdown line breaks)
+5. NEVER use markdown formatting (no asterisks, no dashes for bullets)
 """
                 
                 # Step 4: Generate response with Gemini (with timeout handling)
@@ -372,7 +381,16 @@ Use the context above extensively and cite sources naturally. Be thorough and pr
 {doc_only_context}
 
 <strong>Instructions:</strong><br/>
-Answer based on the documentation above. Be helpful and direct. If the user is referencing a previous question, use the conversation history for context.
+Answer based on the documentation above. Be helpful and direct. If the user is referencing a previous question, use the conversation history for context. Format your response using proper HTML:
+
+1. Use <strong>text</strong> for emphasis (never use asterisks)
+2. Use proper HTML lists:
+   - Unordered lists: <ul><li>Item 1</li><li>Item 2</li></ul>
+   - Ordered lists: <ol><li>First item</li><li>Second item</li></ol>
+3. Format links as HTML anchor tags with target="_blank" and do not show raw URLs
+   Example: <a href="https://example.com" target="_blank">Resource Name</a>
+4. Use <br/> for line breaks (not markdown line breaks)
+5. NEVER use markdown formatting (no asterisks, no dashes for bullets)
 """
                     response = model.generate_content(fallback_prompt)
                     return response.text
