@@ -503,7 +503,7 @@ async def main_app():
             if (type === 'user') {{
                 messageDiv.innerHTML = `<strong>You:</strong> ${{escapeHtml(content)}}`;
             }} else {{
-                messageDiv.innerHTML = `<strong>Cisco Expert:</strong><br/><br/>${{formatResponse(content)}}`;
+                messageDiv.innerHTML = `<strong>Cisco Expert:</strong><br/>${{formatResponse(content)}}`;
             }}
             
             chatMessages.prepend(messageDiv); /* newest on top */
