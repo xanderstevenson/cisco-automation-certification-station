@@ -339,12 +339,13 @@ Use the context above extensively and cite sources naturally. Be thorough and pr
    <a href="https://example.com" target="_blank">Resource Name</a>
 4. Use proper paragraph spacing:
    - Add a single <br/> between paragraphs
-   - Add <br/><br/> ONLY between major sections (like between intro and first main section)
+   - Add <br/><br/> ONLY between the intro and first main section
+   - NEVER add <br/><br/> between any other sections
    - NEVER use multiple blank lines in a row
    - NEVER use more than one <br/> tag in a row
-   - Keep paragraphs and their headings together without extra spacing
+   - Keep paragraphs and their headings together with NO extra spacing
    - Keep list items tightly grouped with their introductory text
-   - Remove ALL extra whitespace between sections
+   - Keep certification relevance section immediately after main content with NO extra spacing
 5. Keep related content together:
    - Don't split sentences across lines unnecessarily
    - Keep list items with their introductory text
@@ -402,12 +403,13 @@ Answer based on the documentation above. Be helpful and direct. If the user is r
    <a href="https://example.com" target="_blank">Resource Name</a>
 4. Use proper paragraph spacing:
    - Add a single <br/> between paragraphs
-   - Add <br/><br/> ONLY between major sections (like between intro and first main section)
+   - Add <br/><br/> ONLY between the intro and first main section
+   - NEVER add <br/><br/> between any other sections
    - NEVER use multiple blank lines in a row
    - NEVER use more than one <br/> tag in a row
-   - Keep paragraphs and their headings together without extra spacing
+   - Keep paragraphs and their headings together with NO extra spacing
    - Keep list items tightly grouped with their introductory text
-   - Remove ALL extra whitespace between sections
+   - Keep certification relevance section immediately after main content with NO extra spacing
 5. Keep related content together:
    - Don't split sentences across lines unnecessarily
    - Keep list items with their introductory text
