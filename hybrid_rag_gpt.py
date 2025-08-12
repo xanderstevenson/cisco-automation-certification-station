@@ -338,14 +338,14 @@ Use the context above extensively and cite sources naturally. Be thorough and pr
 3. Format links as HTML anchor tags with target="_blank" and do not show raw URLs:
    <a href="https://example.com" target="_blank">Resource Name</a>
 4. Use proper paragraph spacing:
-   - Use ONLY a single <br/> between ALL paragraphs and sections
-   - NEVER use <br/><br/> or multiple line breaks anywhere
-   - Keep headings immediately above their content with NO extra spacing
-   - Keep list items tightly grouped with their introductory text
-   - Remove ALL extra whitespace between sections
-   - Format responses as a continuous flow of text with minimal breaks
-   - Use headings and lists for visual structure instead of whitespace
-   - Keep certification relevance section immediately after main content with NO extra spacing
+   - Use ONLY a single <br/> between paragraphs and sections
+   - NEVER use multiple <br/> tags or blank lines
+   - Keep headings on the same line as their content
+   - Keep list introductions on the same line as the first list item
+   - Remove ALL extra whitespace
+   - Format as a continuous flow with minimal breaks
+   - Use <strong> tags for visual structure
+   - Keep certification relevance immediately after main content
 5. Keep related content together:
    - Don't split sentences across lines unnecessarily
    - Keep list items with their introductory text
@@ -402,14 +402,14 @@ Answer based on the documentation above. Be helpful and direct. If the user is r
 3. Format links as HTML anchor tags with target="_blank" and do not show raw URLs:
    <a href="https://example.com" target="_blank">Resource Name</a>
 4. Use proper paragraph spacing:
-   - Use ONLY a single <br/> between ALL paragraphs and sections
-   - NEVER use <br/><br/> or multiple line breaks anywhere
-   - Keep headings immediately above their content with NO extra spacing
-   - Keep list items tightly grouped with their introductory text
-   - Remove ALL extra whitespace between sections
-   - Format responses as a continuous flow of text with minimal breaks
-   - Use headings and lists for visual structure instead of whitespace
-   - Keep certification relevance section immediately after main content with NO extra spacing
+   - Use ONLY a single <br/> between paragraphs and sections
+   - NEVER use multiple <br/> tags or blank lines
+   - Keep headings on the same line as their content
+   - Keep list introductions on the same line as the first list item
+   - Remove ALL extra whitespace
+   - Format as a continuous flow with minimal breaks
+   - Use <strong> tags for visual structure
+   - Keep certification relevance immediately after main content
 5. Keep related content together:
    - Don't split sentences across lines unnecessarily
    - Keep list items with their introductory text
