@@ -305,10 +305,10 @@ Respond naturally and briefly to this casual interaction. Be friendly and helpfu
                 # Build conversation context for technical queries
                 conversation_context = ""
                 if conversation_history:
-                    conversation_context = "\n\n**Previous Conversation:**\n"
+                    conversation_context = "\n\n<strong>Previous Conversation:</strong><br/>"
                     for msg in conversation_history[-4:]:  # Last 4 messages for context
                         role = "Assistant" if msg['role'] == 'assistant' else "User"
-                        conversation_context += f"{role}: {msg['content'][:200]}...\n"
+                        conversation_context += f"<strong>{role}:</strong> {msg['content'][:200]}...<br/>"
                 
                 enhanced_prompt = f"""{system_prompt}{conversation_context}
 
@@ -329,7 +329,7 @@ Provide a comprehensive, detailed answer as a Cisco certification expert. If the
 <li>Provide specific course URLs and learning paths from the knowledge base</li>
 </ol>
 
-Use the context above extensively and cite sources naturally. Be thorough and practical, leveraging all available PDF content for certification guidance.
+Use the context above extensively and cite sources naturally. Be thorough and practical, leveraging all available PDF content for certification guidance. Format all links as HTML anchor tags with target="_blank" and do not show raw URLs. For example, use '<a href="https://example.com" target="_blank">Resource Name</a>' instead of showing the URL.
 """
                 
                 # Step 4: Generate response with Gemini (with timeout handling)

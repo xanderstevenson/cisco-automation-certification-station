@@ -142,6 +142,7 @@ gcloud run deploy "$SERVICE_NAME" \
     --timeout "$TIMEOUT" \
     --min-instances "$MIN_INSTANCES" \
     --max-instances "$MAX_INSTANCES" \
+    --set-env-vars "GOOGLE_API_KEY=${GOOGLE_API_KEY},SERPAPI_API_KEY=${SERPAPI_API_KEY}" \
     --allow-unauthenticated \
     --quiet
 
