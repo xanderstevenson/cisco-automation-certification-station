@@ -333,14 +333,16 @@ Use the context above extensively and cite sources naturally. Be thorough and pr
 
 1. Use <strong>text</strong> for emphasis (never use asterisks)
 2. Use proper HTML lists with consistent spacing:
-   - Unordered lists: <ul style="margin: 1em 0;"><li style="margin: 0.5em 0;">Item 1</li><li style="margin: 0.5em 0;">Item 2</li></ul>
-   - Ordered lists: <ol style="margin: 1em 0;"><li style="margin: 0.5em 0;">First item</li><li style="margin: 0.5em 0;">Second item</li></ol>
+   - Unordered lists: <ul style="margin: 0.5em 0;"><li style="margin: 0.25em 0;">Item 1</li><li style="margin: 0.25em 0;">Item 2</li></ul>
+   - Ordered lists: <ol style="margin: 0.5em 0;"><li style="margin: 0.25em 0;">First item</li><li style="margin: 0.25em 0;">Second item</li></ol>
 3. Format links as HTML anchor tags with target="_blank" and do not show raw URLs:
    <a href="https://example.com" target="_blank">Resource Name</a>
 4. Use proper paragraph spacing:
-   - Add <br/><br/> between major sections
-   - Use single <br/> for line breaks within sections
+   - Add a single <br/> between paragraphs
+   - Add <br/><br/> ONLY between major sections (like between the intro and the first main section)
+   - Never add more than two line breaks in a row
    - Never leave orphaned punctuation on separate lines
+   - Remove any extra blank lines between list items
 5. Keep related content together:
    - Don't split sentences across lines unnecessarily
    - Keep list items with their introductory text
@@ -392,14 +394,16 @@ Answer based on the documentation above. Be helpful and direct. If the user is r
 
 1. Use <strong>text</strong> for emphasis (never use asterisks)
 2. Use proper HTML lists with consistent spacing:
-   - Unordered lists: <ul style="margin: 1em 0;"><li style="margin: 0.5em 0;">Item 1</li><li style="margin: 0.5em 0;">Item 2</li></ul>
-   - Ordered lists: <ol style="margin: 1em 0;"><li style="margin: 0.5em 0;">First item</li><li style="margin: 0.5em 0;">Second item</li></ol>
+   - Unordered lists: <ul style="margin: 0.5em 0;"><li style="margin: 0.25em 0;">Item 1</li><li style="margin: 0.25em 0;">Item 2</li></ul>
+   - Ordered lists: <ol style="margin: 0.5em 0;"><li style="margin: 0.25em 0;">First item</li><li style="margin: 0.25em 0;">Second item</li></ol>
 3. Format links as HTML anchor tags with target="_blank" and do not show raw URLs:
    <a href="https://example.com" target="_blank">Resource Name</a>
 4. Use proper paragraph spacing:
-   - Add <br/><br/> between major sections
-   - Use single <br/> for line breaks within sections
+   - Add a single <br/> between paragraphs
+   - Add <br/><br/> ONLY between major sections (like between the intro and the first main section)
+   - Never add more than two line breaks in a row
    - Never leave orphaned punctuation on separate lines
+   - Remove any extra blank lines between list items
 5. Keep related content together:
    - Don't split sentences across lines unnecessarily
    - Keep list items with their introductory text
