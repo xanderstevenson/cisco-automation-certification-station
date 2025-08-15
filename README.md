@@ -5,10 +5,12 @@
   [![Python 3.12](https://img.shields.io/badge/python-3.12-blue.svg)](https://www.python.org/downloads/)
   [![Docker](https://img.shields.io/badge/Docker-2CA5E0?style=flat&logo=docker&logoColor=white)](https://www.docker.com/)
   [![Google Cloud Run](https://img.shields.io/badge/Google%20Cloud%20Run-4285F4?style=flat&logo=google-cloud&logoColor=white)](https://cloud.google.com/run)
+
+  <img src="public/automation-certification-station-QR.png" alt="Cisco Automation Certification Station QR Code" width="75">
 </div>
 
 <div align="center">
-  <img src="public/automation-certification-station-QR.png" alt="Cisco Automation Certification Station QR Code" width="100">
+  <img src="public/automation-certification-station-QR.png" alt="Cisco Automation Certification Station QR Code" width="75">
 </div>
 
 A production-ready Hybrid Retrieval-Augmented Generation (RAG) system designed for Cisco network automation certification preparation. This system combines local document search, web search, and AI generation to provide comprehensive, source-backed answers for:
