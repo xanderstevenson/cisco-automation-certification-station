@@ -22,7 +22,7 @@ A production-ready Hybrid Retrieval-Augmented Generation (RAG) system designed f
 
 **✅ FULLY OPERATIONAL** - The system is currently deployed and working perfectly at:
 
-**🌐 Live Demo:** https://cisco-automation-certification-station-730208496446.us-central1.run.app
+**🌐 Live Demo:** http://cs.co/automation-certification-station
 
 **Recent Updates (August 2025):**
 - 🚀 **Migrated to FastAPI**: Replaced Streamlit with a lightweight FastAPI implementation
