@@ -7,6 +7,9 @@
   [![Google Cloud Run](https://img.shields.io/badge/Google%20Cloud%20Run-4285F4?style=flat&logo=google-cloud&logoColor=white)](https://cloud.google.com/run)
 </div>
 
+<div align="center">
+  <img src="public/Cisco-automation-certification-station-QR.png" alt="Cisco Automation Certification Station QR Code" width="150">
+</div>
 
 A production-ready Hybrid Retrieval-Augmented Generation (RAG) system designed for Cisco network automation certification preparation. This system combines local document search, web search, and AI generation to provide comprehensive, source-backed answers for:
 
