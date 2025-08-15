@@ -8,7 +8,7 @@
 </div>
 
 <div align="center">
-  <img src="public/cisco-automation-certification-station-QR.png" alt="Cisco Automation Certification Station QR Code" width="100">
+  <img src="public/automation-certification-station-QR.png" alt="Cisco Automation Certification Station QR Code" width="100">
 </div>
 
 A production-ready Hybrid Retrieval-Augmented Generation (RAG) system designed for Cisco network automation certification preparation. This system combines local document search, web search, and AI generation to provide comprehensive, source-backed answers for:
