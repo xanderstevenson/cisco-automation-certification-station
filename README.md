@@ -1,15 +1,13 @@
-<div align="center">
-  <img src="public/Cisco-automation-certification-station.png" alt="Cisco Automation Certification Station" width="150">
-  
-  [![License](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
-  [![Python 3.12](https://img.shields.io/badge/python-3.12-blue.svg)](https://www.python.org/downloads/)
-  [![Docker](https://img.shields.io/badge/Docker-2CA5E0?style=flat&logo=docker&logoColor=white)](https://www.docker.com/)
-  [![Google Cloud Run](https://img.shields.io/badge/Google%20Cloud%20Run-4285F4?style=flat&logo=google-cloud&logoColor=white)](https://cloud.google.com/run)
+# Cisco Automation Certification Station
 
-  <img src="public/automation-certification-station-QR.png" alt="Cisco Automation Certification Station QR Code" width="75">
-</div>
+![Cisco Automation Certification Station](public/Cisco-automation-certification-station.png)
 
-<br>
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![Python 3.12](https://img.shields.io/badge/python-3.12-blue.svg)](https://www.python.org/downloads/)
+[![Docker](https://img.shields.io/badge/Docker-2CA5E0?style=flat&logo=docker&logoColor=white)](https://www.docker.com/)
+[![Google Cloud Run](https://img.shields.io/badge/Google%20Cloud%20Run-4285F4?style=flat&logo=google-cloud&logoColor=white)](https://cloud.google.com/run)
+
+![QR Code](public/automation-certification-station-QR.png)
 
 A production-ready Hybrid Retrieval-Augmented Generation (RAG) system designed for Cisco network automation certification preparation. This system combines local document search, web search, and AI generation to provide comprehensive, source-backed answers for:
 
@@ -25,16 +23,18 @@ A production-ready Hybrid Retrieval-Augmented Generation (RAG) system designed f
 
 **✅ FULLY OPERATIONAL** - The system is currently deployed and working as intended at:
 
-**🌐 Live Demo:** http://cs.co/automation-certification-station
+**🌐 Live Demo:** [cs.co/automation-certification-station](http://cs.co/automation-certification-station)
 
-**Recent Updates (August 2025):**
+### Recent Updates (August 2025)
+
 - 🚀 **Migrated to FastAPI**: Replaced Streamlit with a lightweight FastAPI implementation
 - ⚡ **Improved Performance**: Faster response times with optimized model loading
 - 🏗️ **Simplified Architecture**: Single-process design for better reliability
 - 📱 **Enhanced Mobile Experience**: Fully responsive design with improved touch support
 - 🔒 **Better Security**: Reduced attack surface with minimal dependencies
 
-**Key Features:**
+### Key Features
+
 - 🤖 **AI Chat Interface**: FastAPI-based professional UI with Cisco branding
 - 📚 **Document Search**: 11 official Cisco PDFs + curated URLs in knowledge base
 - 🔍 **Web Search**: Real-time SerpAPI integration for latest information
@@ -48,35 +48,41 @@ A production-ready Hybrid Retrieval-Augmented Generation (RAG) system designed f
 
 This application serves as an intelligent certification advisor that implements a **Hybrid RAG (Retrieval-Augmented Generation)** system:
 
-- **Processes Multiple Data Sources**:
-  - Ingests 10+ official Cisco certification PDFs from the `docs/` directory
-  - Scrapes and indexes content from official Cisco URLs listed in `urls.txt`
-  - Uses SerpAPI for real-time web search when local knowledge is insufficient
+### Processes Multiple Data Sources
 
-- **Hybrid Retrieval Approach**:
-  - **Local Document Search**: FAISS vector store with sentence-transformers for semantic search
-  - **Web Search Fallback**: Automatically supplements with web search when needed
-  - **Context Fusion**: Intelligently combines multiple sources for comprehensive responses
+- Ingests 10+ official Cisco certification PDFs from the `docs/` directory
+- Scrapes and indexes content from official Cisco URLs listed in `urls.txt`
+- Uses SerpAPI for real-time web search when local knowledge is insufficient
 
-- **Provides Expert Guidance**:
-  - Answers technical questions with specific exam topics and study plans
-  - Maintains conversation context for follow-up questions
-  - Delivers source-backed responses with citations
+### Hybrid Retrieval Approach
 
-- **Optimized Performance**:
-  - Parallel processing for faster response times
-  - Efficient chunking strategy (500 chars with 50-char overlap)
-  - Cached embeddings for instant search
+- **Local Document Search**: FAISS vector store with sentence-transformers for semantic search
+- **Web Search Fallback**: Automatically supplements with web search when needed
+- **Context Fusion**: Intelligently combines multiple sources for comprehensive responses
+
+### Provides Expert Guidance
+
+- Answers technical questions with specific exam topics and study plans
+- Maintains conversation context for follow-up questions
+- Delivers source-backed responses with citations
+
+### Optimized Performance
+
+- Parallel processing for faster response times
+- Efficient chunking strategy (500 chars with 50-char overlap)
+- Cached embeddings for instant search
 
 ## System Architecture
 
 ### Hybrid RAG Architecture Overview
 
+
 ```mermaid
 flowchart TD
     A[👤 User Query] --> B{🧠 FastAPI Server}
-    
     B -->|Loads| C[📱 Responsive UI]
+```
+
     B -->|Handles| D[🔍 Hybrid RAG Pipeline]
     
     D --> E[📚 Document Search]
@@ -136,23 +142,25 @@ graph TB
     style GEMINI fill:#e8f5e8
     style VECTOR fill:#fce4ec
     style DOCS fill:#f1f8e9
-```
 
 ### Document Processing Pipeline
 
 The system processes documents through a sophisticated vectorization pipeline:
 
-**📁 Data Sources:**
+#### Data Sources
+
 - 11 official Cisco certification PDFs (CCNA Auto, ENAUTO, DCNAUTO, AUTOCOR, CCIE materials)
 - 9 curated Cisco URLs (Cisco U courses, Learning Network, DevNet resources)
 
-**🔄 Processing Steps:**
+#### Processing Steps
+
 1. **Content Extraction**: PyPDF2 for PDFs, BeautifulSoup4 for web content
 2. **Text Chunking**: 500 characters per chunk with 50-character overlap for context preservation
 3. **Embedding Generation**: paraphrase-MiniLM-L3-v2 model creates 384-dimensional vectors
 4. **Vector Store Creation**: FAISS IndexFlatL2 for fast similarity search
 
-**📊 Output:**
+#### Output
+
 - `faiss.index` (321KB) - Vector similarity search index
 - `texts.pkl` (101KB) - Text chunks and metadata
 - 209 total chunks ready for sub-second query response
@@ -162,6 +170,7 @@ The system processes documents through a sophisticated vectorization pipeline:
 The system is built using the following key technologies:
 
 ### Core Framework
+
 - **Python 3.12**: Optimized for performance and modern async features
 - **FastAPI**: High-performance web framework with automatic docs
 - **Google Gemini 1.5 Flash**: Fast, efficient AI model for response generation
@@ -171,16 +180,19 @@ The system is built using the following key technologies:
 - **Jinja2**: Templating engine for dynamic HTML generation
 
 ### Document Processing
+
 - **PyPDF2**: PDF text extraction and metadata handling
 - **BeautifulSoup4**: Web content scraping and HTML parsing
 - **Requests**: HTTP client for web content retrieval
 
 ### Search and Retrieval
+
 - **SerpAPI**: Real-time Google search integration (optional)
 - **Concurrent.futures**: Parallel processing for faster response times
 - **Pickle**: Efficient serialization for text chunk storage
 
 ### Deployment
+
 - **Docker**: Lightweight containerization
 - **Google Cloud Run**: Serverless container platform with auto-scaling
 - **Multi-stage Builds**: Optimized container images
@@ -216,46 +228,62 @@ git clone https://github.com/xanderstevenson/cisco-automation-certification-stat
 cd cisco-automation-certification-station
 ```
 
-### 3. Set Up Environment with UV
+### 3. Set Up Python Environment
 
-1. Install UV if not already installed:
+1. **Install UV** (recommended for faster dependency installation):
 
    ```bash
    curl -LsSf https://astral.sh/uv/install.sh | sh
    ```
 
+2. **Create and activate a virtual environment**:
 
-2. Create and activate a virtual environment with Python 3.12:
    ```bash
    # On macOS/Linux
    python3.12 -m venv .venv
    source .venv/bin/activate
-
+   
    # On Windows (Command Prompt)
    py -3.12 -m venv .venv
    .venv\Scripts\activate
    ```
 
-3. Install dependencies using UV (significantly faster than pip):
+3. **Install dependencies**:
+
    ```bash
+   # Using UV (faster)
    uv pip install -r requirements.txt
+   
+   # OR using standard pip
+   # pip install -r requirements.txt
    ```
 
-### 4. Set Up API Keys
+### 4. Configure API Keys
 
-Create a `.env` file in the project root with your API keys:
-```env
-# Required: Get from https://aistudio.google.com/
-GOOGLE_API_KEY=your_google_api_key
+1. **Create a `.env` file** in the project root:
 
-# Optional but recommended: Get from https://serpapi.com/
-SERPAPI_API_KEY=your_serpapi_key
+   ```bash
+   # On macOS/Linux
+   touch .env
+   
+   # On Windows (Command Prompt)
+   type nul > .env
+   ```
 
-# Required for Google Cloud Run deployment
-PROJECT_ID=your-google-cloud-project-id
-```
+2. **Add your API keys** to the `.env` file:
 
-No need to manually export these variables - they'll be automatically loaded from the `.env` file when you run the application.
+   ```bash
+   # Required: Get from https://aistudio.google.com/
+   GOOGLE_API_KEY=your_google_api_key
+   
+   # Optional but recommended for web search: Get from https://serpapi.com/
+   # SERPAPI_API_KEY=your_serpapi_key
+   
+   # Required only for Google Cloud Run deployment
+   # PROJECT_ID=your-google-cloud-project-id
+   ```
+
+   The application will automatically load these variables from the `.env` file.
 
 ### 5. Build the Vector Store
 
@@ -323,11 +351,11 @@ For development with auto-reload:
 uvicorn fastapi_only:app --reload --host 0.0.0.0 --port 8080
 ```
 
-### Step 3: Obtain API Keys
+## API Key Configuration
 
-**## API Key Setup
+### 1. Google Gemini API Key
 
-### Google Gemini API Key
+To use the AI features, you'll need a Google Gemini API key:
 
 1. Visit [Google AI Studio](https://aistudio.google.com/)
 2. Sign in with your Google account
@@ -338,11 +366,11 @@ uvicorn fastapi_only:app --reload --host 0.0.0.0 --port 8080
 
 1. Sign up at [SerpAPI](https://serpapi.com/)
 2. Get your API key from the dashboard
-3. Add it to your `.env` files/month)
-3. Navigate to your dashboard
-4. Copy your API key
+3. Add it to your `.env` file as `SERPAPI_API_KEY=your_key_here`
 
-### Step 4: Configure Environment Variables
+### 3. Configure Environment Variables
+
+Create a `.env` file in the project root with your API keys:
 
 ```bash
 # Create .env file in the project root
@@ -356,16 +384,24 @@ echo "PYTHONUNBUFFERED=1" >> .env
 echo "TOKENIZERS_PARALLELISM=false" >> .env
 ```
 
-**Example .env file:**
+Or manually create the `.env` file with these contents:
+
 ```env
-GOOGLE_API_KEY=your_google_gemini_api_key_here
-SERPAPI_KEY=your_serpapi_key_here
+# Required for AI features
+GOOGLE_API_KEY=your_google_api_key_here
+
+# Optional: For enhanced web search
+# SERPAPI_API_KEY=your_serpapi_key_here
+
+# Model configuration
 EMBEDDING_MODEL=paraphrase-MiniLM-L3-v2
+
+# System settings
 PYTHONUNBUFFERED=1
 TOKENIZERS_PARALLELISM=false
 ```
 
-### Step 5: Build the Knowledge Base
+### 4. Build the Knowledge Base
 
 ```bash
 # Process documents and create vector embeddings
@@ -474,28 +510,54 @@ cisco-automation-certification-station/
 
 Google Cloud Run provides the best performance, scalability, and integration with the Google Gemini API.
 
-**Quick Deploy:**
+**Deployment to Google Cloud Run:**
+
+1. First, set up all required environment variables:
+
 ```bash
-# Set your Google Cloud project
+# Required environment variables
 export PROJECT_ID="your-project-id"
+export REGION="us-central1"  # or your preferred region
+export SERVICE_NAME="cisco-automation-certification"
+
+# Required API keys from your .env file
+export GOOGLE_API_KEY="your_google_api_key_here"
+# export SERPAPI_API_KEY="your_serpapi_key_here"  # Uncomment if using web search
+
+# Model configuration
+export EMBEDDING_MODEL="paraphrase-MiniLM-L3-v2"
+
+# System settings
+export PYTHONUNBUFFERED="1"
+export TOKENIZERS_PARALLELISM="false"
+
+# Set the Google Cloud project
 gcloud config set project $PROJECT_ID
 
-# Enable required APIs
+# Enable required Google Cloud APIs
 gcloud services enable cloudbuild.googleapis.com run.googleapis.com
 
 # Load environment variables (IMPORTANT: Required for proper API key configuration)
 source .env
 
-# Build and deploy in one command
+# Build and deploy the application
 gcloud builds submit --tag gcr.io/$PROJECT_ID/cisco-automation-chatbot
-source .env && gcloud run deploy cisco-automation-certification-station \
+
+# Deploy to Cloud Run with all required environment variables
+gcloud run deploy $SERVICE_NAME \
   --image gcr.io/$PROJECT_ID/cisco-automation-chatbot \
-  --region us-central1 \
-  --allow-unauthenticated \
+  --region $REGION \
+  --platform managed \
   --memory 2Gi \
   --cpu 2 \
   --timeout 900 \
-  --set-env-vars GOOGLE_API_KEY=$GOOGLE_API_KEY,SERPAPI_KEY=$SERPAPI_KEY,EMBEDDING_MODEL=paraphrase-MiniLM-L3-v2,PYTHONUNBUFFERED=1,TOKENIZERS_PARALLELISM=false
+  --allow-unauthenticated \
+  --set-env-vars="\
+    GOOGLE_API_KEY=$GOOGLE_API_KEY,\
+    EMBEDDING_MODEL=$EMBEDDING_MODEL,\
+    PYTHONUNBUFFERED=$PYTHONUNBUFFERED,\
+    TOKENIZERS_PARALLELISM=$TOKENIZERS_PARALLELISM,\
+    SERPAPI_API_KEY=$SERPAPI_API_KEY"
 ```
 
 **Features:**
