@@ -9,16 +9,16 @@
 <br>
 
 <div align="center">
+  <img src="public/automation-certification-station-QR.png" alt="Cisco Automation Certification Station QR Code" width="75">
+</div>
+
+<div align="center">
 
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.12](https://img.shields.io/badge/python-3.12-blue.svg)](https://www.python.org/downloads/)
 [![Docker](https://img.shields.io/badge/Docker-2CA5E0?style=flat&logo=docker&logoColor=white)](https://www.docker.com/)
 [![Google Cloud Run](https://img.shields.io/badge/Google%20Cloud%20Run-4285F4?style=flat&logo=google-cloud&logoColor=white)](https://cloud.google.com/run)
 
-</div>
-
-<div align="center">
-  <img src="public/automation-certification-station-QR.png" alt="Cisco Automation Certification Station QR Code" width="75">
 </div>
 
 <br>
