@@ -329,8 +329,6 @@ docker build -t cisco-automation -f Dockerfile.fastapi .
 docker run -p 8080:8080 -e GOOGLE_API_KEY=your_key_here cisco-automation
 ```
 
-## For Contributors
-
 ### Git Configuration for Large Files
 
 If you plan to contribute changes, configure Git to handle large files:
@@ -390,8 +388,8 @@ Or manually create the `.env` file with these contents:
 # Required for AI features
 GOOGLE_API_KEY=your_google_api_key_here
 
-# Optional: For enhanced web search
-# SERPAPI_API_KEY=your_serpapi_key_here
+# Required for hybrid RAG functionality
+SERPAPI_API_KEY=your_serpapi_key_here  # Required for web search in hybrid RAG
 
 # Model configuration
 EMBEDDING_MODEL=paraphrase-MiniLM-L3-v2
@@ -522,7 +520,7 @@ export SERVICE_NAME="cisco-automation-certification"
 
 # Required API keys from your .env file
 export GOOGLE_API_KEY="your_google_api_key_here"
-# export SERPAPI_API_KEY="your_serpapi_key_here"  # Uncomment if using web search
+export SERPAPI_API_KEY="your_serpapi_key_here"  # Required for hybrid RAG web search
 
 # Model configuration
 export EMBEDDING_MODEL="paraphrase-MiniLM-L3-v2"
@@ -758,29 +756,6 @@ Modify `public/cisco-theme.css` for custom branding:
   --primary-color: #your-brand-color;
   --secondary-color: #your-accent-color;
 }
-```
-
-## Contributing
-
-Contributions are welcome! Please follow these steps:
-
-```bash
-# 1. Fork the repository
-git clone https://github.com/your-username/cisco-automation-certification-station.git
-
-# 2. Create feature branch
-git checkout -b feature/amazing-feature
-
-# 3. Make changes and test
-python vectorize.py  # Test document processing
-streamlit run streamlit_app.py  # Test web interface
-
-# 4. Commit changes
-git add .
-git commit -m "Add amazing feature: detailed description"
-
-# 5. Push and create pull request
-git push origin feature/amazing-feature
 ```
 
 ## Alternative Deployment Options
