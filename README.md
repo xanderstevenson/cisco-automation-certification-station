@@ -46,13 +46,27 @@ A production-ready Hybrid Retrieval-Augmented Generation (RAG) system designed f
 
 ## What This System Does
 
-This application serves as an intelligent certification advisor that:
+This application serves as an intelligent certification advisor that implements a **Hybrid RAG (Retrieval-Augmented Generation)** system:
 
-- **Processes Official Documentation**: Ingests 10+ official Cisco certification PDFs and URLs
-- **Provides Expert Guidance**: Answers technical questions with specific exam topics and study plans
-- **Combines Multiple Sources**: Uses both local document search and real-time web search
-- **Delivers Fast Responses**: Optimized with parallel processing and efficient AI models
-- **Offers Professional Interface**: Clean web UI with Cisco branding and responsive design
+- **Processes Multiple Data Sources**:
+  - Ingests 10+ official Cisco certification PDFs from the `docs/` directory
+  - Scrapes and indexes content from official Cisco URLs listed in `urls.txt`
+  - Uses SerpAPI for real-time web search when local knowledge is insufficient
+
+- **Hybrid Retrieval Approach**:
+  - **Local Document Search**: FAISS vector store with sentence-transformers for semantic search
+  - **Web Search Fallback**: Automatically supplements with web search when needed
+  - **Context Fusion**: Intelligently combines multiple sources for comprehensive responses
+
+- **Provides Expert Guidance**:
+  - Answers technical questions with specific exam topics and study plans
+  - Maintains conversation context for follow-up questions
+  - Delivers source-backed responses with citations
+
+- **Optimized Performance**:
+  - Parallel processing for faster response times
+  - Efficient chunking strategy (500 chars with 50-char overlap)
+  - Cached embeddings for instant search
 
 ## System Architecture
 
@@ -178,26 +192,74 @@ The system is built using the following key technologies:
 Before setting up this system, ensure you have:
 
 - **Python 3.12**: Required for optimal performance
-- **Docker**: For containerized deployment
+- **Docker**: For containerized deployment (recommended)
 - **Google Cloud SDK**: If deploying to Google Cloud Run
-- **Google API Key**: Free from Google AI Studio for Gemini API access
-- **SerpAPI Key**: Optional for web search integration (free tier available)
+- **API Keys**:
+  - **Google API Key**: Free from [Google AI Studio](https://ai.google.dev/)
+  - **SerpAPI Key**: Optional but recommended for web search (free tier available at [serpapi.com](https://serpapi.com/))
 - **Git**: For version control and cloning the repository
+- **At least 2GB free disk space**: For the vector store and dependencies
 
 ## Step-by-Step Setup Instructions
 
-### Step 1: Clone the Repository
+## Quick Start Guide
+
+### 1. Clone the Repository
 
 ```bash
-# Clone the repository
 git clone https://github.com/xanderstevenson/cisco-automation-certification-station.git
 cd cisco-automation-certification-station
 ```
 
-**⚠️ Important for Contributors**: If you plan to push changes after cloning, you'll need to increase Git's file size limit due to the vector store files:
+### 2. Set Up Environment
+
+1. Create and activate a virtual environment:
+   ```bash
+   python -m venv .venv
+   source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+   ```
+
+2. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+### 3. Set Up API Keys
+
+Create a `.env` file in the project root with your API keys:
+```env
+GOOGLE_API_KEY=your_google_api_key
+SERPAPI_API_KEY=your_serpapi_key  # Optional but recommended
+```
+
+### 4. Build the Vector Store
+
+1. Add your PDFs to the `docs/` directory
+2. Add any additional URLs to `urls.txt` (one per line)
+3. Run the vectorization script:
+   ```bash
+   python vectorize.py
+   ```
+   This will:
+   - Process all PDFs in the `docs/` directory
+   - Scrape and process all URLs in `urls.txt`
+   - Create a FAISS vector store in `rag/index/`
+
+### 5. Run the Application
 
 ```bash
-# Increase Git's HTTP post buffer size to handle large files
+python fastapi_only.py
+```
+
+Then open your browser to http://localhost:8000
+
+## For Contributors
+
+**⚠️ Note on Large Files**: If you plan to contribute changes, configure Git to handle large files:
+
+```bash
+# Increase Git's HTTP post buffer size
+git config http.postBuffer 524288000  # 500MB buffer
 git config http.postBuffer 524288000
 
 # This prevents "HTTP 400" errors when pushing commits with vector store files
