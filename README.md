@@ -16,6 +16,7 @@
   <img src="public/Cisco-automation-certification-station.png" alt="Cisco Automation Certification Station">
 </div>
 
+<br>
 
 <div align="center">
   <img src="public/automation-certification-station-QR.png" alt="Cisco Automation Certification Station QR Code" width="75">
