@@ -200,39 +200,53 @@ Before setting up this system, ensure you have:
 - **Git**: For version control and cloning the repository
 - **At least 2GB free disk space**: For the vector store and dependencies
 
-## Step-by-Step Setup Instructions
-
 ## Quick Start Guide
 
-### 1. Clone the Repository
+### 1. Prerequisites
+
+- Python 3.12
+- [UV](https://github.com/astral-sh/uv) (faster alternative to pip)
+- Git
+- At least 2GB free disk space
+
+### 2. Clone the Repository
 
 ```bash
 git clone https://github.com/xanderstevenson/cisco-automation-certification-station.git
 cd cisco-automation-certification-station
 ```
 
-### 2. Set Up Environment
+### 3. Set Up Environment with UV
 
-1. Create and activate a virtual environment:
+1. Install UV if not already installed:
+
    ```bash
-   python -m venv .venv
+   curl -LsSf https://astral.sh/uv/install.sh | sh
+   ```
+
+2. Create and activate a virtual environment with Python 3.12:
+   ```bash
+   uv venv --python 3.12
    source .venv/bin/activate  # On Windows: .venv\Scripts\activate
    ```
 
-2. Install dependencies:
+3. Install dependencies using UV (significantly faster than pip):
    ```bash
-   pip install -r requirements.txt
+   uv pip install -r requirements.txt
    ```
 
-### 3. Set Up API Keys
+### 4. Set Up API Keys
 
 Create a `.env` file in the project root with your API keys:
 ```env
+# Required:
 GOOGLE_API_KEY=your_google_api_key
-SERPAPI_API_KEY=your_serpapi_key  # Optional but recommended
+
+# Optional but recommended for web search:
+SERPAPI_API_KEY=your_serpapi_key
 ```
 
-### 4. Build the Vector Store
+### 5. Build the Vector Store
 
 1. Add your PDFs to the `docs/` directory
 2. Add any additional URLs to `urls.txt` (one per line)
@@ -245,66 +259,57 @@ SERPAPI_API_KEY=your_serpapi_key  # Optional but recommended
    - Scrape and process all URLs in `urls.txt`
    - Create a FAISS vector store in `rag/index/`
 
-### 5. Run the Application
+### 6. Run the Application
 
 ```bash
 python fastapi_only.py
 ```
 
-Then open your browser to http://localhost:8000
+Then open your browser to [http://localhost:8000](http://localhost:8000)
 
-## For Contributors
+## Alternative Setup Methods
 
-**⚠️ Note on Large Files**: If you plan to contribute changes, configure Git to handle large files:
+### Using Standard pip (Slower)
 
 ```bash
-# Increase Git's HTTP post buffer size
-git config http.postBuffer 524288000  # 500MB buffer
-git config http.postBuffer 524288000
+# Create and activate virtual environment
+python -m venv .venv
+source .venv/bin/activate  # On Windows: .venv\Scripts\activate
 
-# This prevents "HTTP 400" errors when pushing commits with vector store files
-# The FAISS index and text files are ~400KB total and may exceed default limits
+# Install dependencies
+pip install -r requirements.txt
 ```
 
-### Step 2: Set Up with Docker
+### Using Docker
 
 ```bash
 # Build the Docker image
 docker build -t cisco-automation -f Dockerfile.fastapi .
 
-# Run locally
+# Run the container
 docker run -p 8080:8080 -e GOOGLE_API_KEY=your_key_here cisco-automation
 ```
 
-Or for development with live reload:
+## For Contributors
+
+### Git Configuration for Large Files
+
+If you plan to contribute changes, configure Git to handle large files:
 
 ```bash
-# Install dependencies
-pip install -r requirements.txt
+# Increase Git's HTTP post buffer size
+git config http.postBuffer 524288000  # 500MB buffer
 
-# Run with auto-reload
+# This prevents "HTTP 400" errors when pushing commits with vector store files
+# The FAISS index and text files may exceed default limits
+```
+
+### Development with Live Reload
+
+For development with auto-reload:
+
+```bash
 uvicorn fastapi_only:app --reload --host 0.0.0.0 --port 8080
-```
-# Install UV if not already installed
-curl -LsSf https://astral.sh/uv/install.sh | sh
-
-# Create virtual environment with Python 3.12
-uv venv --python 3.12
-source .venv/bin/activate  # On Windows: .venv\Scripts\activate
-
-# Install dependencies
-uv pip install -r requirements.txt
-```
-
-**Option B: Using Standard pip**
-```bash
-# Create virtual environment with Python 3.12
-python3.12 -m venv .venv
-source .venv/bin/activate  # On Windows: .venv\Scripts\activate
-
-# Upgrade pip and install dependencies
-pip install --upgrade pip
-pip install -r requirements.txt
 ```
 
 ### Step 3: Obtain API Keys
