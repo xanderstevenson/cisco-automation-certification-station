@@ -6,6 +6,8 @@
   <img src="public/Cisco-automation-certification-station.png" alt="Cisco Automation Certification Station">
 </div>
 
+<br>
+
 <div align="center">
 
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
