@@ -23,7 +23,7 @@ A production-ready Hybrid Retrieval-Augmented Generation (RAG) system designed f
 
 ## 🚀 Current Status
 
-**✅ FULLY OPERATIONAL** - The system is currently deployed and working perfectly at:
+**✅ FULLY OPERATIONAL** - The system is currently deployed and working as intended at:
 
 **🌐 Live Demo:** http://cs.co/automation-certification-station
 
@@ -224,10 +224,16 @@ cd cisco-automation-certification-station
    curl -LsSf https://astral.sh/uv/install.sh | sh
    ```
 
+
 2. Create and activate a virtual environment with Python 3.12:
    ```bash
-   uv venv --python 3.12
-   source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+   # On macOS/Linux
+   python3.12 -m venv .venv
+   source .venv/bin/activate
+
+   # On Windows (Command Prompt)
+   py -3.12 -m venv .venv
+   .venv\Scripts\activate
    ```
 
 3. Install dependencies using UV (significantly faster than pip):
@@ -239,12 +245,17 @@ cd cisco-automation-certification-station
 
 Create a `.env` file in the project root with your API keys:
 ```env
-# Required:
+# Required: Get from https://aistudio.google.com/
 GOOGLE_API_KEY=your_google_api_key
 
-# Optional but recommended for web search:
+# Optional but recommended: Get from https://serpapi.com/
 SERPAPI_API_KEY=your_serpapi_key
+
+# Required for Google Cloud Run deployment
+PROJECT_ID=your-google-cloud-project-id
 ```
+
+No need to manually export these variables - they'll be automatically loaded from the `.env` file when you run the application.
 
 ### 5. Build the Vector Store
 
@@ -314,17 +325,20 @@ uvicorn fastapi_only:app --reload --host 0.0.0.0 --port 8080
 
 ### Step 3: Obtain API Keys
 
-**Google Gemini API Key (Required)**
+**## API Key Setup
+
+### Google Gemini API Key
 
 1. Visit [Google AI Studio](https://aistudio.google.com/)
 2. Sign in with your Google account
 3. Click "Get API Key" → "Create API Key"
-4. Copy the generated API key
+4. Copy the generated API key to your `.env` file
 
-**SerpAPI Key (Optional - for web search)**
+### SerpAPI Key (Optional)
 
-1. Visit [SerpAPI](https://serpapi.com/)
-2. Sign up for a free account (100 searches/month)
+1. Sign up at [SerpAPI](https://serpapi.com/)
+2. Get your API key from the dashboard
+3. Add it to your `.env` files/month)
 3. Navigate to your dashboard
 4. Copy your API key
 
