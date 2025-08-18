@@ -20,7 +20,11 @@
 
 <div align="center">
   <img src="public/automation-certification-station-QR.png" alt="Cisco Automation Certification Station QR Code" width="75">
+  ⬆️
+  <p style="color:skyblue">Scan the QR code to access the live demo</p>
 </div>
+
+
 
 <br>
 
