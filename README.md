@@ -1,13 +1,19 @@
 # Cisco Automation Certification Station
 
-![Cisco Automation Certification Station](public/Cisco-automation-certification-station.png)
+<div align="center">
+  <img src="public/Cisco-automation-certification-station.png" alt="Cisco Automation Certification Station">
+</div>
 
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.12](https://img.shields.io/badge/python-3.12-blue.svg)](https://www.python.org/downloads/)
 [![Docker](https://img.shields.io/badge/Docker-2CA5E0?style=flat&logo=docker&logoColor=white)](https://www.docker.com/)
 [![Google Cloud Run](https://img.shields.io/badge/Google%20Cloud%20Run-4285F4?style=flat&logo=google-cloud&logoColor=white)](https://cloud.google.com/run)
 
-![QR Code](public/automation-certification-station-QR.png)
+<div align="center">
+  <img src="public/automation-certification-station-QR.png" alt="Cisco Automation Certification Station QR Code" width="75">
+</div>
+
+<br>
 
 A production-ready Hybrid Retrieval-Augmented Generation (RAG) system designed for Cisco network automation certification preparation. This system combines local document search, web search, and AI generation to provide comprehensive, source-backed answers for:
 
@@ -19,7 +25,7 @@ A production-ready Hybrid Retrieval-Augmented Generation (RAG) system designed f
 - [DevNet Associate](https://learningnetwork.cisco.com/s/devnet-associate-exam-topics)
 - [DevNet Professional (DEVCOR)](https://learningnetwork.cisco.com/s/devcor-exam-topics)
 
-## 🚀 Current Status
+## Current Status
 
 **✅ FULLY OPERATIONAL** - The system is currently deployed and working as intended at:
 
@@ -76,13 +82,10 @@ This application serves as an intelligent certification advisor that implements 
 
 ### Hybrid RAG Architecture Overview
 
-
 ```mermaid
 flowchart TD
     A[👤 User Query] --> B{🧠 FastAPI Server}
     B -->|Loads| C[📱 Responsive UI]
-```
-
     B -->|Handles| D[🔍 Hybrid RAG Pipeline]
     
     D --> E[📚 Document Search]
@@ -95,7 +98,6 @@ flowchart TD
     H --> I
     
     I --> J[🤖 Google Gemini 1.5 Flash]
-    
     J --> K[📋 Comprehensive Response]
     
     style A fill:#e1f5fe
@@ -142,10 +144,11 @@ graph TB
     style GEMINI fill:#e8f5e8
     style VECTOR fill:#fce4ec
     style DOCS fill:#f1f8e9
+```
 
 ### Document Processing Pipeline
 
-The system processes documents through a sophisticated vectorization pipeline:
+TheSystem processes documents through a sophisticated vectorization pipeline:
 
 #### Data Sources
 
@@ -276,8 +279,8 @@ cd cisco-automation-certification-station
    # Required: Get from https://aistudio.google.com/
    GOOGLE_API_KEY=your_google_api_key
    
-   # Optional but recommended for web search: Get from https://serpapi.com/
-   # SERPAPI_API_KEY=your_serpapi_key
+   # Required for hybrid RAG functionality - Get from https://serpapi.com/
+   SERPAPI_API_KEY=your_serpapi_key_here
    
    # Required only for Google Cloud Run deployment
    # PROJECT_ID=your-google-cloud-project-id
