@@ -331,7 +331,7 @@ docker run -p 8080:8080 -e GOOGLE_API_KEY=your_key_here cisco-automation
 
 ### Git Configuration for Large Files
 
-If you plan to contribute changes, configure Git to handle large files:
+If you plan to store your vectorizations in GitHub, configure Git to handle large files:
 
 ```bash
 # Increase Git's HTTP post buffer size
@@ -784,7 +784,6 @@ This repository includes configuration files for multiple deployment platforms t
 These alternative configurations are maintained to:
 - Support different deployment preferences
 - Provide fallback options if primary deployment fails
-- Enable community contributions across different platforms
 - Demonstrate platform-agnostic architecture
 
 **Recommendation**: Use Streamlit + Google Cloud Run for production deployments, but feel free to explore alternatives based on your specific needs.
