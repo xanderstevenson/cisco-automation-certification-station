@@ -41,14 +41,15 @@ A production-ready Hybrid Retrieval-Augmented Generation (RAG) system designed f
 
 ## Current Status
 
-**✅ FULLY OPERATIONAL** - The system is currently deployed and working as intended at:
+✅ **FULLY OPERATIONAL** - The system is currently deployed and working as intended at:
 
-**🌐 Live Demo:** [cs.co/automation-certification-station](http://cs.co/automation-certification-station)
+🌐 **Live Demo:** [cs.co/automation-certification-station](http://cs.co/automation-certification-station)
 
-### Recent Updates (August 2025)
+## Recent Updates (August 2025)
 
 - 🚀 **Migrated to FastAPI**: Replaced Streamlit with a lightweight FastAPI implementation
 - ⚡ **Improved Performance**: Faster response times with optimized model loading
+- 🔄 **Switched to Serper API**: Moved from SerpAPI to Serper API for more reliable and cost-effective web search.
 - 🏗️ **Simplified Architecture**: Single-process design for better reliability
 - 📱 **Enhanced Mobile Experience**: Fully responsive design with improved touch support
 - 🔒 **Better Security**: Reduced attack surface with minimal dependencies
@@ -57,7 +58,7 @@ A production-ready Hybrid Retrieval-Augmented Generation (RAG) system designed f
 
 - 🤖 **AI Chat Interface**: FastAPI-based professional UI with Cisco branding
 - 📚 **Document Search**: 11 official Cisco PDFs + curated URLs in knowledge base
-- 🔍 **Web Search**: Real-time SerpAPI integration for latest information
+- 🔍 **Web Search**: Real-time Serper API integration for latest information
 - ⚡ **Fast Responses**: Optimized response times with parallel processing
 - 💬 **Conversation Context**: Maintains chat history and context
 - 🎯 **Exam-Specific Guidance**: Detailed study plans based on official blueprints
@@ -72,7 +73,7 @@ This application serves as an intelligent certification advisor that implements 
 
 - Ingests 10+ official Cisco certification PDFs from the `docs/` directory
 - Scrapes and indexes content from official Cisco URLs listed in `urls.txt`
-- Uses SerpAPI for real-time web search when local knowledge is insufficient
+- Uses Serper API for real-time web search when local knowledge is insufficient
 
 ### Hybrid Retrieval Approach
 
@@ -98,55 +99,100 @@ This application serves as an intelligent certification advisor that implements 
 
 ```mermaid
 flowchart TD
-    A[👤 User Query] --> B{🧠 FastAPI Server}
-    B -->|Loads| C[📱 Responsive UI]
-    B -->|Handles| D[🔍 Hybrid RAG Pipeline]
+    %% User Interaction
+    A[👤 User Query] -->|HTTP/WebSocket| B{🧠 FastAPI Server}
     
+    %% Main Processing
+    B -->|Serves| C[📱 Responsive UI]
+    B -->|Processes| D[🔍 Hybrid RAG Pipeline]
+    
+    %% Search Components
     D --> E[📚 Document Search]
     D --> F[🌐 Web Search]
     
-    E --> G[(🗂️ FAISS Vector Store<br/>209 Chunks)]
-    F --> H[🔎 SerpAPI<br/>Real-time Results]
+    %% Data Sources
+    E --> G[(🗂️ FAISS Vector Store<br/>• 209 Chunks<br/>• 384-dim Embeddings<br/>• Fast Similarity Search)]
+    F --> H[🔎 Serper API<br/>• Real-time Web Results<br/>• Up-to-date Information]
     
+    %% Response Generation
     G --> I[🔗 Context Fusion]
     H --> I
-    
-    I --> J[🤖 Google Gemini 1.5 Flash]
+    I --> J[🤖 Google Gemini 1.5 Flash<br/>• Text Generation<br/>• Fast Response]
     J --> K[📋 Comprehensive Response]
     
-    style A fill:#e1f5fe
-    style B fill:#e8f5e9
-    style C fill:#e3f2fd
-    style D fill:#f3e5f5
-    style J fill:#e8f5e8
-    style K fill:#fff8e1
+    %% Styling
+    classDef user fill:#e1f5fe,stroke:#0288d1,stroke-width:2px
+    classDef server fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px
+    classDef ui fill:#e3f2fd,stroke:#1565c0,stroke-width:2px
+    classDef process fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
+    classDef storage fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px,stroke-dasharray: 5 5
+    classDef api fill:#fff3e0,stroke:#e65100,stroke-width:2px
+    classDef ai fill:#f1f8e9,stroke:#558b2f,stroke-width:2px
+    classDef response fill:#fff8e1,stroke:#f57f17,stroke-width:2px
+    
+    class A user
+    class B server
+    class C ui
+    class D,E,F process
+    class G storage
+    class H api
+    class I,J ai
+    class K response
 ```
 
 ### System Components Architecture
 
 ```mermaid
 graph TB
+    %% Styling
+    classDef frontend fill:#e3f2fd,stroke:#1565c0,stroke-width:2px
+    classDef api fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px
+    classDef ai fill:#f1f8e9,stroke:#558b2f,stroke-width:2px
+    classDef storage fill:#fff3e0,stroke:#e65100,stroke-width:2px,stroke-dasharray: 5 5
+    classDef process fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
+    
+    %% Frontend Layer
     subgraph "🖥️ Frontend Layer"
-        UI[FastAPI Web Interface<br/>• Chat History<br/>• Cisco Theme<br/>• Responsive Design]
+        UI["**FastAPI Web Interface**<br/>• Chat History<br/>• Cisco Theme<br/>• Responsive Design"]
+        class UI frontend
     end
     
+    %% API Layer
     subgraph "⚙️ API Layer"
-        API[FastAPI Endpoints<br/>• WebSocket Chat<br/>• Static Files<br/>• Health Checks]
+        API["**FastAPI Endpoints**<br/>• WebSocket Chat<br/>• Static Files<br/>• Health Checks"]
+        class API api
     end
     
+    %% AI & Data Layer
     subgraph "🤖 AI & Data Layer"
-        RAG[Hybrid RAG Engine<br/>• Document Search<br/>• Web Search<br/>• Context Fusion]
-        GEMINI[Google Gemini 1.5 Flash<br/>• Text Generation<br/>• Fast Response]
-        SERP[SerpAPI<br/>• Real-time Search]
+        RAG["**Hybrid RAG Engine**<br/>• Document Search<br/>• Web Search<br/>• Context Fusion"]
+        GEMINI["**Google Gemini 1.5 Flash**<br/>• Text Generation<br/>• Fast Response"]
+        SERP["**Serper API**<br/>• Real-time Search"]
+        
+        RAG --> GEMINI
+        SERP --> RAG
+        class RAG,GEMINI,SERP ai
     end
     
+    %% Storage Layer
     subgraph "💾 Storage Layer"
-        VECTOR[(FAISS Vector Store<br/>• 384-dim Embeddings<br/>• Fast Similarity Search)]
-        DOCS[(Document Collection<br/>• 11 Cisco PDFs<br/>• 9 Official URLs)]
+        VECTOR["**FAISS Vector Store**<br/>• 384-dim Embeddings<br/>• Fast Similarity Search"]
+        DOCS["**Document Collection**<br/>• 11 Cisco PDFs<br/>• 9 Official URLs"]
+        
+        DOCS --> VECTOR
+        class VECTOR,DOCS storage
     end
     
-    UI --> API
-    API --> RAG
+    %% Connections
+    UI <-->|WebSocket/HTTP| API
+    API -->|Process Query| RAG
+    RAG <-->|Read/Write| VECTOR
+    RAG <-->|Read| DOCS
+    
+    %% Add some spacing
+    style UI margin-bottom:20px
+    style API margin-bottom:20px
+    style RAG margin-bottom:20px
     RAG --> GEMINI
     RAG --> SERP
     RAG --> VECTOR
@@ -204,7 +250,7 @@ The system is built using the following key technologies:
 
 ### Search and Retrieval
 
-- **SerpAPI**: Real-time Google search integration (optional)
+- **Serper API**: Real-time Google search integration (optional)
 - **Concurrent.futures**: Parallel processing for faster response times
 - **Pickle**: Efficient serialization for text chunk storage
 
@@ -225,7 +271,7 @@ Before setting up this system, ensure you have:
 - **Google Cloud SDK**: If deploying to Google Cloud Run
 - **API Keys**:
   - **Google API Key**: Free from [Google AI Studio](https://ai.google.dev/)
-  - **SerpAPI Key**: Optional but recommended for web search (free tier available at [serpapi.com](https://serpapi.com/))
+  - **Serper API Key**: Free tier available at [serper.dev](https://serper.dev/)
 - **Git**: For version control and cloning the repository
 - **At least 2GB free disk space**: For the vector store and dependencies
 
@@ -293,8 +339,8 @@ cd cisco-automation-certification-station
    # Required: Get from https://aistudio.google.com/
    GOOGLE_API_KEY=your_google_api_key
    
-   # Required for hybrid RAG functionality - Get from https://serpapi.com/
-   SERPAPI_API_KEY=your_serpapi_key_here
+   # Required for hybrid RAG functionality - Get from https://serper.dev/
+   SERPAPI_KEY=your_serpapi_key_here
    
    # Required only for Google Cloud Run deployment
    # PROJECT_ID=your-google-cloud-project-id
@@ -377,11 +423,11 @@ To use the AI features, you'll need a Google Gemini API key:
 3. Click "Get API Key" → "Create API Key"
 4. Copy the generated API key to your `.env` file
 
-### SerpAPI Key (Optional)
+### Serper API Key (Optional)
 
-1. Sign up at [SerpAPI](https://serpapi.com/)
+1. Sign up at [Serper API](https://serper.dev/)
 2. Get your API key from the dashboard
-3. Add it to your `.env` file as `SERPAPI_API_KEY=your_key_here`
+3. Add it to your `.env` file as `SERPAPI_KEY=your_key_here`
 
 ### 3. Configure Environment Variables
 
@@ -406,7 +452,7 @@ Or manually create the `.env` file with these contents:
 GOOGLE_API_KEY=your_google_api_key_here
 
 # Required for hybrid RAG functionality
-SERPAPI_API_KEY=your_serpapi_key_here  # Required for web search in hybrid RAG
+SERPAPI_KEY=your_serper_api_key_here  # Required for web search in hybrid RAG
 
 # Model configuration
 EMBEDDING_MODEL=paraphrase-MiniLM-L3-v2
@@ -537,7 +583,7 @@ export SERVICE_NAME="cisco-automation-certification"
 
 # Required API keys from your .env file
 export GOOGLE_API_KEY="your_google_api_key_here"
-export SERPAPI_API_KEY="your_serpapi_key_here"  # Required for hybrid RAG web search
+export SERPER_API_KEY="your_serper_api_key_here"  # Required for hybrid RAG web search
 
 # Model configuration
 export EMBEDDING_MODEL="paraphrase-MiniLM-L3-v2"
@@ -572,7 +618,7 @@ gcloud run deploy $SERVICE_NAME \
     EMBEDDING_MODEL=$EMBEDDING_MODEL,\
     PYTHONUNBUFFERED=$PYTHONUNBUFFERED,\
     TOKENIZERS_PARALLELISM=$TOKENIZERS_PARALLELISM,\
-    SERPAPI_API_KEY=$SERPAPI_API_KEY"
+    SERPER_API_KEY=$SERPER_API_KEY"
 ```
 
 **Features:**
@@ -606,7 +652,7 @@ python hybrid_rag_gpt.py
 # 2. Connect to Render.com
 # 3. Add environment variables in dashboard:
 #    - GOOGLE_API_KEY
-#    - SERPAPI_KEY (optional)
+#    - SERPAPI_KEY
 # 4. Deploy
 ```
 
@@ -616,7 +662,7 @@ python hybrid_rag_gpt.py
 - **Casual greetings**: ~1-2 seconds (direct response)
 - **Technical queries**: ~6-8 seconds (hybrid RAG pipeline)
 - **Document search**: ~0.5 seconds (FAISS vector similarity)
-- **Web search**: ~2-3 seconds (SerpAPI + parallel processing)
+- **Web search**: ~2-3 seconds (Serper API + parallel processing)
 - **AI generation**: ~3-4 seconds (Gemini 1.5 Flash)
 
 ### Resource Usage
