@@ -340,7 +340,7 @@ cd cisco-automation-certification-station
    GOOGLE_API_KEY=your_google_api_key
    
    # Required for hybrid RAG functionality - Get from https://serper.dev/
-   SERPAPI_KEY=your_serpapi_key_here
+   SERPAPI_KEY=your_serper_api_key_here
    
    # Required only for Google Cloud Run deployment
    # PROJECT_ID=your-google-cloud-project-id
@@ -439,7 +439,7 @@ touch .env
 
 # Add your API keys to .env file
 echo "GOOGLE_API_KEY=your_google_api_key_here" >> .env
-echo "SERPAPI_KEY=your_serpapi_key_here" >> .env  # Optional
+echo "SERPAPI_KEY=your_serperapi_key_here" >> .env  # Optional
 echo "EMBEDDING_MODEL=paraphrase-MiniLM-L3-v2" >> .env
 echo "PYTHONUNBUFFERED=1" >> .env
 echo "TOKENIZERS_PARALLELISM=false" >> .env
