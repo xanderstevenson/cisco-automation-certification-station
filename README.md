@@ -56,14 +56,14 @@ A production-ready Hybrid Retrieval-Augmented Generation (RAG) system designed f
 
 ### Key Features
 
-- 🤖 **AI Chat Interface**: FastAPI-based professional UI with Cisco branding
-- 📚 **Document Search**: 11 official Cisco PDFs + curated URLs in knowledge base
-- 🔍 **Web Search**: Real-time Serper API integration for latest information
-- ⚡ **Fast Responses**: Optimized response times with parallel processing
-- 💬 **Conversation Context**: Maintains chat history and context
-- 🎯 **Exam-Specific Guidance**: Detailed study plans based on official blueprints
-- 🔗 **Resource Links**: Verified, clickable resource links
-- 📱 **Mobile First**: Fully responsive design for all devices
+- **AI Chat Interface**: FastAPI-based professional UI with Cisco branding
+- **Document Search**: 11 official Cisco PDFs + curated URLs in knowledge base
+- **Web Search**: Real-time Serper API integration for latest information
+- **Fast Responses**: Optimized response times with parallel processing
+- **Conversation Context**: Maintains chat history and context
+- **Exam-Specific Guidance**: Detailed study plans based on official blueprints
+- **Resource Links**: Verified, clickable resource links
+- **Mobile First**: Fully responsive design for all devices
 
 ## What This System Does
 
