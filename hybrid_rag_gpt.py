@@ -1,9 +1,10 @@
 # hybrid_rag_gpt.py
 
 import os
+import json
 import google.generativeai as genai
 from dotenv import load_dotenv
-from serpapi import GoogleSearch
+import requests
 import gc
 import concurrent.futures
 import threading
@@ -101,22 +102,33 @@ def doc_search(query: str) -> str:
     # Increase search results for comprehensive certification information
     return retrieve_answer(query, k=5)
 
-# Internet search fallback via SerpAPI
+# Internet search fallback via Serper API
 def web_search(query: str) -> str:
     # Skip web search if no API key to speed up response
     if not os.environ.get("SERPAPI_KEY"):
         return "Web search unavailable (no API key configured)."
     
-    params = {
+    url = "https://google.serper.dev/search"
+    payload = json.dumps({
         "q": query,
-        "api_key": os.environ.get("SERPAPI_KEY"),
-        "engine": "google",
-        "num": 2  # Reduced for faster response
+        "gl": "us",
+        "hl": "en"
+    })
+    headers = {
+        'X-API-KEY': os.environ.get("SERPAPI_KEY"),
+        'Content-Type': 'application/json'
     }
+    
     try:
-        results = GoogleSearch(params).get_dict()
-        snippets = [r.get("snippet", "") for r in results.get("organic_results", [])[:2] if r.get("snippet")]
-        return "\n".join(snippets) if snippets else "No internet results found."
+        response = requests.post(url, headers=headers, data=payload)
+        response.raise_for_status()
+        results = response.json()
+        
+        # Extract organic results
+        if 'organic' in results:
+            snippets = [r.get("snippet", "") for r in results['organic'][:2] if r.get("snippet")]
+            return "\n".join(snippets) if snippets else "No internet results found."
+        return "No internet results found."
     except Exception as e:
         return "Web search temporarily unavailable."
 
