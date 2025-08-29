@@ -8,6 +8,10 @@ sentence-transformers  # Text embeddings
 faiss-cpu  # Vector similarity search
 torch  # Required by sentence-transformers (CPU version)
 
+# Document Processing
+PyPDF2  # PDF text extraction
+beautifulsoup4  # HTML parsing
+
 # Search API
 google-search-results  # SerpAPI for web search
 

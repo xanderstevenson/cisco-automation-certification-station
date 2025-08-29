@@ -1,0 +1,14 @@
+# Testing Framework
+pytest==8.0.0
+pytest-asyncio==0.23.5  # For testing async FastAPI endpoints
+pytest-cov==4.1.0       # For test coverage reporting
+httpx==0.27.0           # Required by FastAPI TestClient
+pytest-env==1.1.3       # For environment variable management in tests
+
+# Mock Libraries
+pytest-mock==3.12.0     # For mocking functions and dependencies
+responses==0.24.1       # For mocking HTTP requests
+
+# Development Tools
+black==24.1.1           # Code formatting
+ruff==0.2.1            # Fast Python linter

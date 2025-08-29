@@ -369,6 +369,65 @@ python fastapi_only.py
 
 Then open your browser to [http://localhost:8000](http://localhost:8000)
 
+## Running Tests
+
+The project includes a comprehensive test suite covering the RAG system, API endpoints, and document processing.
+
+### 1. Install Test Dependencies
+
+```bash
+# Using UV (recommended)
+uv pip install -r requirements-test.txt
+
+# OR using standard pip
+pip install -r requirements-test.txt
+```
+
+### 2. Run Tests
+
+```bash
+# Run all tests
+pytest
+
+# Run tests with coverage report
+pytest --cov=. --cov-report=term-missing
+
+# Run specific test categories
+pytest tests/test_api.py          # Test API endpoints
+pytest tests/test_hybrid_rag.py   # Test RAG functionality
+pytest tests/test_vectorization.py # Test document processing
+```
+
+### Test Categories
+
+1. **API Tests** (`test_api.py`):
+   - FastAPI endpoint testing
+   - Request/response validation
+   - Error handling
+   - Static file serving
+
+2. **RAG System Tests** (`test_hybrid_rag.py`):
+   - Document retrieval
+   - Web search integration
+   - Chat functionality
+   - Context management
+
+3. **Document Processing Tests** (`test_vectorization.py`):
+   - PDF text extraction
+   - URL content scraping
+   - Text chunking
+   - Vector store operations
+
+### Running Tests in CI/CD
+
+For automated testing in CI/CD pipelines:
+
+```bash
+# Install dependencies and run tests
+python -m pip install -r requirements.txt -r requirements-test.txt
+pytest --junitxml=test-results.xml --cov=. --cov-report=xml
+```
+
 ## Alternative Setup Methods
 
 ### Using Standard pip (Slower)
@@ -496,15 +555,13 @@ Vectorization complete!
 
 ### Step 6: Run the Application
 
-**Option A: Web Interface (Recommended)**
+**Run the Application**
 ```bash
-# Start the Streamlit web interface
-streamlit run streamlit_app.py
+# Start the FastAPI application
+python fastapi_only.py
 ```
 
-The application will start at `http://localhost:8501`
-
-**Option B: Command Line Interface**
+The application will start at `http://localhost:8000`
 ```bash
 # Run the command-line version
 python hybrid_rag_gpt.py
@@ -539,16 +596,24 @@ cisco-automation-certification-station/
 ├── README.md                    # This comprehensive guide
 ├── requirements.txt             # Python dependencies
 ├── requirements-lite.txt        # Memory-optimized dependencies for deployment
+├── requirements-test.txt        # Test dependencies
 ├── .env                         # Environment variables (create this)
 ├── .gitignore                   # Git ignore rules
 ├── render.yaml                  # Render.com deployment configuration
 ├── Dockerfile                   # Docker containerization
 ├── deploy-gcp.sh               # Google Cloud Run deployment script
 │
-├── streamlit_app.py             # Streamlit web interface entry point
+
 ├── hybrid_rag_gpt.py           # Core RAG logic with Gemini integration
 ├── vectorize.py                # Document processing and embedding creation
 ├── urls.txt                    # Official Cisco URLs for knowledge base
+│
+├── tests/                      # Test suite
+│   ├── __init__.py            # Test package initialization
+│   ├── conftest.py            # Shared test fixtures
+│   ├── test_api.py            # FastAPI endpoint tests
+│   ├── test_hybrid_rag.py     # RAG functionality tests
+│   └── test_vectorization.py  # Document processing tests
 │
 ├── docs/                       # Cisco certification PDFs (10 files)
 │   ├── 200-901-CCNAAUTO_v.1.1.pdf
@@ -825,31 +890,25 @@ Modify `public/cisco-theme.css` for custom branding:
 
 This repository includes configuration files for multiple deployment platforms to provide flexibility for different use cases:
 
-### Chainlit Interface
-- **Files**: `app.py`, `chainlit.md`, `.chainlit/config.toml`
-- **Use Case**: Alternative chat interface with different UI/UX
-- **Deployment**: Run `chainlit run app.py` for local development
-- **Features**: Built-in chat interface, different theming options
-
 ### Render.com Deployment
 - **Files**: `render.yaml`, `requirements-lite.txt`
 - **Use Case**: Free tier deployment with memory optimizations
 - **Limitations**: 512MB memory limit, may require performance trade-offs
 - **Setup**: Connect repository to Render.com and deploy using `render.yaml`
 
-### Docker Legacy Support
-- **Files**: `Dockerfile` (original), `requirements.txt`
+### Docker Support
+- **Files**: `Dockerfile.fastapi`, `requirements.txt`
 - **Use Case**: Custom containerized deployments
-- **Note**: `Dockerfile.streamlit` is recommended for production
+- **Features**: Multi-stage builds, optimized for production
 
 ### Why Multiple Options?
 
-These alternative configurations are maintained to:
+These deployment configurations are maintained to:
 - Support different deployment preferences
 - Provide fallback options if primary deployment fails
 - Demonstrate platform-agnostic architecture
 
-**Recommendation**: Use Streamlit + Google Cloud Run for production deployments, but feel free to explore alternatives based on your specific needs.
+**Recommendation**: Use Google Cloud Run for production deployments, but feel free to explore alternatives based on your specific needs.
 
 ## License
 
