@@ -86,8 +86,8 @@ if not api_key:
     raise ValueError("GOOGLE_API_KEY environment variable must be set")
 genai.configure(api_key=api_key)
 
-# Use Gemini 1.5 Flash for faster responses (optimized for speed)
-model = genai.GenerativeModel("gemini-1.5-flash")
+# Use Gemini 2.5 Flash for faster responses (optimized for speed)
+model = genai.GenerativeModel("gemini-2.5-flash")
 
 # Optimized generation config for comprehensive responses with good speed
 fast_generation_config = genai.types.GenerationConfig(
@@ -258,7 +258,7 @@ def chat(user_input, conversation_history=None, preload_only=False):
         try:
             load_vector_store()
             genai.configure(api_key=api_key)
-            model = genai.GenerativeModel('gemini-1.5-flash')
+            model = genai.GenerativeModel('gemini-2.5-flash')
             return "Models preloaded successfully"
         except Exception as e:
             return f"Preload failed: {str(e)}"
@@ -269,7 +269,7 @@ def chat(user_input, conversation_history=None, preload_only=False):
     try:
         # Initialize Gemini model
         genai.configure(api_key=api_key)
-        model = genai.GenerativeModel('gemini-1.5-flash')
+        model = genai.GenerativeModel('gemini-2.5-flash')
         
         # Check if this is a simple greeting or casual interaction
         casual_patterns = ['hi', 'hello', 'hey', 'thanks', 'thank you', 'bye', 'goodbye']
