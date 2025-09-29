@@ -45,8 +45,12 @@ A production-ready Hybrid Retrieval-Augmented Generation (RAG) system designed f
 
 🌐 **Live Demo:** [cs.co/automation-certification-station](http://cs.co/automation-certification-station)
 
-## Recent Updates (August 2025)
+## Recent Updates (September 2025)
 
+- Upgraded to Gemini 2.5 Flash model (from 1.5) for improved context handling
+- Response times now average 10+ seconds due to more advanced model
+- Changed environment variable from SERPAPI_API_KEY to SERPAPI_KEY
+- Updated documentation to reflect latest certification changes
 - 🚀 **Migrated to FastAPI**: Replaced Streamlit with a lightweight FastAPI implementation
 - ⚡ **Improved Performance**: Faster response times with optimized model loading
 - 🔄 **Switched to Serper API**: Moved from SerpAPI to Serper API for more reliable and cost-effective web search.
@@ -117,7 +121,7 @@ flowchart TD
     %% Response Generation
     G --> I[🔗 Context Fusion]
     H --> I
-    I --> J[🤖 Google Gemini 1.5 Flash<br/>• Text Generation<br/>• Fast Response]
+    I --> J[🤖 Google Gemini 2.5 Flash<br/>• Text Generation<br/>• Fast Response]
     J --> K[📋 Comprehensive Response]
     
     %% Styling
@@ -236,7 +240,7 @@ The system is built using the following key technologies:
 
 - **Python 3.12**: Optimized for performance and modern async features
 - **FastAPI**: High-performance web framework with automatic docs
-- **Google Gemini 1.5 Flash**: Fast, efficient AI model for response generation
+- **Google Gemini 2.5 Flash**: Fast, efficient AI model for response generation
 - **FAISS**: Facebook AI Similarity Search for efficient vector operations
 - **Sentence Transformers**: State-of-the-art text embedding models
 - **WebSockets**: Real-time bidirectional communication
@@ -396,6 +400,10 @@ pytest --cov=. --cov-report=term-missing
 pytest tests/test_api.py          # Test API endpoints
 pytest tests/test_hybrid_rag.py   # Test RAG functionality
 pytest tests/test_vectorization.py # Test document processing
+
+# Run diagnostic tools
+python tests/test_models_diagnostic.py    # List available Gemini models
+python tests/test_gemini_flash.py        # Test current model with sample query
 ```
 
 ### Test Categories
@@ -417,6 +425,10 @@ pytest tests/test_vectorization.py # Test document processing
    - URL content scraping
    - Text chunking
    - Vector store operations
+
+4. **Diagnostic Tools**:
+   - **`test_models_diagnostic.py`**: Lists all available Google Gemini models and their capabilities
+   - **`test_gemini_flash.py`**: Tests the current Gemini 2.5 Flash model with sample queries
 
 ### Running Tests in CI/CD
 
@@ -600,7 +612,7 @@ cisco-automation-certification-station/
 ├── .env                         # Environment variables (create this)
 ├── .gitignore                   # Git ignore rules
 ├── render.yaml                  # Render.com deployment configuration
-├── Dockerfile                   # Docker containerization
+├── Dockerfile.fastapi           # Docker containerization for FastAPI
 ├── deploy-gcp.sh               # Google Cloud Run deployment script
 │
 
@@ -613,7 +625,9 @@ cisco-automation-certification-station/
 │   ├── conftest.py            # Shared test fixtures
 │   ├── test_api.py            # FastAPI endpoint tests
 │   ├── test_hybrid_rag.py     # RAG functionality tests
-│   └── test_vectorization.py  # Document processing tests
+│   ├── test_vectorization.py  # Document processing tests
+│   ├── test_models_diagnostic.py  # List available Gemini models
+│   └── test_gemini_flash.py   # Test current Gemini model
 │
 ├── docs/                       # Cisco certification PDFs (10 files)
 │   ├── 200-901-CCNAAUTO_v.1.1.pdf
@@ -700,8 +714,8 @@ gcloud run deploy $SERVICE_NAME \
 # Activate virtual environment
 source .venv/bin/activate
 
-# Start the web interface
-streamlit run streamlit_app.py
+# Start the FastAPI web interface
+python fastapi_only.py
 
 # Or run command-line version
 python hybrid_rag_gpt.py
@@ -725,10 +739,10 @@ python hybrid_rag_gpt.py
 
 ### Response Times
 - **Casual greetings**: ~1-2 seconds (direct response)
-- **Technical queries**: ~6-8 seconds (hybrid RAG pipeline)
+- **Technical queries**: ~10+ seconds (hybrid RAG pipeline with Gemini 2.5 Flash)
 - **Document search**: ~0.5 seconds (FAISS vector similarity)
 - **Web search**: ~2-3 seconds (Serper API + parallel processing)
-- **AI generation**: ~3-4 seconds (Gemini 1.5 Flash)
+- **AI generation**: ~6-8 seconds (Gemini 2.5 Flash)
 
 ### Resource Usage
 - **Memory**: ~450MB (with loaded models)
@@ -918,7 +932,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 - **Google Gemini**: Fast, free AI model for response generation
 - **Cisco**: Comprehensive certification documentation and learning resources
-- **Streamlit**: Modern chat interface framework
+- **FastAPI**: High-performance web framework
 - **FAISS**: Efficient vector similarity search
 - **Sentence Transformers**: State-of-the-art text embedding models
 - **Open Source Community**: For the excellent tools and libraries that make this possible
