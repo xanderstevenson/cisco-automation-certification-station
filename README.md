@@ -33,9 +33,9 @@ A production-ready Hybrid Retrieval-Augmented Generation (RAG) system designed f
 
 ## Current Status
 
-✅ **FULLY OPERATIONAL** - The system is currently deployed and working as intended at:
+✅ **FULLY OPERATIONAL** - The system <s>is currently</s> was deployed and working as intended at:
 
-🌐 **Live Demo:** [cs.co/automation-certification-station](http://cs.co/automation-certification-station)
+🌐 **Demo on YouTube:** (https://youtu.be/t9o7wO2qGQg)
 
 ## Recent Updates (September 2025)
 
