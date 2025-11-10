@@ -18,14 +18,6 @@
 
 <br>
 
-<div align="center">
-  <img src="public/automation-certification-station-QR.png" alt="Cisco Automation Certification Station QR Code" width="75">
-  <br>
-  ⬆️
-  <p style="color: #00bceb !important; font-weight: 500; margin-top: 8px;">Scan the QR code, or visit <a href="https://cs.co/automation-certification-station">cs.co/automation-certification-station</a> to access the live demo</p>
-</div>
-
-
 
 <br>
 
